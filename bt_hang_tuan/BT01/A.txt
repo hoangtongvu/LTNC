@@ -1,0 +1,96 @@
+A. Dạng bài tìm hiểu
+1.	Lệnh sau đây làm gì khi grade là một biến kiểu int? Nếu có lỗi cú pháp, hãy sửa lỗi.
+bool isA = (90 <= grade <= 100);
+
+Lỗi, tách thành (90<=grade) && (grade<=100).
+2.	Đoạn chương trình sau đây in ra kết quả gì?
+double x = (double) (3/5);
+	cout << x;
+ra 0;
+
+3.	Tại sao đoạn code dưới đây không in ra 4294967296 = 2^32?
+int x = 65536;
+	long y = x * x;
+	cout << y;
+
+
+do tích của 2 số int là 1 số int rồi mới chuyển sang long, mà int không chứa được số 2^32
+4. Biểu thức sau có giá trị gì?
+(sqrt(2) * sqrt(2) == 2)
+
+false
+5.	Viết một chương trình divideByZero để xem chuyện gì xảy ra khi bạn đem chia một giá trị kiểu int hoặc double cho 0 hoặc lấy đồng dư cho 0.
+Lỗi
+
+6.	Thử xem trình biên dịch nói gì với một chương trình có hàm main chứa đoạn code sau
+int a = 27 * "three";
+hoặc
+double x;
+	cout << x;
+Nếu chuyển dòng khai báo x ra ngoài hàm main thì chuyện gì xảy ra?
+Không lỗi, x thành biến global
+
+7.	Đoạn code sau cho output gì?
+int threeInt = 3;
+	int fourInt  = 4;
+	double threeDouble = 3.0;
+	double fourDouble  = 4.0;
+	cout << threeInt / fourInt << endl;
+	cout << threeInt / fourDouble << endl;
+	cout << threeDouble / fourInt << endl;
+	cout << threeDouble / fourDouble << endl;
+
+0
+	0.75
+	0.75
+	0.75
+8.	Chuyện gì xảy ra nếu ta khai báo hai biến trùng tên trong cùng một khối lệnh (block)? Lấy ví dụ là chương trình có hàm main() với nội dung sau:
+int  arg1;
+	arg1 = -1;
+	int x, y, z;
+	char myDouble = ’5 ’;
+	char arg1 = ’A ’;
+	cout << arg1 << "\n";
+	return 0;
+
+
+Gợi ý: Hãy thử dịch xem trình biên dịch báo lỗi gì.
+
+
+9.	Cùng câu hỏi trên với đoạn code sau:
+int arg1;
+	arg1 = -1;
+	{
+	  char arg1 = ’A’; 
+	  cout << arg1 << "\n"; 
+	} 
+	return 0; 
+
+Khi ở bên trong khối lệnh con, định danh arg1 chỉ tới biến arg1 nào?
+
+
+10.	Cùng câu hỏi trên với đoạn code sau:
+int arg1;
+	arg1 = -1;
+	{
+	  char arg1 = ’A’; 
+	} 
+	cout << arg1 << "\n"; 
+	return 0; 
+
+
+Khi ra khỏi khối lệnh con, định danh arg1 chỉ tới biến arg1 nào?
+
+
+11.	Chuyển đổi nhiệt độ. Dòng lệnh sau có nhiệm vụ đổi từ độ F (Fahrenheit) sang độ C (Celsius). Lệnh đó có gì sai?
+double C = (F - 32) * (5 / 9);
+5/9 luôn ra 0
+
+12.	Đoạn code sau in ra kết quả gì?
+if (10 > 5); 
+	 else; {           
+	    cout << "Here";
+	 };
+
+Here
+
