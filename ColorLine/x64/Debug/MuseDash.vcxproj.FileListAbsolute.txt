@@ -1,0 +1,2 @@
+D:\C++\ProjectMuseDash\MuseDash\x64\Debug\MuseDash.exe
+D:\C++\ProjectColorLine\ColorLine\x64\Debug\ColorLine.exe
