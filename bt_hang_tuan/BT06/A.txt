@@ -1,0 +1,3 @@
+2. Chạy vô hạn do thiếu điều kiện dừng của đệ quy
+3. Nếu tham số truyền vào = 1 thì chương trình chạy bình thường, tham số != 1 thì chạy vô hạn do Return chính hàm với tham số ban đầu, không dừng được
+4. Tràn bộ nhớ Stack?
