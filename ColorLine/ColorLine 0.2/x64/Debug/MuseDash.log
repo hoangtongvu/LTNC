@@ -1,0 +1,5 @@
+﻿F:\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(513,5): warning MSB8028: The intermediate directory (x64\Debug\) contains files shared from another project (MuseDash.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  Main.cpp
+D:\C++\ColorLine\Main.cpp(261,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+D:\C++\ColorLine\Main.cpp(323,19): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  MuseDash.vcxproj -> D:\C++\ColorLine\x64\Debug\ColorLine.exe
