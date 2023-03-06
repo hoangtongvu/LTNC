@@ -252,7 +252,13 @@ int main(int argc, char* argv[])
 
     
     Button restartButton(0, 0, 70, 70, "RESTART");
+    Button returnMenuButton(70 + 10, 0, 70, 70, "MENU");
 
+    int startButtonW = 140;
+    int startButtonH = 40;
+    int menuButtonSpacing = 30;
+    Button startGameButton((SCREEN_WIDTH - startButtonW) / 2, (SCREEN_HEIGHT - startButtonH) / 2, startButtonW, startButtonH, "START");
+    Button exitGameButton((SCREEN_WIDTH - startButtonW) / 2, (SCREEN_HEIGHT - startButtonH) / 2 + startButtonH + menuButtonSpacing, startButtonW, startButtonH, "EXIT");
 
     
 
@@ -264,9 +270,94 @@ int main(int argc, char* argv[])
     // GAME LOOP _________________________________________________________________
     while (!close)
     {
+
+        //Main Menu Controller
+        while (!gameStarted)
+        {
+
+            //Menu Event Holder
+            SDL_Event menuEvent;
+            while (SDL_PollEvent(&menuEvent))
+            {
+                switch (menuEvent.type)
+                {
+                case SDL_QUIT:
+                {
+                    gameStarted = true;
+                    close = true;
+                    break;
+
+                }
+                case SDL_MOUSEBUTTONDOWN:
+                {
+                    switch (menuEvent.button.button)
+                    {
+                    case SDL_BUTTON_LEFT:
+                    {
+                        isClicked = true;
+                    }
+                    default:
+                        break;
+                    }
+                }
+                case SDL_MOUSEMOTION:
+                {
+                    mouseX = menuEvent.motion.x;
+                    mouseY = menuEvent.motion.y;
+
+                    std::stringstream ss;
+                    ss << "X: " << mouseX << " Y: " << mouseY;
+
+                    SDL_SetWindowTitle(window, ss.str().c_str());
+                    break;
+
+                }
+                default:
+                    break;
+
+                }
+
+            }
+
+
+            // BACKGROUND BLACK
+            SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+            SDL_Rect bgRect = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
+            SDL_RenderFillRect(renderer, &bgRect);
+
+            // Start game Button
+            startGameButton.RenderButton(font);
+            startGameButton.DetectMouseClick();
+            if (startGameButton.isSelected)
+            {
+                gameStarted = true;
+                RestartGame(listColorLine, simpleColorList, colorLineAmount, colorLineAmount, highestLayer);
+                startGameButton.isSelected = false;
+            }
+            
+            // Exit game Button
+            exitGameButton.RenderButton(font);
+            exitGameButton.DetectMouseClick();
+            if (exitGameButton.isSelected)
+            {
+                gameStarted = true;
+                close = true;
+                exitGameButton.isSelected = false;
+            }
+
+
+
+
+            isClicked = false;
+
+            SDL_RenderPresent(renderer);
+            SDL_RenderClear(renderer);
+            SDL_Delay(1000 / fps);
+        }
+
+
+
         srand(time(NULL));
-        
-        
         CountRemainingLine(listColorLine, colorLineAmount, remainingLine);
         if (!stopCounting)
         {
@@ -282,12 +373,6 @@ int main(int argc, char* argv[])
 
 
 
-        
-
-
-
-
-
         int y = 200;
         StringText(font, color, "Remaining Line:", 2, y);
         IntText(font, color, remainingLine, 2, y + fontSize);
@@ -296,17 +381,9 @@ int main(int argc, char* argv[])
         IntText(font, color, (int)(round(timeRemainingCounter)), 2, y + 3 * fontSize);
 
 
-        
-        
-
-
-
-
-
 
         SDL_SetRenderDrawColor(renderer, 100, 100, 100, 255);
         SDL_RenderFillRect(renderer, &gameplayBorder);
-
 
 
         // EVENT HOLDER
@@ -354,13 +431,8 @@ int main(int argc, char* argv[])
 
 
 
-
-
-
-
         for (int i = 0; i < colorLineAmount; i++)
         {
-            //cout << listColorLine[i].r << " ";
             if (listColorLine[i].isEnabled)
             {
                 listColorLine[i].RenderLine();
@@ -370,7 +442,6 @@ int main(int argc, char* argv[])
         }
 
 
-
         WinLoseSystem(biggerFont);
         restartButton.RenderButton(font);
         restartButton.DetectMouseClick();
@@ -378,6 +449,15 @@ int main(int argc, char* argv[])
         {
             RestartGame(listColorLine, simpleColorList, colorLineAmount, colorLineAmount, highestLayer);
             restartButton.isSelected = false;
+        }
+        
+        
+        returnMenuButton.RenderButton(font);
+        returnMenuButton.DetectMouseClick();
+        if (returnMenuButton.isSelected)
+        {
+            gameStarted = false;
+            returnMenuButton.isSelected = false;
         }
 
 

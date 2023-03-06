@@ -30,6 +30,8 @@ bool stopCounting = false;
 
 int level = 0;
 
+bool gameStarted = false;
+
 
 
 #pragma region Blend and Color Texture
