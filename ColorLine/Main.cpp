@@ -46,6 +46,9 @@ void WinGame(TTF_Font* font);
 void LoseGame(TTF_Font* font);
 
 
+void RestartGame(ColorLine oldListColorLine[], int simpleColorList[][3], int& oldAmount, int newAmount, int& highestLayer);
+void InitListColorLine(ColorLine oldListColorLine[], int simpleColorList[][3], int& oldAmount, int newAmount, int& highestLayer);
+
 #pragma endregion
 
 
@@ -104,7 +107,7 @@ void Button::RenderButton(TTF_Font* font)
     SDL_RenderFillRect(renderer, &baseButton);
     int textW, textH;
     GetTextWidthHeight(font, buttonLabel, textW, textH);
-
+    StringText(font, { 0, 0, 0 }, buttonLabel, baseButton.x + (baseButton.w - textW) / 2, baseButton.y + (baseButton.h - textH) / 2);
 }
 
 void Button::DetectMouseClick()
@@ -251,16 +254,25 @@ int main(int argc, char* argv[])
     Button restartButton(0, 0, 70, 70, "RESTART");
 
 
+    
+
+
+
+
+
+
     // GAME LOOP _________________________________________________________________
     while (!close)
     {
         srand(time(NULL));
+        
+        
+        CountRemainingLine(listColorLine, colorLineAmount, remainingLine);
         if (!stopCounting)
         {
             timeRemainingCounter -= deltaTime;
         }
 
-        CountRemainingLine(listColorLine, colorLineAmount, remainingLine);
 
 
         // BACKGROUND BLACK
@@ -341,13 +353,7 @@ int main(int argc, char* argv[])
         }
 
 
-        restartButton.RenderButton(font);
-        restartButton.DetectMouseClick();
-        if (restartButton.isSelected)
-        {
-            LoseGame(font);
-            restartButton.isSelected = false;
-        }
+
 
 
 
@@ -364,11 +370,22 @@ int main(int argc, char* argv[])
         }
 
 
+
+        WinLoseSystem(biggerFont);
+        restartButton.RenderButton(font);
+        restartButton.DetectMouseClick();
+        if (restartButton.isSelected)
+        {
+            RestartGame(listColorLine, simpleColorList, colorLineAmount, colorLineAmount, highestLayer);
+            restartButton.isSelected = false;
+        }
+
+
+
         isClicked = false;
 
         
 
-        WinLoseSystem(biggerFont);
 
         SDL_RenderPresent(renderer);
         SDL_RenderClear(renderer);
@@ -381,7 +398,7 @@ int main(int argc, char* argv[])
     TTF_Quit();
     quitSDL(window, renderer);
 
-
+    
 
 
 //#pragma region MyRegion
@@ -811,4 +828,70 @@ void LoseGame(TTF_Font* font)
 
 }
 #pragma endregion
+
+
+void RestartGame(ColorLine oldListColorLine[], int simpleColorList[][3], int& oldAmount, int newAmount, int& highestLayer)
+{
+    InitListColorLine(oldListColorLine, simpleColorList, oldAmount, newAmount, highestLayer);
+    timeRemainingCounter = maxTimeSecond;
+    stopCounting = false;
+}
+
+
+void InitListColorLine(ColorLine listColorLine[], int simpleColorList[][3], int &amountVariable, int newAmount, int &highestLayer)
+{
+    delete[] listColorLine;
+    listColorLine = new ColorLine[newAmount];
+    srand(time(NULL));
+    for (int i = 0; i < newAmount; i++)
+    {
+        int dir = rand() % 2;
+        int randomColor = rand() % 12;
+        listColorLine[i].SetDir(dir);
+        listColorLine[i].SetBaseColor(simpleColorList[randomColor][0], simpleColorList[randomColor][1], simpleColorList[randomColor][2], 1);
+    }
+
+
+    listColorLine[0].layer = 0;
+    int layerCount = 1;
+    for (int i = 1; i < newAmount; i++)
+    {
+        if (listColorLine[i].dir == listColorLine[i].dir)
+        {
+            if (listColorLine[i].dir == 1 &&
+                (listColorLine[i].baseBorder.x + listColorLine[i].baseBorder.w <= listColorLine[i - 1].baseBorder.x ||
+                    listColorLine[i - 1].baseBorder.x + listColorLine[i - 1].baseBorder.w <= listColorLine[i].baseBorder.x))//vertical
+            {
+                listColorLine[i].layer = listColorLine[i - 1].layer;
+            }
+            else if (listColorLine[i].dir == 0 &&
+                (listColorLine[i].baseBorder.y + listColorLine[i].baseBorder.h <= listColorLine[i - 1].baseBorder.y ||
+                    listColorLine[i - 1].baseBorder.y + listColorLine[i - 1].baseBorder.h <= listColorLine[i].baseBorder.y))//horizontal
+            {
+                listColorLine[i].layer = listColorLine[i - 1].layer;
+            }
+            else
+            {
+                listColorLine[i].layer = layerCount;
+                layerCount++;
+            }
+
+
+        }
+        else
+        {
+            listColorLine[i].layer = layerCount;
+            layerCount++;
+        }
+    }
+
+
+    highestLayer = layerCount - 1;
+    amountVariable = newAmount;
+
+}
+
+
+
+
 

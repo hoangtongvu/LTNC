@@ -20,12 +20,38 @@ int mouseY = 0;
 
 bool isClicked = false;
 
-int colorLineAmount = 10;
+int colorLineAmount = 50;
 int highestLayer = 0;
 int remainingLine = 0;
 
-int maxTimeSecond = 5;
+int maxTimeSecond = 40;
 double timeRemainingCounter = maxTimeSecond;
 bool stopCounting = false;
 
 int level = 0;
+
+
+
+#pragma region Blend and Color Texture
+
+//SDL_Surface* playerSurface;
+//playerSurface = IMG_Load("whitePixel.png");
+//SDL_Texture* tex = SDL_CreateTextureFromSurface(renderer, playerSurface);
+//SDL_FreeSurface(playerSurface);
+//SDL_Rect dest;
+//dest.w = 200;
+//dest.h = 200;
+//dest.x = 0;
+//dest.y = 0;
+//
+//
+//SDL_SetTextureBlendMode(tex, SDL_BLENDMODE_BLEND);//This sets the texture in blendmode
+//
+//SDL_SetTextureColorMod(tex, 125, 255, 0);
+//SDL_SetTextureAlphaMod(tex, 150); //sets the alpha into the texture
+//
+//SDL_RenderCopy(renderer, tex, NULL, &dest); //Redraws the image with a fresh, new alpha ~
+
+
+#pragma endregion
+
