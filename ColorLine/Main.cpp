@@ -47,7 +47,7 @@ void LoseGame(TTF_Font* font);
 
 
 void RestartGame(ColorLine oldListColorLine[], int simpleColorList[][3], int& oldAmount, int newAmount, int& highestLayer);
-void InitListColorLine(ColorLine oldListColorLine[], int simpleColorList[][3], int& oldAmount, int newAmount, int& highestLayer);
+void InitListColorLine(ColorLine listColorLine[], int simpleColorList[][3], int& amountVariable, int newAmount, int& highestLayer);
 
 #pragma endregion
 
@@ -84,38 +84,78 @@ public:
     SDL_Rect baseButton;
     string buttonLabel;
     bool isSelected;
+    string buttonSpritePath;
 
 
-    Button(int x, int y, int w, int h, string label)
+    Button(int x, int y, int w, int h, string label, string spritePath)
     {
         baseButton = { x, y, w, h };
         buttonLabel = label;
+        buttonSpritePath = spritePath; 
         isSelected = false;
+        isPointed = false;
     }
     void RenderButton(TTF_Font* font);
     void DetectMouseClick();
     ~Button();
 
 private:
-
+    bool isPointed;
 };
 
 
 void Button::RenderButton(TTF_Font* font)
 {
-    SDL_SetRenderDrawColor(renderer, 150, 150, 150, 255);
-    SDL_RenderFillRect(renderer, &baseButton);
-    int textW, textH;
-    GetTextWidthHeight(font, buttonLabel, textW, textH);
-    StringText(font, { 0, 0, 0 }, buttonLabel, baseButton.x + (baseButton.w - textW) / 2, baseButton.y + (baseButton.h - textH) / 2);
+
+    if (!buttonSpritePath.empty())
+    {
+        SDL_Surface* buttonSurface;
+        buttonSurface = IMG_Load((spriteDir + buttonSpritePath).c_str());
+        SDL_Texture* buttonTex = SDL_CreateTextureFromSurface(renderer, buttonSurface);
+
+        int r, g, b;
+        if (isPointed)
+        {
+            r = 255;
+            g = 255;
+            b = 255;
+        }
+        else
+        {
+            r = 220;
+            g = 220;
+            b = 220;
+        }
+        SDL_SetTextureColorMod(buttonTex, r, g, b);
+        isPointed = false;
+
+
+        SDL_FreeSurface(buttonSurface);
+        SDL_RenderCopy(renderer, buttonTex, NULL, &baseButton);
+    }
+    else
+    {
+        SDL_SetRenderDrawColor(renderer, 150, 150, 150, 255);
+        SDL_RenderFillRect(renderer, &baseButton);
+
+    }
+
+    if (!buttonLabel.empty())
+    {
+        int textW, textH;
+        GetTextWidthHeight(font, buttonLabel, textW, textH);
+        StringText(font, { 0, 0, 0 }, buttonLabel, baseButton.x + (baseButton.w - textW) / 2, baseButton.y + (baseButton.h - textH) / 2);
+
+    }
 }
 
 void Button::DetectMouseClick()
 {
-    if (isClicked)
+    if (mouseX >= baseButton.x && mouseY >= baseButton.y &&
+        mouseX <= baseButton.x + baseButton.w && mouseY <= baseButton.y + baseButton.h)
     {
-        if (mouseX >= baseButton.x && mouseY >= baseButton.y &&
-            mouseX <= baseButton.x + baseButton.w && mouseY <= baseButton.y + baseButton.h)
+        isPointed = true;
+        if (isClicked)
         {
             isSelected = true;
         }
@@ -138,7 +178,7 @@ int main(int argc, char* argv[])
     TTF_Font* font;
     TTF_Font* biggerFont;
 
-    int fontSize = 17;
+    int fontSize = 20;
     font = TTF_OpenFont("Minecraft.ttf", fontSize);
     biggerFont = TTF_OpenFont("Minecraft.ttf", fontSize * 3);
     if (!font) {
@@ -146,7 +186,7 @@ int main(int argc, char* argv[])
     }
 
     // Set color to white
-    SDL_Color color = { 255, 255, 255 };
+    SDL_Color color = { 0, 0, 0 };
 
 
 
@@ -186,7 +226,7 @@ int main(int argc, char* argv[])
         {189, 122, 256}
     };
 
-    bool close = false;
+    
 
     // INITIALIZE COLOR LINE
     ColorLine *listColorLine = new ColorLine[colorLineAmount];
@@ -244,29 +284,46 @@ int main(int argc, char* argv[])
     highestLayer = layerCount - 1;
     
 
-    SDL_Rect gameplayBorder;
-    gameplayBorder.x = gameplayScreen_X;
-    gameplayBorder.y = gameplayScreen_Y;
-    gameplayBorder.w = gameplayScreen_Width;
-    gameplayBorder.h = gameplayScreen_Height;
-
     
-    Button restartButton(0, 0, 70, 70, "RESTART");
-    Button returnMenuButton(70 + 10, 0, 70, 70, "MENU");
+    Button restartButton(14, 14, 52, 52, "", "RestartButton.png");
+    Button returnMenuButton(78, 14, 52, 52, "", "HomeButton.png");
 
     int startButtonW = 140;
     int startButtonH = 40;
     int menuButtonSpacing = 30;
-    Button startGameButton((SCREEN_WIDTH - startButtonW) / 2, (SCREEN_HEIGHT - startButtonH) / 2, startButtonW, startButtonH, "START");
-    Button exitGameButton((SCREEN_WIDTH - startButtonW) / 2, (SCREEN_HEIGHT - startButtonH) / 2 + startButtonH + menuButtonSpacing, startButtonW, startButtonH, "EXIT");
+    Button startGameButton((SCREEN_WIDTH - startButtonW) / 2, (SCREEN_HEIGHT - startButtonH) / 2, startButtonW, startButtonH, "START", "");
+    Button exitGameButton((SCREEN_WIDTH - startButtonW) / 2, (SCREEN_HEIGHT - startButtonH) / 2 + startButtonH + menuButtonSpacing, startButtonW, startButtonH, "EXIT", "");
 
     
+    SDL_Surface* gameplayBgSurface;
+    gameplayBgSurface = IMG_Load( (spriteDir + "ColorLine Game UI.png").c_str());
+    SDL_Texture* gameplayBgTex = SDL_CreateTextureFromSurface(renderer, gameplayBgSurface);
+    SDL_FreeSurface(gameplayBgSurface);
+    SDL_Rect dest;
+    dest.w = SCREEN_WIDTH;
+    dest.h = SCREEN_HEIGHT;
+    dest.x = 0;
+    dest.y = 0;
+    
+    
+    SDL_Surface* gameplayClockSurface;
+    gameplayClockSurface = IMG_Load( (spriteDir + "Clock_Orange.png").c_str());
+    SDL_Texture* gameplayClockTex = SDL_CreateTextureFromSurface(renderer, gameplayClockSurface);
+    SDL_Rect clockDest;
+    clockDest.w = gameplayClockSurface->w;
+    clockDest.h = gameplayClockSurface->h;
+    clockDest.x = 20;
+    clockDest.y = 500;
+    SDL_FreeSurface(gameplayClockSurface);
 
 
 
 
 
 
+
+
+    bool close = false;
     // GAME LOOP _________________________________________________________________
     while (!close)
     {
@@ -367,10 +424,14 @@ int main(int argc, char* argv[])
 
 
         // BACKGROUND BLACK
-        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+        /*SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
         SDL_Rect bgRect = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
-        SDL_RenderFillRect(renderer, &bgRect);
+        SDL_RenderFillRect(renderer, &bgRect);*/
 
+        SDL_RenderCopy(renderer, gameplayBgTex, NULL, &dest);
+
+
+        
 
 
         int y = 200;
@@ -382,8 +443,7 @@ int main(int argc, char* argv[])
 
 
 
-        SDL_SetRenderDrawColor(renderer, 100, 100, 100, 255);
-        SDL_RenderFillRect(renderer, &gameplayBorder);
+        
 
 
         // EVENT HOLDER
@@ -465,6 +525,7 @@ int main(int argc, char* argv[])
         isClicked = false;
 
         
+        SDL_RenderCopy(renderer, gameplayClockTex, NULL, &clockDest);
 
 
         SDL_RenderPresent(renderer);
@@ -682,11 +743,11 @@ void waitUntilKeyPressed()
 
 ColorLine::ColorLine()
 {
-    borderThickness = 4;
+    borderThickness = 3;
 
 
-    baseBorder.x = 0;
-    baseBorder.y = 0;
+    baseBorder.x = 3;
+    baseBorder.y = 3;
     baseBorder.w = gameplayScreen_Width;
     baseBorder.h = 40;
 
@@ -715,11 +776,11 @@ void ColorLine::SetDir(int dirParameter)
         baseBorder.w = baseBorder.h;
         baseBorder.h = gameplayScreen_Height;
         baseBorder.x += gameplayScreen_X + rand() % (gameplayScreen_Width - baseBorder.w - baseBorder.x * 2 + 1);
-        baseBorder.y = 0;
+        baseBorder.y = gameplayScreen_Y;
     }
     else
     {
-        baseBorder.y += rand() % (gameplayScreen_Height - baseBorder.h - baseBorder.y * 2 + 1);
+        baseBorder.y += gameplayScreen_Y + rand() % (gameplayScreen_Height - baseBorder.h - baseBorder.y * 2 + 1);
         baseBorder.x = gameplayScreen_X;
     }
     baseLine.x = baseBorder.x + borderThickness;
@@ -738,7 +799,7 @@ void ColorLine::SetBaseColor(int rPar, int gPar, int bPar, int alphaPar)
 
 void ColorLine::RenderLine()
 {
-    SDL_SetRenderDrawColor(renderer, 50, 50, 50, 255);
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_RenderFillRect(renderer, &baseBorder);
 
     SDL_SetRenderDrawColor(renderer, r, g, b, alpha);

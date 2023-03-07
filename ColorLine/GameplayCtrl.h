@@ -9,10 +9,10 @@ const int SCREEN_WIDTH = 1280;
 const int SCREEN_HEIGHT = 720;
 
 
-const int gameplayScreen_X = 150;
-const int gameplayScreen_Y = 0;
-const int gameplayScreen_Width = 1280 - 150;
-const int gameplayScreen_Height = 720;
+const int gameplayScreen_X = 175;
+const int gameplayScreen_Y = 24;
+const int gameplayScreen_Width = 1080;
+const int gameplayScreen_Height = 671;
 
 
 int mouseX = 0;
@@ -20,11 +20,11 @@ int mouseY = 0;
 
 bool isClicked = false;
 
-int colorLineAmount = 50;
+int colorLineAmount = 1000;
 int highestLayer = 0;
 int remainingLine = 0;
 
-int maxTimeSecond = 40;
+int maxTimeSecond = 9999;
 double timeRemainingCounter = maxTimeSecond;
 bool stopCounting = false;
 
@@ -32,7 +32,8 @@ int level = 0;
 
 bool gameStarted = false;
 
-
+string assetDir = "Assets/";
+string spriteDir = assetDir + "Sprites/";
 
 #pragma region Blend and Color Texture
 
