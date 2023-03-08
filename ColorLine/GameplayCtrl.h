@@ -1,39 +1,77 @@
-#pragma once
+﻿#pragma once
+#include "Header.h"
+#include "TextFunc.h"
+#include "ColorLine.h"
+#include "Button.h"
 
 
+//SDL_Renderer* renderer;
+//
+//
+//const int SCREEN_WIDTH = 1280;
+//const int SCREEN_HEIGHT = 720;
+//
+//
+//const int gameplayScreen_X = 175;
+//const int gameplayScreen_Y = 24;
+//const int gameplayScreen_Width = 1080;
+//const int gameplayScreen_Height = 671;
+//
+//
+//int mouseX = 0;
+//int mouseY = 0;
+//
+//bool isClicked = false;
+//
+//int colorLineAmount = 1000;
+//int highestLayer = 0;
+//int remainingLine = 0;
+//
+//int maxTimeSecond = 9999;
+//double timeRemainingCounter = maxTimeSecond;
+//bool stopCounting = false;
+//
+//int level = 0;
+//
+//bool gameStarted = false;
+//
+//string assetDir = "Assets/";
+//string spriteDir = assetDir + "Sprites/";
 
-SDL_Renderer* renderer;
+
+extern SDL_Renderer* renderer;
 
 
-const int SCREEN_WIDTH = 1280;
-const int SCREEN_HEIGHT = 720;
+extern const int SCREEN_WIDTH;
+extern const int SCREEN_HEIGHT;
 
 
-const int gameplayScreen_X = 175;
-const int gameplayScreen_Y = 24;
-const int gameplayScreen_Width = 1080;
-const int gameplayScreen_Height = 671;
+extern const int gameplayScreen_X;
+extern const int gameplayScreen_Y;
+extern const int gameplayScreen_Width;
+extern const int gameplayScreen_Height;
 
 
-int mouseX = 0;
-int mouseY = 0;
+extern int mouseX;
+extern int mouseY;
 
-bool isClicked = false;
+extern bool isClicked;
 
-int colorLineAmount = 1000;
-int highestLayer = 0;
-int remainingLine = 0;
+extern int colorLineAmount;
+extern int highestLayer;
+extern int remainingLine;
 
-int maxTimeSecond = 9999;
-double timeRemainingCounter = maxTimeSecond;
-bool stopCounting = false;
+extern int maxTimeSecond;
+extern double timeRemainingCounter;
+extern bool stopCounting;
 
-int level = 0;
+extern int level;
 
-bool gameStarted = false;
+extern bool gameStarted;
 
-string assetDir = "Assets/";
-string spriteDir = assetDir + "Sprites/";
+extern string assetDir;
+extern string spriteDir;
+extern string fontDir;
 
 #pragma region Blend and Color Texture
 
@@ -57,4 +95,12 @@ string spriteDir = assetDir + "Sprites/";
 
 
 #pragma endregion
+
+
+void WinLoseSystem(TTF_Font* font);
+void WinGame(TTF_Font* font);
+void LoseGame(TTF_Font* font);
+
+
+
 

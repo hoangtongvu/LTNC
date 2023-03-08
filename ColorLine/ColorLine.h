@@ -1,5 +1,6 @@
 #pragma once
-
+#include "Header.h"
+#include "GameplayCtrl.h"
 
 class ColorLine
 {

@@ -1,21 +1,13 @@
-﻿#include <windows.h>
-#include <stdio.h>
-#include <string.h>
-#include <time.h>
-
-#include <sstream>
-
-#include <SDL.h>
-#include <SDL_image.h>
-#include <SDL_ttf.h>
-#include <iostream>
-#include "draw.h"
+﻿#include "Header.h"
 #include "GameplayCtrl.h"
 #include "ColorLine.h"
+#include "Button.h"
+#include "TextFunc.h"
+#include "CustomTexture.h"
 
 
 
-using namespace std;
+
 
 #pragma region FunctionInitialize
 void logSDLError(std::ostream& os, const std::string& msg, bool fatal = false);
@@ -34,17 +26,8 @@ void quitSDL(SDL_Window* window, SDL_Renderer* renderer);
 
 void waitUntilKeyPressed();
 
+
 void CountRemainingLine(ColorLine listColorLine[], int colorLineAmount, int& remainingLine);
-
-void StringAndIntText(TTF_Font* font, SDL_Color color, string s, int num, int x, int y);
-void IntText(TTF_Font* font, SDL_Color color, int num, int x, int y);
-void StringText(TTF_Font* font, SDL_Color color, string s, int x, int y);
-void GetTextWidthHeight(TTF_Font* font, string s, int& w, int& h);
-
-void WinLoseSystem(TTF_Font* font);
-void WinGame(TTF_Font* font);
-void LoseGame(TTF_Font* font);
-
 
 void RestartGame(ColorLine oldListColorLine[], int simpleColorList[][3], int& oldAmount, int newAmount, int& highestLayer);
 void InitListColorLine(ColorLine listColorLine[], int simpleColorList[][3], int& amountVariable, int newAmount, int& highestLayer);
@@ -56,9 +39,7 @@ void InitListColorLine(ColorLine listColorLine[], int simpleColorList[][3], int&
 #pragma region VariableInitialize
 
 SDL_Window* window;
-//SDL_Renderer* renderer;
-//const int SCREEN_WIDTH = 1280;
-//const int SCREEN_HEIGHT = 720;
+
 const string WINDOW_TITLE = "MUSE DASH";
 const int fps = 144;
 
@@ -67,104 +48,9 @@ SDL_Surface* g_background = NULL;
 SDL_Event g_even;
 
 
-//int mouseX = 0;
-//int mouseY = 0;
-//bool isClicked = false;
-
-//int colorLineAmount = 1000;
-//int highestLayer = 0;
-
-
 #pragma endregion
 
 
-class Button
-{
-public:
-    SDL_Rect baseButton;
-    string buttonLabel;
-    bool isSelected;
-    string buttonSpritePath;
-
-
-    Button(int x, int y, int w, int h, string label, string spritePath)
-    {
-        baseButton = { x, y, w, h };
-        buttonLabel = label;
-        buttonSpritePath = spritePath; 
-        isSelected = false;
-        isPointed = false;
-    }
-    void RenderButton(TTF_Font* font);
-    void DetectMouseClick();
-    ~Button();
-
-private:
-    bool isPointed;
-};
-
-
-void Button::RenderButton(TTF_Font* font)
-{
-
-    if (!buttonSpritePath.empty())
-    {
-        SDL_Surface* buttonSurface;
-        buttonSurface = IMG_Load((spriteDir + buttonSpritePath).c_str());
-        SDL_Texture* buttonTex = SDL_CreateTextureFromSurface(renderer, buttonSurface);
-
-        int r, g, b;
-        if (isPointed)
-        {
-            r = 255;
-            g = 255;
-            b = 255;
-        }
-        else
-        {
-            r = 220;
-            g = 220;
-            b = 220;
-        }
-        SDL_SetTextureColorMod(buttonTex, r, g, b);
-        isPointed = false;
-
-
-        SDL_FreeSurface(buttonSurface);
-        SDL_RenderCopy(renderer, buttonTex, NULL, &baseButton);
-    }
-    else
-    {
-        SDL_SetRenderDrawColor(renderer, 150, 150, 150, 255);
-        SDL_RenderFillRect(renderer, &baseButton);
-
-    }
-
-    if (!buttonLabel.empty())
-    {
-        int textW, textH;
-        GetTextWidthHeight(font, buttonLabel, textW, textH);
-        StringText(font, { 0, 0, 0 }, buttonLabel, baseButton.x + (baseButton.w - textW) / 2, baseButton.y + (baseButton.h - textH) / 2);
-
-    }
-}
-
-void Button::DetectMouseClick()
-{
-    if (mouseX >= baseButton.x && mouseY >= baseButton.y &&
-        mouseX <= baseButton.x + baseButton.w && mouseY <= baseButton.y + baseButton.h)
-    {
-        isPointed = true;
-        if (isClicked)
-        {
-            isSelected = true;
-        }
-    }
-}
-
-Button::~Button()
-{
-}
 
 
 
@@ -175,41 +61,14 @@ int main(int argc, char* argv[])
     TTF_Init();
 
 
-    TTF_Font* font;
-    TTF_Font* biggerFont;
-
     int fontSize = 20;
-    font = TTF_OpenFont("Minecraft.ttf", fontSize);
-    biggerFont = TTF_OpenFont("Minecraft.ttf", fontSize * 3);
-    if (!font) {
-        cout << "Failed to load font: " << TTF_GetError() << endl;
-    }
+    TTF_Font* font = TTF_OpenFont((fontDir + "Minecraft.ttf").c_str(), fontSize);
+    TTF_Font* biggerFont = TTF_OpenFont((fontDir + "Minecraft.ttf").c_str(), fontSize * 3);
 
-    // Set color to white
+    // Set font color to black
     SDL_Color color = { 0, 0, 0 };
 
 
-
-#pragma region MyRegion
-
-    //SDL_Texture* background_0 = LoadTexture("background_0.png", renderer);
-    //SDL_Rect background_0_Rect;
-    //SDL_QueryTexture(background_0, NULL, NULL, &background_0_Rect.w, &background_0_Rect.h);
-    //background_0_Rect.x = 100;
-    //background_0_Rect.y = 100;
-    //background_0_Rect.w = background_0_Rect.w;
-    //background_0_Rect.h = background_0_Rect.h;
-    //SDL_RenderCopy(renderer, background_0, NULL, &background_0_Rect);
-
-
-
-    //RenderGame();
-
-    //SDL_RenderClear(renderer);
-#pragma endregion
-
-
-    
     // COLOR LIST
     int simpleColorList[12][3] = {
         {178, 51, 53},
@@ -226,63 +85,13 @@ int main(int argc, char* argv[])
         {189, 122, 256}
     };
 
-    
 
     // INITIALIZE COLOR LINE
     ColorLine *listColorLine = new ColorLine[colorLineAmount];
 
-    srand(time(NULL));
-    for (int i = 0; i < colorLineAmount; i++)
-    {
-        int dir = rand() % 2;
-        int randomColor = rand() % 12;
-        listColorLine[i].SetDir(dir);
-        listColorLine[i].SetBaseColor(simpleColorList[randomColor][0], simpleColorList[randomColor][1], simpleColorList[randomColor][2], 1);
-    }
 
+    InitListColorLine(listColorLine, simpleColorList, colorLineAmount, colorLineAmount, highestLayer);
 
-    listColorLine[0].layer = 0;
-    int layerCount = 1;
-    for (int i = 1; i < colorLineAmount; i++)
-    {
-        //cout << layerCount << endl;
-        
-
-        if (listColorLine[i].dir == listColorLine[i].dir)
-        {
-            if (listColorLine[i].dir == 1 &&
-               ( listColorLine[i].baseBorder.x + listColorLine[i].baseBorder.w <= listColorLine[i - 1].baseBorder.x ||
-                 listColorLine[i - 1].baseBorder.x + listColorLine[i - 1].baseBorder.w <= listColorLine[i].baseBorder.x ) )//vertical
-            {
-                listColorLine[i].layer = listColorLine[i - 1].layer;
-            }
-            else if (listColorLine[i].dir == 0 &&
-               ( listColorLine[i].baseBorder.y + listColorLine[i].baseBorder.h <= listColorLine[i - 1].baseBorder.y ||
-                 listColorLine[i - 1].baseBorder.y + listColorLine[i - 1].baseBorder.h <= listColorLine[i].baseBorder.y ) )//horizontal
-            {
-                listColorLine[i].layer = listColorLine[i - 1].layer;
-            }
-            else
-            {
-                listColorLine[i].layer = layerCount;
-                layerCount++;
-            }
-
-
-        }
-        else
-        {
-            listColorLine[i].layer = layerCount;
-            layerCount++;
-        }
-
-        
-        //listColorLine[i].SetId(i);
-
-    }
-
-    highestLayer = layerCount - 1;
-    
 
     
     Button restartButton(14, 14, 52, 52, "", "RestartButton.png");
@@ -294,32 +103,10 @@ int main(int argc, char* argv[])
     Button startGameButton((SCREEN_WIDTH - startButtonW) / 2, (SCREEN_HEIGHT - startButtonH) / 2, startButtonW, startButtonH, "START", "");
     Button exitGameButton((SCREEN_WIDTH - startButtonW) / 2, (SCREEN_HEIGHT - startButtonH) / 2 + startButtonH + menuButtonSpacing, startButtonW, startButtonH, "EXIT", "");
 
-    
-    SDL_Surface* gameplayBgSurface;
-    gameplayBgSurface = IMG_Load( (spriteDir + "ColorLine Game UI.png").c_str());
-    SDL_Texture* gameplayBgTex = SDL_CreateTextureFromSurface(renderer, gameplayBgSurface);
-    SDL_FreeSurface(gameplayBgSurface);
-    SDL_Rect dest;
-    dest.w = SCREEN_WIDTH;
-    dest.h = SCREEN_HEIGHT;
-    dest.x = 0;
-    dest.y = 0;
-    
-    
-    SDL_Surface* gameplayClockSurface;
-    gameplayClockSurface = IMG_Load( (spriteDir + "Clock_Orange.png").c_str());
-    SDL_Texture* gameplayClockTex = SDL_CreateTextureFromSurface(renderer, gameplayClockSurface);
-    SDL_Rect clockDest;
-    clockDest.w = gameplayClockSurface->w;
-    clockDest.h = gameplayClockSurface->h;
-    clockDest.x = 20;
-    clockDest.y = 500;
-    SDL_FreeSurface(gameplayClockSurface);
+     
 
-
-
-
-
+    CustomTexture gameplayBgTexture("ColorLine Game UI.png", 0, 0);
+    CustomTexture mainMenuTexture("menuBg.png", 0, 0);
 
 
 
@@ -377,10 +164,9 @@ int main(int argc, char* argv[])
             }
 
 
-            // BACKGROUND BLACK
-            SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-            SDL_Rect bgRect = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
-            SDL_RenderFillRect(renderer, &bgRect);
+            mainMenuTexture.RenderTexture();
+
+
 
             // Start game Button
             startGameButton.RenderButton(font);
@@ -411,10 +197,15 @@ int main(int argc, char* argv[])
             SDL_RenderClear(renderer);
             SDL_Delay(1000 / fps);
         }
-
+        if (close)
+        {
+            break;
+        }
 
 
         srand(time(NULL));
+
+        //Count RemainingTime
         CountRemainingLine(listColorLine, colorLineAmount, remainingLine);
         if (!stopCounting)
         {
@@ -423,17 +214,10 @@ int main(int argc, char* argv[])
 
 
 
-        // BACKGROUND BLACK
-        /*SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-        SDL_Rect bgRect = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
-        SDL_RenderFillRect(renderer, &bgRect);*/
+        //Gameplay Background
+        gameplayBgTexture.RenderTexture();
 
-        SDL_RenderCopy(renderer, gameplayBgTex, NULL, &dest);
-
-
-        
-
-
+        //Gameplay TextLine
         int y = 200;
         StringText(font, color, "Remaining Line:", 2, y);
         IntText(font, color, remainingLine, 2, y + fontSize);
@@ -442,8 +226,6 @@ int main(int argc, char* argv[])
         IntText(font, color, (int)(round(timeRemainingCounter)), 2, y + 3 * fontSize);
 
 
-
-        
 
 
         // EVENT HOLDER
@@ -490,7 +272,7 @@ int main(int argc, char* argv[])
         }
 
 
-
+        //Render and DetectMouseClick ColorLines
         for (int i = 0; i < colorLineAmount; i++)
         {
             if (listColorLine[i].isEnabled)
@@ -502,7 +284,11 @@ int main(int argc, char* argv[])
         }
 
 
+
+
         WinLoseSystem(biggerFont);
+
+        //Restart Button
         restartButton.RenderButton(font);
         restartButton.DetectMouseClick();
         if (restartButton.isSelected)
@@ -511,7 +297,7 @@ int main(int argc, char* argv[])
             restartButton.isSelected = false;
         }
         
-        
+        //ReturnMenu Button
         returnMenuButton.RenderButton(font);
         returnMenuButton.DetectMouseClick();
         if (returnMenuButton.isSelected)
@@ -521,11 +307,11 @@ int main(int argc, char* argv[])
         }
 
 
-
+        //Reset mouseClick
         isClicked = false;
 
         
-        SDL_RenderCopy(renderer, gameplayClockTex, NULL, &clockDest);
+
 
 
         SDL_RenderPresent(renderer);
@@ -694,7 +480,6 @@ int main(int argc, char* argv[])
 
 
 
-
 void initSDL(SDL_Window*& window, SDL_Renderer*& renderer)
 {
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
@@ -738,112 +523,6 @@ void waitUntilKeyPressed()
 
 
 
-#pragma region ColorLine Function
-
-
-ColorLine::ColorLine()
-{
-    borderThickness = 3;
-
-
-    baseBorder.x = 3;
-    baseBorder.y = 3;
-    baseBorder.w = gameplayScreen_Width;
-    baseBorder.h = 40;
-
-    baseLine.x = baseBorder.x + borderThickness;
-    baseLine.y = baseBorder.y + borderThickness;
-    baseLine.w = baseBorder.w - borderThickness * 2;
-    baseLine.h = baseBorder.h - borderThickness * 2;
-
-    r = 0;
-    g = 0;
-    b = 0;
-    alpha = 0;
-
-    layer = 0;
-    dir = 0;//horizontal
-
-    isEnabled = true;
-
-}
-
-void ColorLine::SetDir(int dirParameter)
-{
-    dir = dirParameter;
-    if (dirParameter == 1)//vertical
-    {
-        baseBorder.w = baseBorder.h;
-        baseBorder.h = gameplayScreen_Height;
-        baseBorder.x += gameplayScreen_X + rand() % (gameplayScreen_Width - baseBorder.w - baseBorder.x * 2 + 1);
-        baseBorder.y = gameplayScreen_Y;
-    }
-    else
-    {
-        baseBorder.y += gameplayScreen_Y + rand() % (gameplayScreen_Height - baseBorder.h - baseBorder.y * 2 + 1);
-        baseBorder.x = gameplayScreen_X;
-    }
-    baseLine.x = baseBorder.x + borderThickness;
-    baseLine.y = baseBorder.y + borderThickness;
-    baseLine.w = baseBorder.w - borderThickness * 2;
-    baseLine.h = baseBorder.h - borderThickness * 2;
-}
-
-void ColorLine::SetBaseColor(int rPar, int gPar, int bPar, int alphaPar)
-{
-    r = rPar;
-    g = gPar;
-    b = bPar;
-    alpha = alphaPar;
-}
-
-void ColorLine::RenderLine()
-{
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-    SDL_RenderFillRect(renderer, &baseBorder);
-
-    SDL_SetRenderDrawColor(renderer, r, g, b, alpha);
-    SDL_RenderFillRect(renderer, &baseLine);
-}
-
-void ColorLine::DetectMouseClick(ColorLine listColorLine[])
-{
-    if (isClicked)
-    {
-        if (mouseX >= baseBorder.x && mouseY >= baseBorder.y &&
-            mouseX <= baseBorder.x + baseBorder.w && mouseY <= baseBorder.y + baseBorder.h)
-        {
-            //cout << "Id: " << layer << endl;
-            //cout << "highestId: " << highestLayer << endl;
-
-
-            if (layer == highestLayer)
-            {
-                isEnabled = false;
-
-
-                highestLayer = listColorLine[0].layer;
-                for (int i = 1; i < colorLineAmount; i++)
-                {
-                    if (highestLayer < listColorLine[i].layer && listColorLine[i].isEnabled)
-                    {
-                        highestLayer = listColorLine[i].layer;
-                    }
-                }
-                //cout << "clicked";
-            }
-
-        }
-    }
-}
-
-ColorLine::~ColorLine()
-{
-}
-
-#pragma endregion
-
-
 void CountRemainingLine(ColorLine listColorLine[], int colorLineAmount, int& remainingLine)
 {
     remainingLine = 0;
@@ -857,120 +536,6 @@ void CountRemainingLine(ColorLine listColorLine[], int colorLineAmount, int& rem
 }
 
 
-
-#pragma region Text Manager
-
-void StringAndIntText(TTF_Font* font, SDL_Color color, string s, int num, int x, int y)
-{
-    s += to_string(num);
-    SDL_Surface* text;
-    text = TTF_RenderText_Solid(font, s.c_str(), color);
-    SDL_Texture* text_texture = SDL_CreateTextureFromSurface(renderer, text);
-    SDL_Rect dest;
-    dest.x = x;
-    dest.y = y;
-    dest.w = text->w;
-    dest.h = text->h;
-
-    SDL_RenderCopy(renderer, text_texture, NULL, &dest);
-
-    SDL_DestroyTexture(text_texture);
-    SDL_FreeSurface(text);
-}
-
-
-void IntText(TTF_Font* font, SDL_Color color, int num, int x, int y)
-{
-    string s = to_string(num);
-    SDL_Surface* text;
-    text = TTF_RenderText_Solid(font, s.c_str(), color);
-    SDL_Texture* text_texture = SDL_CreateTextureFromSurface(renderer, text);
-    SDL_Rect dest;
-    dest.x = x;
-    dest.y = y;
-    dest.w = text->w;
-    dest.h = text->h;
-
-    SDL_RenderCopy(renderer, text_texture, NULL, &dest);
-
-    SDL_DestroyTexture(text_texture);
-    SDL_FreeSurface(text);
-}
-
-void StringText(TTF_Font* font, SDL_Color color, string s, int x, int y)
-{
-    SDL_Surface* text;
-    text = TTF_RenderText_Solid(font, s.c_str(), color);
-    SDL_Texture* text_texture = SDL_CreateTextureFromSurface(renderer, text);
-    SDL_Rect dest;
-    dest.x = x;
-    dest.y = y;
-    dest.w = text->w;
-    dest.h = text->h;
-
-    SDL_RenderCopy(renderer, text_texture, NULL, &dest);
-
-    SDL_DestroyTexture(text_texture);
-    SDL_FreeSurface(text);
-}
-
-
-void GetTextWidthHeight(TTF_Font* font, string s, int& w, int& h)
-{
-    SDL_Surface* text;
-    text = TTF_RenderText_Solid(font, s.c_str(), {0, 0, 0});
-    w = text->w;
-    h = text->h;
-    SDL_FreeSurface(text);
-}
-#pragma endregion
-
-
-
-#pragma region WIN LOSE SYSTEM
-
-void WinLoseSystem(TTF_Font* font)
-{
-    if (remainingLine <= 0 && timeRemainingCounter > 0)
-    {
-        WinGame(font);
-        stopCounting = true;
-    }
-    else if (timeRemainingCounter <= 0 && remainingLine > 0)
-    {
-        LoseGame(font);
-        stopCounting = true;
-    }
-
-}
-
-void WinGame(TTF_Font* font)
-{
-    SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
-    SDL_Rect winScreen = {gameplayScreen_X, gameplayScreen_Y, gameplayScreen_Width, gameplayScreen_Height};
-    SDL_RenderFillRect(renderer, &winScreen);
-    string winMessage = "YOU WIN";
-    int textW, textH;
-    GetTextWidthHeight(font, winMessage, textW, textH);
-    StringText(font, { 255, 255, 255 }, winMessage, gameplayScreen_X + (gameplayScreen_Width - textW) / 2, gameplayScreen_Y + (gameplayScreen_Height - textH) / 2);
-
-
-}
-
-void LoseGame(TTF_Font* font)
-{
-    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
-    SDL_Rect loseScreen = { gameplayScreen_X, gameplayScreen_Y, gameplayScreen_Width, gameplayScreen_Height };
-    SDL_RenderFillRect(renderer, &loseScreen);
-    string loseMessage = "YOU LOSE";
-    int textW, textH;
-    GetTextWidthHeight(font, loseMessage, textW, textH);
-    StringText(font, { 255, 255, 255 }, loseMessage, gameplayScreen_X + (gameplayScreen_Width - textW) / 2, gameplayScreen_Y + (gameplayScreen_Height - textH) / 2);
-
-}
-#pragma endregion
-
-
 void RestartGame(ColorLine oldListColorLine[], int simpleColorList[][3], int& oldAmount, int newAmount, int& highestLayer)
 {
     InitListColorLine(oldListColorLine, simpleColorList, oldAmount, newAmount, highestLayer);
@@ -979,7 +544,7 @@ void RestartGame(ColorLine oldListColorLine[], int simpleColorList[][3], int& ol
 }
 
 
-void InitListColorLine(ColorLine listColorLine[], int simpleColorList[][3], int &amountVariable, int newAmount, int &highestLayer)
+void InitListColorLine(ColorLine listColorLine[], int simpleColorList[][3], int& amountVariable, int newAmount, int& highestLayer)
 {
     delete[] listColorLine;
     listColorLine = new ColorLine[newAmount];
@@ -1031,8 +596,6 @@ void InitListColorLine(ColorLine listColorLine[], int simpleColorList[][3], int 
     amountVariable = newAmount;
 
 }
-
-
 
 
 
