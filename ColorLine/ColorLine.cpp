@@ -6,8 +6,8 @@ ColorLine::ColorLine()
     borderThickness = 3;
 
 
-    baseBorder.x = 3;
-    baseBorder.y = 3;
+    baseBorder.x = 6;
+    baseBorder.y = 6;
     baseBorder.w = gameplayScreen_Width;
     baseBorder.h = 40;
 

@@ -1,5 +1,6 @@
 ﻿#pragma once
-#include "Header.h"
+#include "GameManager.h"
+
 #include "TextFunc.h"
 #include "ColorLine.h"
 #include "Button.h"
@@ -40,7 +41,9 @@
 
 
 extern SDL_Renderer* renderer;
+extern SDL_Window* window;
 
+extern const string WINDOW_TITLE;
 
 extern const int SCREEN_WIDTH;
 extern const int SCREEN_HEIGHT;
@@ -65,13 +68,16 @@ extern int maxTimeSecond;
 extern double timeRemainingCounter;
 extern bool stopCounting;
 
+
+extern bool leveledUp;
 extern int level;
 
 extern bool gameStarted;
 
-extern string assetDir;
-extern string spriteDir;
-extern string fontDir;
+
+
+
+
 
 #pragma region Blend and Color Texture
 
@@ -97,10 +103,12 @@ extern string fontDir;
 #pragma endregion
 
 
-void WinLoseSystem(TTF_Font* font);
-void WinGame(TTF_Font* font);
-void LoseGame(TTF_Font* font);
+void WinLoseSystem(TTF_Font* medFont, TTF_Font* smallFont);
+void WinGame(TTF_Font* medFont, TTF_Font* smallFont);
+void LoseGame(TTF_Font* medFont, TTF_Font* smallFont);
 
+
+void ContinueNextLevel(TTF_Font* smallFont);
 
 
 

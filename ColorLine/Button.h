@@ -8,8 +8,8 @@ class Button
 public:
     SDL_Rect baseButton;
     string buttonLabel;
-    bool isSelected;
     string buttonSpritePath;
+    bool isEnabled;
 
 
     Button(int x, int y, int w, int h, string label, string spritePath)
@@ -17,11 +17,11 @@ public:
         baseButton = { x, y, w, h };
         buttonLabel = label;
         buttonSpritePath = spritePath;
-        isSelected = false;
         isPointed = false;
+        isEnabled = true;
     }
     void RenderButton(TTF_Font* font);
-    void DetectMouseClick();
+    bool DetectMouseClick();
     ~Button();
 
 private:

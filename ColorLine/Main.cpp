@@ -4,27 +4,12 @@
 #include "Button.h"
 #include "TextFunc.h"
 #include "CustomTexture.h"
-
+#include "SDL_Func.h"
 
 
 
 
 #pragma region FunctionInitialize
-void logSDLError(std::ostream& os, const std::string& msg, bool fatal = false);
-void logSDLError(std::ostream& os, const std::string& msg, bool fatal)
-{
-    os << msg << " Error: " << SDL_GetError() << std::endl;
-    if (fatal) {
-        SDL_Quit();
-        exit(1);
-    }
-}
-
-void initSDL(SDL_Window*& window, SDL_Renderer*& renderer);
-
-void quitSDL(SDL_Window* window, SDL_Renderer* renderer);
-
-void waitUntilKeyPressed();
 
 
 void CountRemainingLine(ColorLine listColorLine[], int colorLineAmount, int& remainingLine);
@@ -38,9 +23,7 @@ void InitListColorLine(ColorLine listColorLine[], int simpleColorList[][3], int&
 
 #pragma region VariableInitialize
 
-SDL_Window* window;
 
-const string WINDOW_TITLE = "MUSE DASH";
 const int fps = 144;
 
 SDL_Surface* g_screen = NULL;
@@ -56,14 +39,17 @@ SDL_Event g_even;
 
 int main(int argc, char* argv[])
 {
-    float deltaTime = 1 / (float)fps;
     initSDL(window, renderer);
     TTF_Init();
+    
+    
+    float deltaTime = 1 / (float)fps;
+
 
 
     int fontSize = 20;
-    TTF_Font* font = TTF_OpenFont((fontDir + "Minecraft.ttf").c_str(), fontSize);
-    TTF_Font* biggerFont = TTF_OpenFont((fontDir + "Minecraft.ttf").c_str(), fontSize * 3);
+    TTF_Font* pixelFont_Small = TTF_OpenFont((fontDir + "Minecraft.ttf").c_str(), fontSize);
+    TTF_Font* pixelFont_Med = TTF_OpenFont((fontDir + "Minecraft.ttf").c_str(), fontSize * 2);
 
     // Set font color to black
     SDL_Color color = { 0, 0, 0 };
@@ -103,6 +89,7 @@ int main(int argc, char* argv[])
     Button startGameButton((SCREEN_WIDTH - startButtonW) / 2, (SCREEN_HEIGHT - startButtonH) / 2, startButtonW, startButtonH, "START", "");
     Button exitGameButton((SCREEN_WIDTH - startButtonW) / 2, (SCREEN_HEIGHT - startButtonH) / 2 + startButtonH + menuButtonSpacing, startButtonW, startButtonH, "EXIT", "");
 
+    
      
 
     CustomTexture gameplayBgTexture("ColorLine Game UI.png", 0, 0);
@@ -169,23 +156,22 @@ int main(int argc, char* argv[])
 
 
             // Start game Button
-            startGameButton.RenderButton(font);
+            startGameButton.RenderButton(pixelFont_Small);
             startGameButton.DetectMouseClick();
-            if (startGameButton.isSelected)
+            if (startGameButton.DetectMouseClick())
             {
                 gameStarted = true;
                 RestartGame(listColorLine, simpleColorList, colorLineAmount, colorLineAmount, highestLayer);
-                startGameButton.isSelected = false;
+
             }
             
             // Exit game Button
-            exitGameButton.RenderButton(font);
+            exitGameButton.RenderButton(pixelFont_Small);
             exitGameButton.DetectMouseClick();
-            if (exitGameButton.isSelected)
+            if (exitGameButton.DetectMouseClick())
             {
                 gameStarted = true;
                 close = true;
-                exitGameButton.isSelected = false;
             }
 
 
@@ -203,6 +189,8 @@ int main(int argc, char* argv[])
         }
 
 
+
+
         srand(time(NULL));
 
         //Count RemainingTime
@@ -212,18 +200,23 @@ int main(int argc, char* argv[])
             timeRemainingCounter -= deltaTime;
         }
 
-
+        cout << level << endl;
 
         //Gameplay Background
         gameplayBgTexture.RenderTexture();
 
         //Gameplay TextLine
         int y = 200;
-        StringText(font, color, "Remaining Line:", 2, y);
-        IntText(font, color, remainingLine, 2, y + fontSize);
+        StringText(pixelFont_Small, color, "Remaining Line:", 2, y);
+        IntText(pixelFont_Small, color, remainingLine, 2, y + fontSize);
         
-        StringText(font, color, "Time left:", 2, y + 2 * fontSize);
-        IntText(font, color, (int)(round(timeRemainingCounter)), 2, y + 3 * fontSize);
+
+
+
+        int timeLeftText_W, timeLeftText_H;
+        int roundedTimeLeftSecond = (int)(round(timeRemainingCounter));
+        GetTextWidthHeight(pixelFont_Small, to_string(roundedTimeLeftSecond), timeLeftText_W, timeLeftText_H);
+        IntText(pixelFont_Small, {255, 255, 255}, roundedTimeLeftSecond, 21 + (109 - timeLeftText_W) / 2, 427 + (21 - timeLeftText_H) / 2);
 
 
 
@@ -286,24 +279,22 @@ int main(int argc, char* argv[])
 
 
 
-        WinLoseSystem(biggerFont);
+        WinLoseSystem(pixelFont_Med, pixelFont_Small);
 
         //Restart Button
-        restartButton.RenderButton(font);
+        restartButton.RenderButton(pixelFont_Small);
         restartButton.DetectMouseClick();
-        if (restartButton.isSelected)
+        if (restartButton.DetectMouseClick())
         {
             RestartGame(listColorLine, simpleColorList, colorLineAmount, colorLineAmount, highestLayer);
-            restartButton.isSelected = false;
         }
         
         //ReturnMenu Button
-        returnMenuButton.RenderButton(font);
+        returnMenuButton.RenderButton(pixelFont_Small);
         returnMenuButton.DetectMouseClick();
-        if (returnMenuButton.isSelected)
+        if (returnMenuButton.DetectMouseClick())
         {
             gameStarted = false;
-            returnMenuButton.isSelected = false;
         }
 
 
@@ -321,7 +312,8 @@ int main(int argc, char* argv[])
     }
 
     
-    TTF_CloseFont(font);
+    TTF_CloseFont(pixelFont_Small);
+    TTF_CloseFont(pixelFont_Med);
     TTF_Quit();
     quitSDL(window, renderer);
 
@@ -330,38 +322,7 @@ int main(int argc, char* argv[])
 
 //#pragma region MyRegion
 //
-//    // returns zero on success else non-zero
-//    if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
-//        printf("error initializing SDL: %s\n", SDL_GetError());
-//    }
-//    SDL_Window* win = SDL_CreateWindow("MUSE DASH", // creates a window
-//        SDL_WINDOWPOS_CENTERED,
-//        SDL_WINDOWPOS_CENTERED,
-//        1280, 720, 0);
-//
-//    // triggers the program that controls
-//    // your graphics hardware and sets flags
-//    Uint32 render_flags = SDL_RENDERER_ACCELERATED;
-//
-//    // creates a renderer to render our images
-//    SDL_Renderer* rend = SDL_CreateRenderer(win, -1, render_flags);
-//
-//    // creates a surface to load an image into the main memory
-//    SDL_Surface* playerSurface;
-//
-//    // please provide a path for your image
-//    playerSurface = IMG_Load("background_0.png");
-//
-//    // loads image to our graphics hardware memory.
-//    SDL_Texture* tex = SDL_CreateTextureFromSurface(rend, playerSurface);
-//
-//    // clears main-memory
-//    SDL_FreeSurface(playerSurface);
-//
-//    // let us control our image position
-//    // so that we can move it with our keyboard.
-//    SDL_Rect dest;
-//
+//    
 //    SDL_QueryTexture(tex, NULL, NULL, &dest.w, &dest.h);
 //
 //    dest.w /= 6;
@@ -480,45 +441,6 @@ int main(int argc, char* argv[])
 
 
 
-void initSDL(SDL_Window*& window, SDL_Renderer*& renderer)
-{
-    if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
-        logSDLError(std::cout, "SDL_Init", true);
-    if (TTF_Init() < 0) 
-    {
-        cout << "Error initializing SDL_ttf: " << TTF_GetError() << endl;
-    }
-    window = SDL_CreateWindow(WINDOW_TITLE.c_str(), SDL_WINDOWPOS_CENTERED,
-        SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-    //window = SDL_CreateWindow(WINDOW_TITLE.c_str(), SDL_WINDOWPOS_CENTERED,
-    //SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_FULLSCREEN_DESKTOP);
-    if (window == nullptr) logSDLError(std::cout, "CreateWindow", true);
-    //Khi thông thường chạy với môi trường bình thường ở nhà
-    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED |
-        SDL_RENDERER_PRESENTVSYNC);
-    
-    if (renderer == nullptr) logSDLError(std::cout, "CreateRenderer", true);
-    SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
-    SDL_RenderSetLogicalSize(renderer, SCREEN_WIDTH, SCREEN_HEIGHT);
-}
-
-void quitSDL(SDL_Window* window, SDL_Renderer* renderer)
-{
-    SDL_DestroyRenderer(renderer);
-    SDL_DestroyWindow(window);
-    SDL_Quit();
-}
-
-void waitUntilKeyPressed()
-{
-    SDL_Event e;
-    while (true) {
-        if (SDL_WaitEvent(&e) != 0 &&
-            (e.type == SDL_KEYDOWN || e.type == SDL_QUIT))
-            return;
-        SDL_Delay(100);
-    }
-}
 
 
 
