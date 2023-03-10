@@ -1,10 +1,5 @@
-﻿#include "Header.h"
-#include "GameplayCtrl.h"
-#include "ColorLine.h"
-#include "Button.h"
-#include "TextFunc.h"
-#include "CustomTexture.h"
-#include "SDL_Func.h"
+﻿#include "GameplayCtrl.h"
+
 
 
 
@@ -46,10 +41,10 @@ int main(int argc, char* argv[])
     float deltaTime = 1 / (float)fps;
 
 
-
     int fontSize = 20;
     TTF_Font* pixelFont_Small = TTF_OpenFont((fontDir + "Minecraft.ttf").c_str(), fontSize);
     TTF_Font* pixelFont_Med = TTF_OpenFont((fontDir + "Minecraft.ttf").c_str(), fontSize * 2);
+
 
     // Set font color to black
     SDL_Color color = { 0, 0, 0 };
@@ -90,10 +85,16 @@ int main(int argc, char* argv[])
     Button exitGameButton((SCREEN_WIDTH - startButtonW) / 2, (SCREEN_HEIGHT - startButtonH) / 2 + startButtonH + menuButtonSpacing, startButtonW, startButtonH, "EXIT", "");
 
     
-     
 
     CustomTexture gameplayBgTexture("ColorLine Game UI.png", 0, 0);
     CustomTexture mainMenuTexture("menuBg.png", 0, 0);
+
+
+    for (int i = 0; i < 10; i++)
+    {
+        ColorLine tempLine;
+        listColorLine_1.push_back(tempLine);
+    }
 
 
 

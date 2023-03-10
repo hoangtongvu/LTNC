@@ -12,7 +12,7 @@ void Button::RenderButton(TTF_Font* font)
             SDL_Texture* buttonTex = SDL_CreateTextureFromSurface(renderer, buttonSurface);
 
             int r, g, b;
-            if (isPointed)
+            if (isPointed())
             {
                 r = 255;
                 g = 255;
@@ -25,7 +25,6 @@ void Button::RenderButton(TTF_Font* font)
                 b = 220;
             }
             SDL_SetTextureColorMod(buttonTex, r, g, b);
-            isPointed = false;
 
 
             SDL_FreeSurface(buttonSurface);
@@ -60,7 +59,6 @@ bool Button::DetectMouseClick()
     if (mouseX >= baseButton.x && mouseY >= baseButton.y &&
         mouseX <= baseButton.x + baseButton.w && mouseY <= baseButton.y + baseButton.h)
     {
-        isPointed = true;
         if (isClicked)
         {
             buttonClicked = true;
@@ -69,6 +67,22 @@ bool Button::DetectMouseClick()
     return buttonClicked;
 }
 
+
+bool Button::isPointed()
+{
+    if (!isEnabled)
+    {
+        return false;
+    }
+    bool pointedByMouse = false;
+    if (mouseX >= baseButton.x && mouseY >= baseButton.y &&
+        mouseX <= baseButton.x + baseButton.w && mouseY <= baseButton.y + baseButton.h)
+    {
+        pointedByMouse = true;
+        
+    }
+    return pointedByMouse;
+}
 
 
 Button::~Button()

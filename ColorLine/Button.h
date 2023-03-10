@@ -17,13 +17,13 @@ public:
         baseButton = { x, y, w, h };
         buttonLabel = label;
         buttonSpritePath = spritePath;
-        isPointed = false;
         isEnabled = true;
     }
     void RenderButton(TTF_Font* font);
     bool DetectMouseClick();
+    bool isPointed();
     ~Button();
 
 private:
-    bool isPointed;
+
 };
