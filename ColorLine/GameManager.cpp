@@ -23,11 +23,11 @@ int mouseY = 0;
 
 bool isClicked = false;
 
-int colorLineAmount = 10;
+int colorLineAmount = 100;
 int highestLayer = 0;
 int remainingLine = 0;
 
-int maxTimeSecond = 15;
+int maxTimeSecond = 1500;
 double timeRemainingCounter = maxTimeSecond;
 bool stopCounting = false;
 
@@ -38,7 +38,6 @@ int level = 0;
 bool gameStarted = false;
 
 
-//vector<ColorLine> listColorLine_1;
 
 
 

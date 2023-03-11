@@ -43,7 +43,7 @@
 
 
 
-extern vector<ColorLine> listColorLine_1;
+extern vector<ColorLine> listColorLine;
 
 
 
@@ -81,6 +81,9 @@ void LoseGame(TTF_Font* medFont, TTF_Font* smallFont);
 
 
 void ContinueNextLevel(TTF_Font* smallFont);
+
+void ResizeListColorLine();
+
 
 
 

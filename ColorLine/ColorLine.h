@@ -31,7 +31,7 @@ public:
 
     void RenderLine();
 
-    void DetectMouseClick(ColorLine listColorLine[]);
+    void DetectMouseClick();
     
   
 

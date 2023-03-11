@@ -68,27 +68,29 @@ void ColorLine::RenderLine()
     SDL_RenderFillRect(renderer, &baseLine);
 }
 
-void ColorLine::DetectMouseClick(ColorLine listColorLine[])
+void ColorLine::DetectMouseClick()
 {
     if (isClicked)
     {
         if (mouseX >= baseBorder.x && mouseY >= baseBorder.y &&
             mouseX <= baseBorder.x + baseBorder.w && mouseY <= baseBorder.y + baseBorder.h)
         {
-
+            //cout << "Highest layer: " << highestLayer << endl;
+            //cout << "this line layer: " << layer << endl;
             if (layer == highestLayer)
             {
                 isEnabled = false;
 
 
-                highestLayer = listColorLine[0].layer;
+
+                /*highestLayer = listColorLine[0].layer;
                 for (int i = 1; i < colorLineAmount; i++)
                 {
                     if (highestLayer < listColorLine[i].layer && listColorLine[i].isEnabled)
                     {
                         highestLayer = listColorLine[i].layer;
                     }
-                }
+                }*/
                 //cout << "clicked";
             }
 

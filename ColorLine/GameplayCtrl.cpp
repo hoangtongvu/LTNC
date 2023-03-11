@@ -3,7 +3,7 @@
 
 
 #pragma region Variable Definition
-vector<ColorLine> listColorLine_1;
+vector<ColorLine> listColorLine;
 
 
 #pragma endregion
@@ -83,68 +83,25 @@ void ContinueNextLevel(TTF_Font* smallFont)
 
 
 
+void ResizeListColorLine()
+{
+    for (int i = 0; i < listColorLine.size(); i++)
+    {
+        if (!listColorLine[i].isEnabled)
+        {
+            cout << "deleted " << i << endl;
+            listColorLine.erase(listColorLine.begin() + i);
+            i--;
+        }
+    }
+    if (!listColorLine.empty())
+    {
+        highestLayer = listColorLine.back().layer;
+
+    }
+}
 
 
-//
-//void InitListColorLine(ColorLine listColorLine[], int simpleColorList[][3], int& amountVariable, int newAmount, int& highestLayer)
-//{
-//    delete[] listColorLine;
-//    listColorLine = new ColorLine[newAmount];
-//    srand(time(NULL));
-//    for (int i = 0; i < newAmount; i++)
-//    {
-//        int dir = rand() % 2;
-//        int randomColor = rand() % 12;
-//        listColorLine[i].SetDir(dir);
-//        listColorLine[i].SetBaseColor(simpleColorList[randomColor][0], simpleColorList[randomColor][1], simpleColorList[randomColor][2], 1);
-//    }
-//
-//
-//    listColorLine[0].layer = 0;
-//    int layerCount = 1;
-//    for (int i = 1; i < newAmount; i++)
-//    {
-//        if (listColorLine[i].dir == listColorLine[i].dir)
-//        {
-//            if (listColorLine[i].dir == 1 &&
-//                (listColorLine[i].baseBorder.x + listColorLine[i].baseBorder.w <= listColorLine[i - 1].baseBorder.x ||
-//                    listColorLine[i - 1].baseBorder.x + listColorLine[i - 1].baseBorder.w <= listColorLine[i].baseBorder.x))//vertical
-//            {
-//                listColorLine[i].layer = listColorLine[i - 1].layer;
-//            }
-//            else if (listColorLine[i].dir == 0 &&
-//                (listColorLine[i].baseBorder.y + listColorLine[i].baseBorder.h <= listColorLine[i - 1].baseBorder.y ||
-//                    listColorLine[i - 1].baseBorder.y + listColorLine[i - 1].baseBorder.h <= listColorLine[i].baseBorder.y))//horizontal
-//            {
-//                listColorLine[i].layer = listColorLine[i - 1].layer;
-//            }
-//            else
-//            {
-//                listColorLine[i].layer = layerCount;
-//                layerCount++;
-//            }
-//
-//
-//        }
-//        else
-//        {
-//            listColorLine[i].layer = layerCount;
-//            layerCount++;
-//        }
-//    }
-//
-//
-//    highestLayer = layerCount - 1;
-//    amountVariable = newAmount;
-//
-//}
-//
-//void RestartGame(ColorLine oldListColorLine[], int simpleColorList[][3], int& oldAmount, int newAmount, int& highestLayer)
-//{
-//    InitListColorLine(oldListColorLine, simpleColorList, oldAmount, newAmount, highestLayer);
-//    timeRemainingCounter = maxTimeSecond;
-//    stopCounting = false;
-//}
 
 
 

@@ -7,10 +7,10 @@
 #pragma region FunctionInitialize
 
 
-void CountRemainingLine(ColorLine listColorLine[], int colorLineAmount, int& remainingLine);
+void CountRemainingLine();
 
-void RestartGame(ColorLine oldListColorLine[], int simpleColorList[][3], int& oldAmount, int newAmount, int& highestLayer);
-void InitListColorLine(ColorLine listColorLine[], int simpleColorList[][3], int& amountVariable, int newAmount, int& highestLayer);
+void RestartGame(int simpleColorList[][3], int newAmount);
+void InitListColorLine(int simpleColorList[][3], int newAmount);
 
 #pragma endregion
 
@@ -68,10 +68,10 @@ int main(int argc, char* argv[])
 
 
     // INITIALIZE COLOR LINE
-    ColorLine *listColorLine = new ColorLine[colorLineAmount];
+    //ColorLine *listColorLine = new ColorLine[colorLineAmount];
 
 
-    InitListColorLine(listColorLine, simpleColorList, colorLineAmount, colorLineAmount, highestLayer);
+    InitListColorLine(simpleColorList, colorLineAmount);
 
 
     
@@ -90,11 +90,7 @@ int main(int argc, char* argv[])
     CustomTexture mainMenuTexture("menuBg.png", 0, 0);
 
 
-    for (int i = 0; i < 10; i++)
-    {
-        ColorLine tempLine;
-        listColorLine_1.push_back(tempLine);
-    }
+
 
 
 
@@ -162,7 +158,7 @@ int main(int argc, char* argv[])
             if (startGameButton.DetectMouseClick())
             {
                 gameStarted = true;
-                RestartGame(listColorLine, simpleColorList, colorLineAmount, colorLineAmount, highestLayer);
+                RestartGame(simpleColorList, colorLineAmount);
 
             }
             
@@ -195,13 +191,13 @@ int main(int argc, char* argv[])
         srand(time(NULL));
 
         //Count RemainingTime
-        CountRemainingLine(listColorLine, colorLineAmount, remainingLine);
+        CountRemainingLine();
         if (!stopCounting)
         {
             timeRemainingCounter -= deltaTime;
         }
 
-        cout << level << endl;
+        //cout << level << endl;
 
         //Gameplay Background
         gameplayBgTexture.RenderTexture();
@@ -267,15 +263,17 @@ int main(int argc, char* argv[])
 
 
         //Render and DetectMouseClick ColorLines
-        for (int i = 0; i < colorLineAmount; i++)
+        for (int i = 0; i < listColorLine.size(); i++)
         {
             if (listColorLine[i].isEnabled)
             {
                 listColorLine[i].RenderLine();
-                listColorLine[i].DetectMouseClick(listColorLine);
+                listColorLine[i].DetectMouseClick();
 
             }
         }
+
+        ResizeListColorLine();
 
 
 
@@ -287,7 +285,7 @@ int main(int argc, char* argv[])
         restartButton.DetectMouseClick();
         if (restartButton.DetectMouseClick())
         {
-            RestartGame(listColorLine, simpleColorList, colorLineAmount, colorLineAmount, highestLayer);
+            RestartGame(simpleColorList, colorLineAmount);
         }
         
         //ReturnMenu Button
@@ -446,43 +444,39 @@ int main(int argc, char* argv[])
 
 
 
-void CountRemainingLine(ColorLine listColorLine[], int colorLineAmount, int& remainingLine)
+void CountRemainingLine()
 {
-    remainingLine = 0;
-    for (int i = 0; i < colorLineAmount; i++)
-    {
-        if (listColorLine[i].isEnabled)
-        {
-            remainingLine++;
-        }
-    }
+    remainingLine = listColorLine.size();  
 }
 
 
-void RestartGame(ColorLine oldListColorLine[], int simpleColorList[][3], int& oldAmount, int newAmount, int& highestLayer)
+void RestartGame(int simpleColorList[][3], int newAmount)
 {
-    InitListColorLine(oldListColorLine, simpleColorList, oldAmount, newAmount, highestLayer);
+    InitListColorLine(simpleColorList, newAmount);
     timeRemainingCounter = maxTimeSecond;
     stopCounting = false;
 }
 
 
-void InitListColorLine(ColorLine listColorLine[], int simpleColorList[][3], int& amountVariable, int newAmount, int& highestLayer)
+void InitListColorLine(int simpleColorList[][3], int newAmount)
 {
-    delete[] listColorLine;
-    listColorLine = new ColorLine[newAmount];
+    listColorLine.clear();
+    colorLineAmount = newAmount;
     srand(time(NULL));
     for (int i = 0; i < newAmount; i++)
     {
         int dir = rand() % 2;
         int randomColor = rand() % 12;
-        listColorLine[i].SetDir(dir);
-        listColorLine[i].SetBaseColor(simpleColorList[randomColor][0], simpleColorList[randomColor][1], simpleColorList[randomColor][2], 1);
+        ColorLine tempColorLine;
+        tempColorLine.SetDir(dir);
+        tempColorLine.SetBaseColor(simpleColorList[randomColor][0], simpleColorList[randomColor][1], simpleColorList[randomColor][2], 1);
+        listColorLine.emplace_back(tempColorLine);
     }
-
+    
 
     listColorLine[0].layer = 0;
     int layerCount = 1;
+
     for (int i = 1; i < newAmount; i++)
     {
         if (listColorLine[i].dir == listColorLine[i].dir)
@@ -516,7 +510,6 @@ void InitListColorLine(ColorLine listColorLine[], int simpleColorList[][3], int&
 
 
     highestLayer = layerCount - 1;
-    amountVariable = newAmount;
 
 }
 
