@@ -23,7 +23,8 @@ int mouseY = 0;
 
 bool isClicked = false;
 
-int colorLineAmount = 100;
+int colorLineAmount = 10;
+int colorLineAmount_Base = 10;
 int highestLayer = 0;
 int remainingLine = 0;
 
@@ -39,7 +40,20 @@ bool gameStarted = false;
 
 
 
-
+int simpleColorList[12][3] = {
+        {178, 51, 53},
+        {255, 116, 53},
+        {255, 203, 53},
+        {255, 249, 53},
+        {0, 117, 58},
+        {22, 221, 53},
+        {0, 82, 165},
+        {0, 121, 231},
+        {0, 169, 252},
+        {104, 30, 126},
+        {125, 60, 181},
+        {189, 122, 256}
+};
 
 
 
@@ -50,4 +64,5 @@ string fontDir = assetDir + "Fonts/";
 
 
 
-
+const int fps = 144;
+float deltaTime = 1 / (float)fps;

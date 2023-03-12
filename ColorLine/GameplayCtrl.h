@@ -86,7 +86,10 @@ void ResizeListColorLine();
 
 
 
+void CountRemainingLine();
 
-//void InitListColorLine(ColorLine listColorLine[], int simpleColorList[][3], int& amountVariable, int newAmount, int& highestLayer);
+void RestartGame(int newAmount);
 
+void InitListColorLine(int newAmount);
 
+void Gameplay_Update(TTF_Font* medFont, TTF_Font* smallFont);
