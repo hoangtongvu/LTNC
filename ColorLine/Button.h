@@ -7,6 +7,7 @@ class Button
 {
 public:
     SDL_Rect baseButton;
+    //Mix_Chunk* onClickSFX;
     string buttonLabel;
     string buttonSpritePath;
     bool isEnabled;
@@ -18,10 +19,14 @@ public:
         buttonLabel = label;
         buttonSpritePath = spritePath;
         isEnabled = true;
+        //onClickSFX = Mix_LoadWAV((sfxDir + "Retro Blop 18.wav").c_str());
     }
     void RenderButton(TTF_Font* font);
     bool DetectMouseClick();
     bool isPointed();
+    void PlayOnClickSFX();
+
+
     ~Button();
 
 private:

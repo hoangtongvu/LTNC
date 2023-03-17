@@ -61,6 +61,7 @@ bool Button::DetectMouseClick()
     {
         if (isClicked)
         {
+            PlayOnClickSFX();
             buttonClicked = true;
         }
     }
@@ -82,6 +83,12 @@ bool Button::isPointed()
         
     }
     return pointedByMouse;
+}
+
+
+void Button::PlayOnClickSFX()
+{
+    //Mix_PlayChannel(-1, onClickSFX, 0);
 }
 
 

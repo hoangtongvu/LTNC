@@ -10,6 +10,7 @@ public:
 #pragma region Variable Initialize
     SDL_Rect baseLine;
     SDL_Rect baseBorder;
+    //Mix_Chunk* onClickSFX;
     int borderThickness;
     int r, g, b, alpha;
     bool isPointed = false;
@@ -33,7 +34,9 @@ public:
 
     void DetectMouseClick();
     
-  
+    void PlayOnClickSFX();
+
+
 
 
 private:

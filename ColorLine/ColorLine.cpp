@@ -26,6 +26,8 @@ ColorLine::ColorLine()
 
     isEnabled = true;
 
+    //onClickSFX = Mix_LoadWAV((sfxDir + "Retro Blop 18.wav").c_str());
+
 }
 
 
@@ -79,6 +81,7 @@ void ColorLine::DetectMouseClick()
             //cout << "this line layer: " << layer << endl;
             if (layer == highestLayer)
             {
+                PlayOnClickSFX();
                 isEnabled = false;
 
 
@@ -98,6 +101,13 @@ void ColorLine::DetectMouseClick()
     }
 }
 
+
+void ColorLine::PlayOnClickSFX()
+{
+   // Mix_PlayChannel(-1, onClickSFX, 0);
+}
+
 ColorLine::~ColorLine()
 {
+    //Mix_FreeChunk(onClickSFX);
 }

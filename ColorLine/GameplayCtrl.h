@@ -88,7 +88,7 @@ void ResizeListColorLine();
 
 void CountRemainingLine();
 
-void RestartGame(int newAmount);
+void RestartGame();
 
 void InitListColorLine(int newAmount);
 

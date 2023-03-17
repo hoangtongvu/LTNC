@@ -23,8 +23,12 @@ void Gameplay_Update(TTF_Font* medFont, TTF_Font* smallFont)
 
     //Gameplay TextLine
     int y = 200;
-    StringText(smallFont, { 0, 0, 0 }, "Remaining Line:", 2, y);
+    StringText(smallFont, { 0, 0, 0 }, "Remaining:", 2, y);
     IntText(smallFont, { 0, 0, 0 }, remainingLine, 2, y + 20);
+    
+    
+    StringText(smallFont, { 0, 0, 0 }, "Level:", 2, y + 50);
+    IntText(smallFont, { 0, 0, 0 }, level, 2, y + 70);
 
 
     int timeLeftText_W, timeLeftText_H;
@@ -60,18 +64,17 @@ void WinLoseSystem(TTF_Font* medFont, TTF_Font* smallFont)
     if (remainingLine <= 0 && timeRemainingCounter > 0)
     {
         WinGame(medFont, smallFont);
-        stopCounting = true;
     }
     else if (timeRemainingCounter <= 0 && remainingLine > 0)
     {
         LoseGame(medFont, smallFont);
-        stopCounting = true;
     }
 
 }
 
 void WinGame(TTF_Font* medFont, TTF_Font* smallFont)
 {
+    stopCounting = true;
     SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
     SDL_Rect winScreen = { gameplayScreen_X, gameplayScreen_Y, gameplayScreen_Width, gameplayScreen_Height };
     SDL_RenderFillRect(renderer, &winScreen);
@@ -93,6 +96,7 @@ void WinGame(TTF_Font* medFont, TTF_Font* smallFont)
 
 void LoseGame(TTF_Font* medFont, TTF_Font* smallFont)
 {
+    stopCounting = true;
     SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
     SDL_Rect loseScreen = { gameplayScreen_X, gameplayScreen_Y, gameplayScreen_Width, gameplayScreen_Height };
     SDL_RenderFillRect(renderer, &loseScreen);
@@ -117,7 +121,7 @@ void ContinueNextLevel(TTF_Font* smallFont)
     {
         nextLevelButton.isEnabled = false;
         leveledUp = false;
-        RestartGame(level * colorLineAmount_Base);
+        RestartGame();
 
     }
 }
@@ -148,9 +152,11 @@ void CountRemainingLine()
 }
 
 
-void RestartGame(int newAmount)
+void RestartGame()
 {
+    long newAmount = (long)round((long)level * level * 0.15 * 12 ) + colorLineAmount_Base; 
     InitListColorLine(newAmount);
+    maxTimeSecond = maxTimeSecond_Base + (int)round(level * level * 0.13 * 12);
     timeRemainingCounter = maxTimeSecond;
     stopCounting = false;
 }
@@ -164,10 +170,24 @@ void InitListColorLine(int newAmount)
     for (int i = 0; i < newAmount; i++)
     {
         int dir = rand() % 2;
+        if (i % 2 == 0)
+        {
+            dir = 0;
+        }
+        else
+        {
+            dir = 1;
+        }
         int randomColor = rand() % 12;
+        int randColorR = rand() % 205 + 30;
+        int randColorG = rand() % 205 + 30;
+        int randColorB = rand() % 205 + 30;
+
+
         ColorLine tempColorLine;
         tempColorLine.SetDir(dir);
-        tempColorLine.SetBaseColor(simpleColorList[randomColor][0], simpleColorList[randomColor][1], simpleColorList[randomColor][2], 1);
+        //tempColorLine.SetBaseColor(simpleColorList[randomColor][0] + randColorRange, simpleColorList[randomColor][1] + randColorRange, simpleColorList[randomColor][2] + randColorRange, 1);
+        tempColorLine.SetBaseColor(randColorR, randColorG, randColorB, 1);
         listColorLine.emplace_back(tempColorLine);
     }
 

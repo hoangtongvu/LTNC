@@ -30,6 +30,7 @@ extern int colorLineAmount_Base;
 extern int highestLayer;
 extern int remainingLine;
 
+extern int maxTimeSecond_Base;
 extern int maxTimeSecond;
 extern double timeRemainingCounter;
 extern bool stopCounting;
@@ -46,6 +47,9 @@ extern string assetDir;
 extern string spriteDir;
 extern string fontDir;
 
+extern string audioDir;
+extern string musicDir;
+extern string sfxDir;
 
 extern int simpleColorList[][3];
 

@@ -19,9 +19,7 @@
 
 
 
-SDL_Surface* g_screen = NULL;
-SDL_Surface* g_background = NULL;
-SDL_Event g_even;
+
 
 
 #pragma endregion
@@ -35,6 +33,7 @@ int main(int argc, char* argv[])
     initSDL(window, renderer);
     TTF_Init();
     
+
     
 
     int fontSize = 20;
@@ -66,6 +65,11 @@ int main(int argc, char* argv[])
     CustomTexture mainMenuTexture("menuBg.png", 0, 0);
 
 
+    
+    Mix_Music* bgMusic = Mix_LoadMUS((musicDir + "Lonesome Traveller.wav").c_str());   
+    Mix_PlayMusic(bgMusic, -1);
+
+    Mix_Chunk* testSFX = Mix_LoadWAV((sfxDir + "Retro Blop 18.wav").c_str());
 
 
 
@@ -101,6 +105,8 @@ int main(int argc, char* argv[])
                     case SDL_BUTTON_LEFT:
                     {
                         isClicked = true;
+                        
+                        break;
                     }
                     default:
                         break;
@@ -136,13 +142,12 @@ int main(int argc, char* argv[])
             if (startGameButton.DetectMouseClick())
             {
                 gameStarted = true;
-                RestartGame(colorLineAmount);
+                RestartGame();
 
             }
             
             // Exit game Button
             exitGameButton.RenderButton(pixelFont_Small);
-            exitGameButton.DetectMouseClick();
             if (exitGameButton.DetectMouseClick())
             {
                 gameStarted = true;
@@ -220,19 +225,17 @@ int main(int argc, char* argv[])
 
         Gameplay_Update(pixelFont_Med, pixelFont_Small);
 
-    
-
+        
         //Restart Button
         restartButton.RenderButton(pixelFont_Small);
-        restartButton.DetectMouseClick();
         if (restartButton.DetectMouseClick())
         {
-            RestartGame(colorLineAmount);
+            RestartGame();
+            
         }
         
         //ReturnMenu Button
         returnMenuButton.RenderButton(pixelFont_Small);
-        returnMenuButton.DetectMouseClick();
         if (returnMenuButton.DetectMouseClick())
         {
             gameStarted = false;

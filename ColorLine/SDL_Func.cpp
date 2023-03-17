@@ -9,6 +9,12 @@ void initSDL(SDL_Window*& window, SDL_Renderer*& renderer)
     {
         cout << "Error initializing SDL_ttf: " << TTF_GetError() << endl;
     }
+
+    if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) == -1)
+    {
+        printf("%s", Mix_GetError());
+    }
+
     window = SDL_CreateWindow(WINDOW_TITLE.c_str(), SDL_WINDOWPOS_CENTERED,
         SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
     //window = SDL_CreateWindow(WINDOW_TITLE.c_str(), SDL_WINDOWPOS_CENTERED,

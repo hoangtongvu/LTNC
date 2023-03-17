@@ -23,12 +23,13 @@ int mouseY = 0;
 
 bool isClicked = false;
 
-int colorLineAmount = 10;
-int colorLineAmount_Base = 10;
+int colorLineAmount_Base = 35;//35
+int colorLineAmount = 50;
 int highestLayer = 0;
 int remainingLine = 0;
 
-int maxTimeSecond = 1500;
+int maxTimeSecond_Base = 35;
+int maxTimeSecond = 35;
 double timeRemainingCounter = maxTimeSecond;
 bool stopCounting = false;
 
@@ -60,6 +61,10 @@ int simpleColorList[12][3] = {
 string assetDir = "Assets/";
 string spriteDir = assetDir + "Sprites/";
 string fontDir = assetDir + "Fonts/";
+
+string audioDir = assetDir + "Audios/";
+string musicDir = audioDir + "Musics/";
+string sfxDir = audioDir + "SFXs/";
 
 
 
