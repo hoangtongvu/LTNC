@@ -4,7 +4,12 @@
 
 #pragma region Variable Definition
 vector<ColorLine> listColorLine;
+vector<ColorLine> queueListFadedColorLine;
 
+
+//TTF_Font* test = TTF_OpenFont((fontDir + "Minecraft.ttf").c_str(), 20);
+
+//GlobalGame globalGame;
 
 #pragma endregion
 
@@ -12,12 +17,10 @@ vector<ColorLine> listColorLine;
 
 void Gameplay_Update(TTF_Font* medFont, TTF_Font* smallFont)
 {
-    //Count RemainingTime
+    //Count Remaining
+    CountTimeLeft();
     CountRemainingLine();
-    if (!stopCounting)
-    {
-        timeRemainingCounter -= deltaTime;
-    }
+
 
 
 
@@ -50,10 +53,23 @@ void Gameplay_Update(TTF_Font* medFont, TTF_Font* smallFont)
         }
     }
 
+    for (int i = 0; i < queueListFadedColorLine.size(); i++)
+    {
+        queueListFadedColorLine[i].RenderLine();
+        queueListFadedColorLine[i].CountFadingTime();
+        if (queueListFadedColorLine[i].fadingTimer >= queueListFadedColorLine[i].fadingTimeLimit)
+        {
+            queueListFadedColorLine.erase(queueListFadedColorLine.begin() + i);
+            i--;
+        }
+    }
+
+
+
     ResizeListColorLine();
 
     WinLoseSystem(medFont, smallFont);
-
+    cout << queueListFadedColorLine.size() << endl;
 }
 
 
@@ -134,6 +150,7 @@ void ResizeListColorLine()
         if (!listColorLine[i].isEnabled)
         {
             //cout << "deleted " << i << endl;
+            queueListFadedColorLine.emplace_back(listColorLine[i]);
             listColorLine.erase(listColorLine.begin() + i);
             i--;
         }
@@ -232,6 +249,12 @@ void InitListColorLine(int newAmount)
 }
 
 
-
+void CountTimeLeft()
+{
+    if (!stopCounting)
+    {
+        timeRemainingCounter -= deltaTime;
+    }
+}
 
 

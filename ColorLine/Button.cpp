@@ -88,7 +88,8 @@ bool Button::isPointed()
 
 void Button::PlayOnClickSFX()
 {
-    //Mix_PlayChannel(-1, onClickSFX, 0);
+    //Mix_PlayChannel(-1, globalGame.onClickButtonSFX, 0);
+    //cout << "adq";
 }
 
 

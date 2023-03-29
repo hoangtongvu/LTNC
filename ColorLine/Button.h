@@ -12,9 +12,13 @@ public:
     string buttonSpritePath;
     bool isEnabled;
 
+    
+
+
 
     Button(int x, int y, int w, int h, string label, string spritePath)
     {
+        
         baseButton = { x, y, w, h };
         buttonLabel = label;
         buttonSpritePath = spritePath;

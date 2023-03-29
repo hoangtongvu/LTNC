@@ -61,24 +61,25 @@ int main(int argc, char* argv[])
 
     
 
-    CustomTexture gameplayBgTexture("ColorLine Game UI.png", 0, 0);
-    CustomTexture mainMenuTexture("menuBg.png", 0, 0);
+    CustomTexture gameplayBgTexture("ColorLine Game UI.png", 0, 0, -1, -1);
+    CustomTexture mainMenuTexture("menuBg.png", 0, 0, -1, -1);
 
 
     
     Mix_Music* bgMusic = Mix_LoadMUS((musicDir + "Lonesome Traveller.wav").c_str());   
-    Mix_PlayMusic(bgMusic, -1);
+    //Mix_PlayMusic(bgMusic, -1);
 
-    Mix_Chunk* testSFX = Mix_LoadWAV((sfxDir + "Retro Blop 18.wav").c_str());
+    //Mix_Chunk* testSFX = Mix_LoadWAV((sfxDir + "Retro Blop 18.wav").c_str());
 
 
+    //Mix_Chunk* onClickButtonSFX = Mix_LoadWAV((sfxDir + "Retro Blop 18.wav").c_str());
 
+    
     bool close = false;
     // GAME LOOP _________________________________________________________________
     while (!close)
     {
         srand(time(NULL));
-
         //Main Menu Controller
         #pragma region MainMenu
 
@@ -138,7 +139,6 @@ int main(int argc, char* argv[])
 
             // Start game Button
             startGameButton.RenderButton(pixelFont_Small);
-            startGameButton.DetectMouseClick();
             if (startGameButton.DetectMouseClick())
             {
                 gameStarted = true;
@@ -176,7 +176,9 @@ int main(int argc, char* argv[])
         //Gameplay Controller
         #pragma region Gameplay
 
-        //Gameplay Background
+
+
+        //Gameplay Background      
         gameplayBgTexture.RenderTexture();
 
 

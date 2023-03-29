@@ -2,6 +2,7 @@
 
 #include "GameManager.h"
 //#include "GameplayCtrl.h"
+#include "CustomTexture.h"
 
 class ColorLine
 {
@@ -13,17 +14,21 @@ public:
     //Mix_Chunk* onClickSFX;
     int borderThickness;
     int r, g, b, alpha;
-    bool isPointed = false;
     int layer;
     int dir;
     bool isEnabled;
+    CustomTexture baseLineTexture;
+    CustomTexture baseBorderTexture;
+
+    float fadingTimeLimit;
+    float fadingTimer;
+    float fadingSpeed;
 
 #pragma endregion
 
 
 
     ColorLine();
-
     ~ColorLine();
 
     void SetDir(int dirParameter);
@@ -36,6 +41,9 @@ public:
     
     void PlayOnClickSFX();
 
+    bool IsPointed();
+
+    void CountFadingTime();
 
 
 

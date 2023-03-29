@@ -1,5 +1,6 @@
 #pragma once
-#include "GameplayCtrl.h"
+//#include "GameplayCtrl.h"
+#include "GameManager.h"
 
 
 class CustomTexture
@@ -10,11 +11,14 @@ public:
 	SDL_Texture* tex;
 
 
-	CustomTexture(string path, int x, int y);
+	CustomTexture(string path, int x, int y, int w, int h);
 	~CustomTexture();
 
-	void LoadTexture();
+	
+	void LoadTexture(int w, int h);
 	void RenderTexture();
+	void Transform(int x, int y, int w, int h);
+	void SetColor(int r, int g, int b, int alpha);
 
 private:
 

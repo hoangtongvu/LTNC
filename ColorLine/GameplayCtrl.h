@@ -47,10 +47,6 @@ extern vector<ColorLine> listColorLine;
 
 
 
-
-
-
-
 #pragma region Blend and Color Texture
 
 //SDL_Surface* playerSurface;
@@ -84,8 +80,6 @@ void ContinueNextLevel(TTF_Font* smallFont);
 
 void ResizeListColorLine();
 
-
-
 void CountRemainingLine();
 
 void RestartGame();
@@ -93,3 +87,5 @@ void RestartGame();
 void InitListColorLine(int newAmount);
 
 void Gameplay_Update(TTF_Font* medFont, TTF_Font* smallFont);
+
+void CountTimeLeft();
