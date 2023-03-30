@@ -22,7 +22,10 @@ public:
 
     float fadingTimeLimit;
     float fadingTimer;
+    float fadingT;
     float fadingSpeed;
+
+    float lightenColorScale;
 
 #pragma endregion
 
@@ -37,13 +40,12 @@ public:
 
     void RenderLine();
 
-    void DetectMouseClick();
-    
-    void PlayOnClickSFX();
+    bool DetectMouseClick();
 
     bool IsPointed();
 
     void CountFadingTime();
+
 
 
 

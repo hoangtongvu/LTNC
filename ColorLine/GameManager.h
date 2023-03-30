@@ -58,6 +58,7 @@ extern int simpleColorList[][3];
 extern const int fps;
 extern float deltaTime;
 
+extern int highestPointedLayer;
 
 
 

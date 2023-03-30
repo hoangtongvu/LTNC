@@ -71,3 +71,6 @@ string sfxDir = audioDir + "SFXs/";
 
 const int fps = 144;
 float deltaTime = 1 / (float)fps;
+
+
+int highestPointedLayer = 0;

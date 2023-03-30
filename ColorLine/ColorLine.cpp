@@ -30,10 +30,10 @@ ColorLine::ColorLine():
  
     fadingTimeLimit = 1;
     fadingTimer = 0;
+    fadingT = 0;
     fadingSpeed = 2.5;
-    //baseLineTexture.Transform(baseLine.x, baseLine.y, baseLine.w, baseLine.h);
-    //baseBorderTexture.Transform(baseBorder.x, baseBorder.y, baseBorder.w, baseBorder.h);
-    //onClickSFX = Mix_LoadWAV((sfxDir + "Retro Blop 18.wav").c_str());
+
+    lightenColorScale = 0.25;
 }
 
 
@@ -72,25 +72,33 @@ void ColorLine::SetBaseColor(int rPar, int gPar, int bPar, int alphaPar)
 
 void ColorLine::RenderLine()
 {
-    int tempAlpha = 200;
-    if (IsPointed())
+
+    int tempAlpha = 150;
+    float darkenBorderColorScale = 0.75;
+    float borderColorScale = 0;
+    float baseLineColorScale = 0;
+    if (IsPointed() && highestPointedLayer == layer)
     {
-        tempAlpha = 255;
+        tempAlpha = 230;
+
+        borderColorScale = lightenColorScale;
+        baseLineColorScale = lightenColorScale;
     }
     tempAlpha *= 1.0 - fadingTimer / fadingTimeLimit;
     //SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     //SDL_RenderFillRect(renderer, &baseBorder);
-    float colorScale = 0.75;
-    baseBorderTexture.SetColor(r * colorScale, g *colorScale, b * colorScale, tempAlpha);
+    
+
+    baseBorderTexture.SetColor(r * darkenBorderColorScale + (255 - r * darkenBorderColorScale) * borderColorScale, g * darkenBorderColorScale + (255 - g * darkenBorderColorScale) * borderColorScale, b * darkenBorderColorScale + (255 - b * darkenBorderColorScale) * borderColorScale, tempAlpha);
     baseBorderTexture.RenderTexture();
 
     //SDL_SetRenderDrawColor(renderer, r, g, b, alpha);
     //SDL_RenderFillRect(renderer, &baseLine);
-    baseLineTexture.SetColor(r, g, b, tempAlpha);
+    baseLineTexture.SetColor(r + (255 - r) * baseLineColorScale, g + (255 - g) * baseLineColorScale, b + (255 - b) * baseLineColorScale, tempAlpha);
     baseLineTexture.RenderTexture();
 }
 
-void ColorLine::DetectMouseClick()
+bool ColorLine::DetectMouseClick()
 {
     if (isClicked)
     {
@@ -99,14 +107,16 @@ void ColorLine::DetectMouseClick()
         {
             //cout << "Highest layer: " << highestLayer << endl;
             //cout << "this line layer: " << layer << endl;
-            if (layer == highestLayer)
+            return true;
+            /*if (layer == highestLayer)
             {
                 PlayOnClickSFX();
                 isEnabled = false;  
-            }
+            }*/
 
         }
     }
+    return false;
 }
 
 bool ColorLine::IsPointed()
@@ -119,19 +129,18 @@ bool ColorLine::IsPointed()
     return false;
 }
 
-
-void ColorLine::PlayOnClickSFX()
+void ColorLine::CountFadingTime()
 {
-   // Mix_PlayChannel(-1, onClickSFX, 0);
+    fadingT += deltaTime;
+    fadingTimer += fadingT * fadingT * fadingSpeed;
 }
+
 
 ColorLine::~ColorLine()
 {
-    //Mix_FreeChunk(onClickSFX);
+   
 }
 
 
-void ColorLine::CountFadingTime()
-{
-    fadingTimer += deltaTime * fadingSpeed;
-}
+
+

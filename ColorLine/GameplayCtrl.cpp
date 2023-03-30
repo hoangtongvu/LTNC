@@ -7,9 +7,10 @@ vector<ColorLine> listColorLine;
 vector<ColorLine> queueListFadedColorLine;
 
 
+
+
 //TTF_Font* test = TTF_OpenFont((fontDir + "Minecraft.ttf").c_str(), 20);
 
-//GlobalGame globalGame;
 
 #pragma endregion
 
@@ -17,6 +18,8 @@ vector<ColorLine> queueListFadedColorLine;
 
 void Gameplay_Update(TTF_Font* medFont, TTF_Font* smallFont)
 {
+    //cout << Mix_GetError() << endl;
+    
     //Count Remaining
     CountTimeLeft();
     CountRemainingLine();
@@ -42,22 +45,41 @@ void Gameplay_Update(TTF_Font* medFont, TTF_Font* smallFont)
 
 
 
+    for (int i = listColorLine.size() - 1; i >= 0; i--)
+    {
+        if (listColorLine[i].IsPointed())
+        {
+            highestPointedLayer = listColorLine[i].layer;
+            break;
+        }
+    }
+
     //Render and DetectMouseClick ColorLines
     for (int i = 0; i < listColorLine.size(); i++)
     {
         if (listColorLine[i].isEnabled)
         {
+            
             listColorLine[i].RenderLine();
-            listColorLine[i].DetectMouseClick();
+            if (listColorLine[i].DetectMouseClick() && listColorLine[i].layer == highestLayer)
+            {
+                listColorLine[i].isEnabled = false;
+                //onClickButtonSFX = Mix_LoadWAV((sfxDir + "Retro Blop 18.wav").c_str());
+                //Mix_PlayChannel(-1, onClickButtonSFX, 0);
+                //Mix_FreeChunk(onClickButtonSFX);
+            }
+            
 
         }
     }
 
+    //Render FadingLine && CountFadingTime
     for (int i = 0; i < queueListFadedColorLine.size(); i++)
     {
         queueListFadedColorLine[i].RenderLine();
         queueListFadedColorLine[i].CountFadingTime();
-        if (queueListFadedColorLine[i].fadingTimer >= queueListFadedColorLine[i].fadingTimeLimit)
+        float timer = queueListFadedColorLine[i].fadingTimer;
+        if (timer >= queueListFadedColorLine[i].fadingTimeLimit)
         {
             queueListFadedColorLine.erase(queueListFadedColorLine.begin() + i);
             i--;
@@ -69,7 +91,7 @@ void Gameplay_Update(TTF_Font* medFont, TTF_Font* smallFont)
     ResizeListColorLine();
 
     WinLoseSystem(medFont, smallFont);
-    cout << queueListFadedColorLine.size() << endl;
+    
 }
 
 
