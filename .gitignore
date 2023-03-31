@@ -119,3 +119,6 @@ ConsoleApplicationTEST/.vs/ConsoleApplicationTEST/v16/Browse.VC.db-wal
 ConsoleApplicationTEST/.vs/ConsoleApplicationTEST/v16/Browse.VC.opendb
 ConsoleApplicationTEST/.vs/ConsoleApplicationTEST/v16/ipch/AutoPCH/ce52e1778774800/1.A.ipch
 ColorLine/x64/Debug/GlobalGame.obj
+ColorLine/x64/Debug/Game.obj
+ColorLine/x64/Debug/ColorLine.tlog/unsuccessfulbuild
+ColorLine/.vs/ColorLine/v16/ipch/AutoPCH/938674345d9c6c03/GAME.ipch
