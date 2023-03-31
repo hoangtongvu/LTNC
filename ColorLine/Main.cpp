@@ -1,5 +1,5 @@
 ﻿#include "GameplayCtrl.h"
-
+#include "Game.h"
 
 
 
@@ -16,7 +16,7 @@
 
 #pragma region VariableInitialize
 
-
+Game game;
 
 
 
@@ -34,16 +34,9 @@ int main(int argc, char* argv[])
     initSDL(window, renderer);
     TTF_Init();
     
-
+    game.LoadComponents();
     
 
-    int fontSize = 20;
-    TTF_Font* pixelFont_Small = TTF_OpenFont((fontDir + "Minecraft.ttf").c_str(), fontSize);
-    TTF_Font* pixelFont_Med = TTF_OpenFont((fontDir + "Minecraft.ttf").c_str(), fontSize * 2);
-
-
-    // Set font color to black
-    SDL_Color color = { 0, 0, 0 };
 
 
     // INITIALIZE COLOR LINE
@@ -54,26 +47,23 @@ int main(int argc, char* argv[])
     Button restartButton(14, 14, 52, 52, "", "RestartButton.png");
     Button returnMenuButton(78, 14, 52, 52, "", "HomeButton.png");
 
-    int startButtonW = 140;
-    int startButtonH = 40;
-    int menuButtonSpacing = 30;
+    int startButtonW = 200;
+    int startButtonH = 60;
+    int menuButtonSpacing = 50;
     Button startGameButton((SCREEN_WIDTH - startButtonW) / 2, (SCREEN_HEIGHT - startButtonH) / 2, startButtonW, startButtonH, "START", "");
     Button exitGameButton((SCREEN_WIDTH - startButtonW) / 2, (SCREEN_HEIGHT - startButtonH) / 2 + startButtonH + menuButtonSpacing, startButtonW, startButtonH, "EXIT", "");
 
     
 
-    CustomTexture gameplayBgTexture("ColorLine Game UI.png", 0, 0, -1, -1);
+    //CustomTexture gameplayBgTexture("ColorLine Game UI.png", 0, 0, -1, -1);
     CustomTexture mainMenuTexture("menuBg.png", 0, 0, -1, -1);
 
 
     
-    Mix_Music* bgMusic = Mix_LoadMUS((musicDir + "Lonesome Traveller.wav").c_str());   
-    //Mix_PlayMusic(bgMusic, -1);
-
-    //Mix_Chunk* testSFX = Mix_LoadWAV((sfxDir + "Retro Blop 18.wav").c_str());
+       
 
 
-    //Mix_Chunk* onClickButtonSFX = Mix_LoadWAV((sfxDir + "Retro Blop 18.wav").c_str());
+
 
     
     bool close = false;
@@ -139,7 +129,7 @@ int main(int argc, char* argv[])
 
 
             // Start game Button
-            startGameButton.RenderButton(pixelFont_Small);
+            startGameButton.RenderButton(pixelFont_Med);
             if (startGameButton.DetectMouseClick())
             {
                 gameStarted = true;
@@ -148,7 +138,7 @@ int main(int argc, char* argv[])
             }
             
             // Exit game Button
-            exitGameButton.RenderButton(pixelFont_Small);
+            exitGameButton.RenderButton(pixelFont_Med);
             if (exitGameButton.DetectMouseClick())
             {
                 gameStarted = true;

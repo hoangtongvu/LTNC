@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Header.h"
+#include "CustomTexture.h"
 
 
 
@@ -60,5 +61,11 @@ extern float deltaTime;
 
 extern int highestPointedLayer;
 
+extern Mix_Music* bgMusic;
+extern Mix_Chunk* onClickButtonSFX;
 
+extern TTF_Font* pixelFont_Small;
+extern TTF_Font* pixelFont_Med;
+
+//extern CustomTexture gameplayBgTexture;
 

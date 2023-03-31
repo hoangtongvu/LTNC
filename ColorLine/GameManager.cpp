@@ -41,22 +41,6 @@ bool gameStarted = false;
 
 
 
-//int simpleColorList[12][3] = {
-//        {178, 51, 53},
-//        {255, 116, 53},
-//        {255, 203, 53},
-//        {255, 249, 53},
-//        {0, 117, 58},
-//        {22, 221, 53},
-//        {0, 82, 165},
-//        {0, 121, 231},
-//        {0, 169, 252},
-//        {104, 30, 126},
-//        {125, 60, 181},
-//        {189, 122, 256}
-//};
-
-
 
 string assetDir = "Assets/";
 string spriteDir = assetDir + "Sprites/";
@@ -74,3 +58,11 @@ float deltaTime = 1 / (float)fps;
 
 
 int highestPointedLayer = 0;
+
+Mix_Music* bgMusic = NULL;
+Mix_Chunk* onClickButtonSFX = NULL;
+
+TTF_Font* pixelFont_Small = NULL;
+TTF_Font* pixelFont_Med = NULL;
+
+//CustomTexture gameplayBgTexture("ColorLine Game UI.png", 0, 0, -1, -1);

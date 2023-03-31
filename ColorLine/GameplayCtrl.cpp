@@ -64,9 +64,9 @@ void Gameplay_Update(TTF_Font* medFont, TTF_Font* smallFont)
             if (listColorLine[i].DetectMouseClick() && listColorLine[i].layer == highestLayer)
             {
                 listColorLine[i].isEnabled = false;
-                //onClickButtonSFX = Mix_LoadWAV((sfxDir + "Retro Blop 18.wav").c_str());
-                //Mix_PlayChannel(-1, onClickButtonSFX, 0);
-                //Mix_FreeChunk(onClickButtonSFX);
+                
+                Mix_PlayChannel(-1, onClickButtonSFX, 0);
+                
             }
             
 

@@ -44,8 +44,14 @@ void CustomTexture::Transform(int x, int y, int w, int h)
 {
     texRect.x = x;
     texRect.y = y;
-    texRect.w = w;
-    texRect.h = h;
+    if (w != -1)
+    {
+        texRect.w = w;
+    }
+    if (h != -1)
+    {
+        texRect.h = h;
+    }
 }
 
 void CustomTexture::SetColor(int r, int g, int b, int alpha)
