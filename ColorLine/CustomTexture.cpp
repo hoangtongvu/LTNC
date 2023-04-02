@@ -1,12 +1,11 @@
 #include "CustomTexture.h"
 
 
-CustomTexture::CustomTexture(string path, int x, int y, int w, int h)
+CustomTexture::CustomTexture(string path, int x, int y)
 {
 	texPath = spriteDir + path;
 	texRect.x = x;
 	texRect.y = y;
-    LoadTexture(w, h);
 }
 
 
@@ -16,7 +15,21 @@ void CustomTexture::LoadTexture(int w, int h)
 {
     SDL_Surface* texSurface;
     texSurface = IMG_Load(texPath.c_str());
+    if (texSurface == NULL)
+    {
+        cout << "ERROR: Can't Load Surface Path: " << texPath << endl;
+        return;
+    }
+
+
     tex = SDL_CreateTextureFromSurface(renderer, texSurface);
+    if (tex == NULL)
+    {
+        cout << "ERROR: Can't Load Texture From Surface: " << texPath << endl;
+        return;
+    }
+
+
 
     if (w == -1)
     {

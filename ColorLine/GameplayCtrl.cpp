@@ -6,18 +6,30 @@
 vector<ColorLine> listColorLine;
 vector<ColorLine> queueListFadedColorLine;
 
+CustomTexture gameplayBgTexture("ColorLine Game UI.png", 0, 0);
 
 
+//Button restartButton(14, 14, 52, 52, "", "RestartButton.png");
 
-//TTF_Font* test = TTF_OpenFont((fontDir + "Minecraft.ttf").c_str(), 20);
 
 
 #pragma endregion
 
 
 
-void Gameplay_Update(TTF_Font* medFont, TTF_Font* smallFont)
+void Gameplay_Update()
 {
+
+    //Gameplay Background      
+    gameplayBgTexture.RenderTexture();
+
+    /*if (!Mix_PlayingMusic())
+    {
+        Mix_PlayMusic(bgMusic, -1);
+        cout << "Playing BG Music" << endl;
+    }*/
+
+    
     //cout << Mix_GetError() << endl;
     
     //Count Remaining
@@ -26,25 +38,22 @@ void Gameplay_Update(TTF_Font* medFont, TTF_Font* smallFont)
 
 
 
-
     //Gameplay TextLine
     int y = 200;
-    StringText(smallFont, { 0, 0, 0 }, "Remaining:", 2, y);
-    IntText(smallFont, { 0, 0, 0 }, remainingLine, 2, y + 20);
+    StringText(pixelFont_Small, { 0, 0, 0 }, "Remaining:", 2, y);
+    IntText(pixelFont_Small, { 0, 0, 0 }, remainingLine, 2, y + 20);
     
-    
-    StringText(smallFont, { 0, 0, 0 }, "Level:", 2, y + 50);
-    IntText(smallFont, { 0, 0, 0 }, level, 2, y + 70);
-
+    StringText(pixelFont_Small, { 0, 0, 0 }, "Level:", 2, y + 50);
+    IntText(pixelFont_Small, { 0, 0, 0 }, level, 2, y + 70);
 
     int timeLeftText_W, timeLeftText_H;
     int roundedTimeLeftSecond = (int)(round(timeRemainingCounter));
-    GetTextWidthHeight(smallFont, to_string(roundedTimeLeftSecond), timeLeftText_W, timeLeftText_H);
-    IntText(smallFont, { 255, 255, 255 }, roundedTimeLeftSecond, 21 + (109 - timeLeftText_W) / 2, 427 + (21 - timeLeftText_H) / 2);
+    GetTextWidthHeight(pixelFont_Small, to_string(roundedTimeLeftSecond), timeLeftText_W, timeLeftText_H);
+    IntText(pixelFont_Small, { 255, 255, 255 }, roundedTimeLeftSecond, 21 + (109 - timeLeftText_W) / 2, 427 + (21 - timeLeftText_H) / 2);
 
 
 
-
+    //Get Highest Pointed Layer
     for (int i = listColorLine.size() - 1; i >= 0; i--)
     {
         if (listColorLine[i].IsPointed())
@@ -86,31 +95,30 @@ void Gameplay_Update(TTF_Font* medFont, TTF_Font* smallFont)
         }
     }
 
-
-
+    
     ResizeListColorLine();
 
-    WinLoseSystem(medFont, smallFont);
+    WinLoseSystem();
     
 }
 
 
 #pragma region WIN LOSE SYSTEM
 
-void WinLoseSystem(TTF_Font* medFont, TTF_Font* smallFont)
+void WinLoseSystem()
 {
     if (remainingLine <= 0 && timeRemainingCounter > 0)
     {
-        WinGame(medFont, smallFont);
+        WinGame();
     }
     else if (timeRemainingCounter <= 0 && remainingLine > 0)
     {
-        LoseGame(medFont, smallFont);
+        LoseGame();
     }
 
 }
 
-void WinGame(TTF_Font* medFont, TTF_Font* smallFont)
+void WinGame()
 {
     stopCounting = true;
     SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
@@ -118,8 +126,8 @@ void WinGame(TTF_Font* medFont, TTF_Font* smallFont)
     SDL_RenderFillRect(renderer, &winScreen);
     string winMessage = "YOU WIN";
     int textW, textH;
-    GetTextWidthHeight(medFont, winMessage, textW, textH);
-    StringText(medFont, { 255, 255, 255 }, winMessage, gameplayScreen_X + (gameplayScreen_Width - textW) / 2, gameplayScreen_Y + (gameplayScreen_Height - textH) / 2);
+    GetTextWidthHeight(pixelFont_Med, winMessage, textW, textH);
+    StringText(pixelFont_Med, { 255, 255, 255 }, winMessage, gameplayScreen_X + (gameplayScreen_Width - textW) / 2, gameplayScreen_Y + (gameplayScreen_Height - textH) / 2);
 
     if (!leveledUp)
     {
@@ -127,12 +135,12 @@ void WinGame(TTF_Font* medFont, TTF_Font* smallFont)
         leveledUp = true;
     }
 
-    ContinueNextLevel(smallFont);
+    ContinueNextLevel();
 
 
 }
 
-void LoseGame(TTF_Font* medFont, TTF_Font* smallFont)
+void LoseGame()
 {
     stopCounting = true;
     SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
@@ -140,20 +148,20 @@ void LoseGame(TTF_Font* medFont, TTF_Font* smallFont)
     SDL_RenderFillRect(renderer, &loseScreen);
     string loseMessage = "YOU LOSE";
     int textW, textH;
-    GetTextWidthHeight(medFont, loseMessage, textW, textH);
-    StringText(medFont, { 255, 255, 255 }, loseMessage, gameplayScreen_X + (gameplayScreen_Width - textW) / 2, gameplayScreen_Y + (gameplayScreen_Height - textH) / 2);
+    GetTextWidthHeight(pixelFont_Med, loseMessage, textW, textH);
+    StringText(pixelFont_Med, { 255, 255, 255 }, loseMessage, gameplayScreen_X + (gameplayScreen_Width - textW) / 2, gameplayScreen_Y + (gameplayScreen_Height - textH) / 2);
 
 }
 #pragma endregion
 
 
 
-void ContinueNextLevel(TTF_Font* smallFont)
+void ContinueNextLevel()
 {
     int nextLevelButtonW = 140;
     int nextLevelButtonH = 60;
     Button nextLevelButton(gameplayScreen_X + (gameplayScreen_Width - nextLevelButtonW) / 2, 40 + gameplayScreen_Y + (gameplayScreen_Height - nextLevelButtonH) / 2, nextLevelButtonW, nextLevelButtonH, "NEXT LEVEL", "");
-    nextLevelButton.RenderButton(smallFont);
+    nextLevelButton.RenderButton(pixelFont_Small);
 
     if (nextLevelButton.DetectMouseClick())
     {

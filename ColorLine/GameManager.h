@@ -1,12 +1,14 @@
 #pragma once
 
 #include "Header.h"
+#include "TEST_CLASS.h"
 #include "CustomTexture.h"
-
+//#include "Button.h"
 
 
 extern SDL_Renderer* renderer;
 extern SDL_Window* window;
+extern SDL_Event event;
 
 extern const string WINDOW_TITLE;
 
@@ -52,7 +54,6 @@ extern string audioDir;
 extern string musicDir;
 extern string sfxDir;
 
-extern int simpleColorList[][3];
 
 
 
@@ -67,5 +68,5 @@ extern Mix_Chunk* onClickButtonSFX;
 extern TTF_Font* pixelFont_Small;
 extern TTF_Font* pixelFont_Med;
 
-//extern CustomTexture gameplayBgTexture;
+extern TESS_CLASS testObj;
 

@@ -44,6 +44,11 @@
 
 
 extern vector<ColorLine> listColorLine;
+extern CustomTexture gameplayBgTexture;
+
+
+//extern Button restartButton;
+
 
 
 
@@ -71,12 +76,12 @@ extern vector<ColorLine> listColorLine;
 #pragma endregion
 
 
-void WinLoseSystem(TTF_Font* medFont, TTF_Font* smallFont);
-void WinGame(TTF_Font* medFont, TTF_Font* smallFont);
-void LoseGame(TTF_Font* medFont, TTF_Font* smallFont);
+void WinLoseSystem();
+void WinGame();
+void LoseGame();
 
 
-void ContinueNextLevel(TTF_Font* smallFont);
+void ContinueNextLevel();
 
 void ResizeListColorLine();
 
@@ -86,6 +91,6 @@ void RestartGame();
 
 void InitListColorLine(int newAmount);
 
-void Gameplay_Update(TTF_Font* medFont, TTF_Font* smallFont);
+void Gameplay_Update();
 
 void CountTimeLeft();

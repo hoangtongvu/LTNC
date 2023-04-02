@@ -14,9 +14,12 @@ Game::~Game()
 
 void Game::LoadComponents()
 {
+	
+	LoadTextures();
+	LoadUI_Elements();
 	LoadSounds();
 	LoadFonts();
-	//gameplayBgTexture = new CustomTexture("ColorLine Game UI.png", 0, 0, -1, -1);
+	
 }
 
 
@@ -31,4 +34,15 @@ void Game::LoadSounds()
 {
 	bgMusic = Mix_LoadMUS((musicDir + "Lonesome Traveller.wav").c_str());
 	onClickButtonSFX = Mix_LoadWAV((sfxDir + "Retro Blop 18.wav").c_str());
+}
+
+void Game::LoadTextures()
+{
+	gameplayBgTexture.LoadTexture(-1, -1);
+}
+
+
+void Game::LoadUI_Elements()
+{
+
 }

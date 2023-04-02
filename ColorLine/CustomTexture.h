@@ -11,7 +11,7 @@ public:
 	SDL_Texture* tex;
 
 
-	CustomTexture(string path, int x, int y, int w, int h);
+	CustomTexture(string path, int x, int y);
 	~CustomTexture();
 
 	

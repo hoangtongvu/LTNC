@@ -3,7 +3,6 @@
 
 
 
-
 #pragma region FunctionInitialize
 
 
@@ -18,14 +17,7 @@
 
 Game game;
 
-
-
-
-
-
 #pragma endregion
-
-
 
 
 
@@ -37,13 +29,10 @@ int main(int argc, char* argv[])
     game.LoadComponents();
     
 
-
-
     // INITIALIZE COLOR LINE
     InitListColorLine(colorLineAmount);
 
 
-    
     Button restartButton(14, 14, 52, 52, "", "RestartButton.png");
     Button returnMenuButton(78, 14, 52, 52, "", "HomeButton.png");
 
@@ -55,33 +44,29 @@ int main(int argc, char* argv[])
 
     
 
-    //CustomTexture gameplayBgTexture("ColorLine Game UI.png", 0, 0, -1, -1);
-    CustomTexture mainMenuTexture("menuBg.png", 0, 0, -1, -1);
+    CustomTexture mainMenuTexture("menuBg.png", 0, 0);
+    mainMenuTexture.LoadTexture(-1, -1);
 
-
-    
-       
-
-
-
-
+    Mix_PlayMusic(bgMusic, -1);
     
     bool close = false;
     // GAME LOOP _________________________________________________________________
     while (!close)
     {
         srand(time(NULL));
-        //Main Menu Controller
+
+
+
+        //Main Menu Controller__________________________________________________________________________________________________
         #pragma region MainMenu
 
         while (!gameStarted)
         {
 
             //Menu Event Holder
-            SDL_Event menuEvent;
-            while (SDL_PollEvent(&menuEvent))
+            while (SDL_PollEvent(&event))
             {
-                switch (menuEvent.type)
+                switch (event.type)
                 {
                 case SDL_QUIT:
                 {
@@ -92,7 +77,7 @@ int main(int argc, char* argv[])
                 }
                 case SDL_MOUSEBUTTONDOWN:
                 {
-                    switch (menuEvent.button.button)
+                    switch (event.button.button)
                     {
                     case SDL_BUTTON_LEFT:
                     {
@@ -106,8 +91,8 @@ int main(int argc, char* argv[])
                 }
                 case SDL_MOUSEMOTION:
                 {
-                    mouseX = menuEvent.motion.x;
-                    mouseY = menuEvent.motion.y;
+                    mouseX = event.motion.x;
+                    mouseY = event.motion.y;
 
                     std::stringstream ss;
                     ss << "X: " << mouseX << " Y: " << mouseY;
@@ -125,7 +110,6 @@ int main(int argc, char* argv[])
 
 
             mainMenuTexture.RenderTexture();
-
 
 
             // Start game Button
@@ -164,17 +148,11 @@ int main(int argc, char* argv[])
 
 
 
-        //Gameplay Controller
+        //Gameplay Controller___________________________________________________________________________________________________
         #pragma region Gameplay
 
 
-
-        //Gameplay Background      
-        gameplayBgTexture.RenderTexture();
-
-
         // EVENT HOLDER
-        SDL_Event event;
         while (SDL_PollEvent(&event))
         {
             switch (event.type) 
@@ -216,7 +194,7 @@ int main(int argc, char* argv[])
 
         }
 
-        Gameplay_Update(pixelFont_Med, pixelFont_Small);
+        Gameplay_Update();
 
         
         //Restart Button
@@ -238,14 +216,15 @@ int main(int argc, char* argv[])
         //Reset mouseClick
         isClicked = false;
 
+        SDL_RenderPresent(renderer);
+        SDL_RenderClear(renderer);
+        SDL_Delay(1000 / fps);
+
         #pragma endregion
 
 
 
 
-        SDL_RenderPresent(renderer);
-        SDL_RenderClear(renderer);
-        SDL_Delay(1000 / fps);
 
     }
 
@@ -254,8 +233,8 @@ int main(int argc, char* argv[])
     
 
 
-    TTF_CloseFont(pixelFont_Small);
-    TTF_CloseFont(pixelFont_Med);
+    //TTF_CloseFont(pixelFont_Small);
+    //TTF_CloseFont(pixelFont_Med);
     TTF_Quit();
     quitSDL(window, renderer);
 

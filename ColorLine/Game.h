@@ -1,6 +1,7 @@
 #pragma once
 
 #include "GameManager.h"
+#include "GameplayCtrl.h"
 
 
 class Game
@@ -13,6 +14,10 @@ public:
 	void LoadFonts();
 
 	void LoadSounds();
+
+	void LoadTextures();
+
+	void LoadUI_Elements();
 private:
 
 };

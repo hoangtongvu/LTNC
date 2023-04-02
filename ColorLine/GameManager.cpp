@@ -4,12 +4,11 @@
 
 SDL_Renderer* renderer;
 SDL_Window* window;
+SDL_Event event;
 const string WINDOW_TITLE = "MUSE DASH";
 
 const int SCREEN_WIDTH = 1280;
 const int SCREEN_HEIGHT = 720;
-
-//ColorLine* test = new ColorLine[10];
 
 
 const int gameplayScreen_X = 171;
@@ -52,7 +51,6 @@ string sfxDir = audioDir + "SFXs/";
 
 
 
-
 const int fps = 144;
 float deltaTime = 1 / (float)fps;
 
@@ -65,4 +63,12 @@ Mix_Chunk* onClickButtonSFX = NULL;
 TTF_Font* pixelFont_Small = NULL;
 TTF_Font* pixelFont_Med = NULL;
 
-//CustomTexture gameplayBgTexture("ColorLine Game UI.png", 0, 0, -1, -1);
+
+TESS_CLASS testObj(5);
+
+
+
+
+
+
+

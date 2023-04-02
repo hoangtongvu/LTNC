@@ -2,10 +2,14 @@
 
 
 ColorLine::ColorLine():
-    baseLineTexture("whitePixel.png", 0, 0, -1, -1),
-    baseBorderTexture("whitePixel.png", 0, 0, -1, -1)
+    baseLineTexture("whitePixel.png", 0, 0),
+    baseBorderTexture("whitePixel.png", 0, 0)
 
 {
+    baseLineTexture.LoadTexture(-1, -1);
+    baseBorderTexture.LoadTexture(-1, -1);
+
+
     borderThickness = 4;
 
     baseBorder.x = 6;
