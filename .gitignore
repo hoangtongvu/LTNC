@@ -122,3 +122,5 @@ ColorLine/x64/Debug/GlobalGame.obj
 ColorLine/x64/Debug/Game.obj
 ColorLine/x64/Debug/ColorLine.tlog/unsuccessfulbuild
 ColorLine/.vs/ColorLine/v16/ipch/AutoPCH/938674345d9c6c03/GAME.ipch
+ColorLine/.vs/ColorLine/v16/ipch/AutoPCH/517cefe4f7756872/TEST_CLASS.ipch
+ColorLine/x64/Debug/TEST_CLASS.obj
