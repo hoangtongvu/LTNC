@@ -1,3 +1,9 @@
+ver 0.7:
+- New test class
+- Less code line in Main()
+- New Game class
+- Fix Sound
+
 ver 0.6:
 - Created Gameplay_Update()
 - Less code line in Main()
