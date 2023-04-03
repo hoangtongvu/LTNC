@@ -124,3 +124,7 @@ ColorLine/x64/Debug/ColorLine.tlog/unsuccessfulbuild
 ColorLine/.vs/ColorLine/v16/ipch/AutoPCH/938674345d9c6c03/GAME.ipch
 ColorLine/.vs/ColorLine/v16/ipch/AutoPCH/517cefe4f7756872/TEST_CLASS.ipch
 ColorLine/x64/Debug/TEST_CLASS.obj
+ColorLine/.vs/ColorLine/v16/ipch/AutoPCH/67c1badadb2e5e04/UIMANAGER.ipch
+ColorLine/.vs/ColorLine/v16/ipch/AutoPCH/87d5cec3fe9d7ab6/MAINMENUCTRL.ipch
+ColorLine/x64/Debug/MainMenuCtrl.obj
+ColorLine/x64/Debug/UIManager.obj
