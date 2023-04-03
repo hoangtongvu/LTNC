@@ -1,6 +1,6 @@
 #include "Game.h"
 
-
+Game game;
 
 
 Game::Game()
@@ -38,7 +38,10 @@ void Game::LoadSounds()
 
 void Game::LoadTextures()
 {
-	gameplayBgTexture.LoadTexture(-1, -1);
+	uiManager.mainMenuTexture.LoadTexture(-1, -1);
+	uiManager.gameplayBgTexture.LoadTexture(-1, -1);
+	//mainMenuTexture.LoadTexture(-1, -1);
+	//gameplayBgTexture.LoadTexture(-1, -1);
 }
 
 

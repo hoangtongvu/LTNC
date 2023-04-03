@@ -64,7 +64,8 @@ TTF_Font* pixelFont_Small = NULL;
 TTF_Font* pixelFont_Med = NULL;
 
 
-TESS_CLASS testObj(5);
+bool gameClose = false;
+
 
 
 

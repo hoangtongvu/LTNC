@@ -2,19 +2,19 @@
 
 
 
-TESS_CLASS::TESS_CLASS(int _value)
+TEST_CLASS::TEST_CLASS()
 {
-	value = _value;
+	
 }
 
 
-void TESS_CLASS::TestFunc()
+void TEST_CLASS::TestFunc()
 {
-	cout << value;
+	
 }
 
 
 
-TESS_CLASS::~TESS_CLASS()
+TEST_CLASS::~TEST_CLASS()
 {
 }

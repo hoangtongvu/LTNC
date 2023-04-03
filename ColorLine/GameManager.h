@@ -1,8 +1,7 @@
 #pragma once
 
 #include "Header.h"
-#include "TEST_CLASS.h"
-#include "CustomTexture.h"
+//#include "CustomTexture.h"
 //#include "Button.h"
 
 
@@ -68,5 +67,4 @@ extern Mix_Chunk* onClickButtonSFX;
 extern TTF_Font* pixelFont_Small;
 extern TTF_Font* pixelFont_Med;
 
-extern TESS_CLASS testObj;
-
+extern bool gameClose;

@@ -21,3 +21,5 @@ public:
 private:
 
 };
+
+extern Game game;

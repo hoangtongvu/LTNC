@@ -1,6 +1,5 @@
 #pragma once
-#include "Header.h"
-#include "GameplayCtrl.h"
+#include "GameManager.h"
 #include "TextFunc.h"
 
 class Button

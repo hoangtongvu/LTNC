@@ -1,15 +1,20 @@
 #pragma once
 #include "Header.h"
+#include "TextFunc.h"
 
 
-class TESS_CLASS
+class TEST_CLASS
 {
 public:
-	int value;
+	SDL_Rect baseButton;
+	string buttonLabel;
+	string buttonSpritePath;
+	bool isEnabled;
 
-	TESS_CLASS(int _value);
+
+	TEST_CLASS();
 	void TestFunc();
-	~TESS_CLASS();
+	~TEST_CLASS();
 
 private:
 

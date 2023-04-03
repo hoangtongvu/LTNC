@@ -6,10 +6,8 @@
 vector<ColorLine> listColorLine;
 vector<ColorLine> queueListFadedColorLine;
 
-CustomTexture gameplayBgTexture("ColorLine Game UI.png", 0, 0);
 
 
-//Button restartButton(14, 14, 52, 52, "", "RestartButton.png");
 
 
 
@@ -19,8 +17,50 @@ CustomTexture gameplayBgTexture("ColorLine Game UI.png", 0, 0);
 
 void Gameplay_Update()
 {
+    // EVENT HOLDER
+    while (SDL_PollEvent(&event))
+    {
+        switch (event.type)
+        {
+        case SDL_QUIT:
+        {
+            gameClose = true;
+            break;
 
-    //Gameplay Background      
+        }
+        case SDL_MOUSEBUTTONDOWN:
+        {
+            switch (event.button.button)
+            {
+            case SDL_BUTTON_LEFT:
+            {
+                isClicked = true;
+            }
+            default:
+                break;
+            }
+        }
+        case SDL_MOUSEMOTION:
+        {
+            mouseX = event.motion.x;
+            mouseY = event.motion.y;
+
+            std::stringstream ss;
+            ss << "X: " << mouseX << " Y: " << mouseY;
+
+            SDL_SetWindowTitle(window, ss.str().c_str());
+            break;
+
+        }
+        default:
+            break;
+
+        }
+
+    }
+
+    //Gameplay Background  
+    CustomTexture gameplayBgTexture = uiManager.gameplayBgTexture;
     gameplayBgTexture.RenderTexture();
 
     /*if (!Mix_PlayingMusic())
@@ -35,6 +75,7 @@ void Gameplay_Update()
     //Count Remaining
     CountTimeLeft();
     CountRemainingLine();
+    GetHighestPointedLayer();
 
 
 
@@ -53,15 +94,6 @@ void Gameplay_Update()
 
 
 
-    //Get Highest Pointed Layer
-    for (int i = listColorLine.size() - 1; i >= 0; i--)
-    {
-        if (listColorLine[i].IsPointed())
-        {
-            highestPointedLayer = listColorLine[i].layer;
-            break;
-        }
-    }
 
     //Render and DetectMouseClick ColorLines
     for (int i = 0; i < listColorLine.size(); i++)
@@ -99,7 +131,31 @@ void Gameplay_Update()
     ResizeListColorLine();
 
     WinLoseSystem();
-    
+
+    //Restart Button
+    Button restartButton = uiManager.restartButton;
+    restartButton.RenderButton(pixelFont_Small);
+    if (restartButton.DetectMouseClick())
+    {
+        RestartGame();
+
+    }
+
+    //ReturnMenu Button
+    Button returnMenuButton = uiManager.returnMenuButton;
+    returnMenuButton.RenderButton(pixelFont_Small);
+    if (returnMenuButton.DetectMouseClick())
+    {
+        gameStarted = false;
+    }
+
+
+    //Reset mouseClick
+    isClicked = false;
+
+    SDL_RenderPresent(renderer);
+    SDL_RenderClear(renderer);
+    SDL_Delay(1000 / fps);
 }
 
 
@@ -158,9 +214,7 @@ void LoseGame()
 
 void ContinueNextLevel()
 {
-    int nextLevelButtonW = 140;
-    int nextLevelButtonH = 60;
-    Button nextLevelButton(gameplayScreen_X + (gameplayScreen_Width - nextLevelButtonW) / 2, 40 + gameplayScreen_Y + (gameplayScreen_Height - nextLevelButtonH) / 2, nextLevelButtonW, nextLevelButtonH, "NEXT LEVEL", "");
+    Button nextLevelButton = uiManager.nextLevelButton;
     nextLevelButton.RenderButton(pixelFont_Small);
 
     if (nextLevelButton.DetectMouseClick())
@@ -287,4 +341,14 @@ void CountTimeLeft()
     }
 }
 
-
+void GetHighestPointedLayer()
+{
+    for (int i = listColorLine.size() - 1; i >= 0; i--)
+    {
+        if (listColorLine[i].IsPointed())
+        {
+            highestPointedLayer = listColorLine[i].layer;
+            break;
+        }
+    }
+}

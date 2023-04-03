@@ -1,3 +1,9 @@
+ver 0.8:
+- New UI_Manager class
+- Less code line in gameLoop in Main()
+- New file: MainMenuCtrl
+- New extern object Method (UI_Manager)
+
 ver 0.7:
 - New test class
 - Less code line in Main()

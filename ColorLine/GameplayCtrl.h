@@ -1,9 +1,11 @@
 ﻿#pragma once
 #include "GameManager.h"
 
+#include "UIManager.h"
 #include "TextFunc.h"
 #include "ColorLine.h"
 #include "Button.h"
+#include "TEST_CLASS.h"
 #include "CustomTexture.h"
 #include "SDL_Func.h"
 
@@ -44,10 +46,10 @@
 
 
 extern vector<ColorLine> listColorLine;
-extern CustomTexture gameplayBgTexture;
 
 
-//extern Button restartButton;
+
+
 
 
 
@@ -94,3 +96,5 @@ void InitListColorLine(int newAmount);
 void Gameplay_Update();
 
 void CountTimeLeft();
+
+void GetHighestPointedLayer();
