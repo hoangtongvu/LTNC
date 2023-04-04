@@ -24,9 +24,18 @@ public:
     float fadingTimer;
     float fadingT;
     float fadingSpeed;
+    
 
-    float lightenColorScale;
+    float pointedLightenColorScale;
+    float pointedLightenColorScaleSpeed;
+    float pointedLightenColorScale_Max;
+    float pointedLightenColorScale_Min;
 
+    float onClickLightenColorScale;
+
+
+    int baseAlpha;
+    int pointedAlpha;
 #pragma endregion
 
 

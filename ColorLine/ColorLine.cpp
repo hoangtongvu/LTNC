@@ -37,7 +37,16 @@ ColorLine::ColorLine():
     fadingT = 0;
     fadingSpeed = 2.5;
 
-    lightenColorScale = 0.25;
+    pointedLightenColorScale_Min = 0;
+    pointedLightenColorScale_Max = 0.35;
+    pointedLightenColorScale = pointedLightenColorScale_Min;
+    pointedLightenColorScaleSpeed = 1.3;
+
+    onClickLightenColorScale = 0.75;
+
+
+    baseAlpha = 150;
+    pointedAlpha = 230;
 }
 
 
@@ -77,28 +86,51 @@ void ColorLine::SetBaseColor(int rPar, int gPar, int bPar, int alphaPar)
 void ColorLine::RenderLine()
 {
 
-    int tempAlpha = 150;
+    int alpha = baseAlpha;
     float darkenBorderColorScale = 0.75;
     float borderColorScale = 0;
     float baseLineColorScale = 0;
+    
     if (IsPointed() && highestPointedLayer == layer)
     {
-        tempAlpha = 230;
+        alpha = pointedAlpha;
 
-        borderColorScale = lightenColorScale;
-        baseLineColorScale = lightenColorScale;
+        pointedLightenColorScale += deltaTime * pointedLightenColorScaleSpeed;
+        if (pointedLightenColorScale >= pointedLightenColorScale_Max)
+        {
+            pointedLightenColorScale = pointedLightenColorScale_Max;
+        }
+        borderColorScale = pointedLightenColorScale;
+        baseLineColorScale = pointedLightenColorScale;
     }
-    tempAlpha *= 1.0 - fadingTimer / fadingTimeLimit;
-    //SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-    //SDL_RenderFillRect(renderer, &baseBorder);
-    
+    else
+    {
+        pointedLightenColorScale -= deltaTime * pointedLightenColorScaleSpeed;
+        if (pointedLightenColorScale <= pointedLightenColorScale_Min)
+        {
+            pointedLightenColorScale = pointedLightenColorScale_Min;
+        }
 
-    baseBorderTexture.SetColor(r * darkenBorderColorScale + (255 - r * darkenBorderColorScale) * borderColorScale, g * darkenBorderColorScale + (255 - g * darkenBorderColorScale) * borderColorScale, b * darkenBorderColorScale + (255 - b * darkenBorderColorScale) * borderColorScale, tempAlpha);
+    }
+    alpha *= 1.0 - fadingTimer / fadingTimeLimit;
+
+    if (!isEnabled)
+    {
+        borderColorScale = onClickLightenColorScale;
+        baseLineColorScale = onClickLightenColorScale;
+
+    }
+
+    baseBorderTexture.SetColor(r * darkenBorderColorScale + (255 - r * darkenBorderColorScale) * borderColorScale,
+        g * darkenBorderColorScale + (255 - g * darkenBorderColorScale) * borderColorScale,
+        b * darkenBorderColorScale + (255 - b * darkenBorderColorScale) * borderColorScale, alpha);
     baseBorderTexture.RenderTexture();
 
-    //SDL_SetRenderDrawColor(renderer, r, g, b, alpha);
-    //SDL_RenderFillRect(renderer, &baseLine);
-    baseLineTexture.SetColor(r + (255 - r) * baseLineColorScale, g + (255 - g) * baseLineColorScale, b + (255 - b) * baseLineColorScale, tempAlpha);
+
+
+    baseLineTexture.SetColor(r + (255 - r) * baseLineColorScale,
+        g + (255 - g) * baseLineColorScale,
+        b + (255 - b) * baseLineColorScale, alpha);
     baseLineTexture.RenderTexture();
 }
 
@@ -112,12 +144,6 @@ bool ColorLine::DetectMouseClick()
             //cout << "Highest layer: " << highestLayer << endl;
             //cout << "this line layer: " << layer << endl;
             return true;
-            /*if (layer == highestLayer)
-            {
-                PlayOnClickSFX();
-                isEnabled = false;  
-            }*/
-
         }
     }
     return false;
