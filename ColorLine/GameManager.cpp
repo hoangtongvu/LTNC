@@ -68,8 +68,17 @@ bool gameClose = false;
 
 
 
+void ResetMouseClick()
+{
+	isClicked = false;
+}
 
-
+void SDL_Render()
+{
+    SDL_RenderPresent(renderer);
+    SDL_RenderClear(renderer);
+    SDL_Delay(1000 / fps);
+}
 
 
 

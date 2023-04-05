@@ -68,3 +68,8 @@ extern TTF_Font* pixelFont_Small;
 extern TTF_Font* pixelFont_Med;
 
 extern bool gameClose;
+
+void ResetMouseClick();
+
+void SDL_Render();
+

@@ -43,17 +43,6 @@
 //string assetDir = "Assets/";
 //string spriteDir = assetDir + "Sprites/";
 
-
-
-extern vector<ColorLine> listColorLine;
-
-
-
-
-
-
-
-
 #pragma region Blend and Color Texture
 
 //SDL_Surface* playerSurface;
@@ -78,6 +67,9 @@ extern vector<ColorLine> listColorLine;
 #pragma endregion
 
 
+extern vector<ColorLine> listColorLine;
+
+
 void WinLoseSystem();
 void WinGame();
 void LoseGame();
@@ -98,3 +90,15 @@ void Gameplay_Update();
 void CountTimeLeft();
 
 void GetHighestPointedLayer();
+
+void GameplayEventHolder();
+
+void RenderGameplayBgTexture();
+
+void RenderGameplayTextLine();
+
+void GameplayDetectButtonClick();
+
+void RenderAndDetectMouseClickColorLine();
+
+void RenderFadingLine();

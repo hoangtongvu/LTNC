@@ -5,3 +5,9 @@
 #include "SDL_Func.h"
 
 void MainMenu_Update();
+
+void MainMenuEventHolder();
+
+void RenderMainMenuTexture();
+
+void MainMenuDetectButtonClick();

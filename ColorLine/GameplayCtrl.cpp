@@ -6,156 +6,33 @@
 vector<ColorLine> listColorLine;
 vector<ColorLine> queueListFadedColorLine;
 
-
-
-
-
-
 #pragma endregion
 
 
 
 void Gameplay_Update()
 {
-    // EVENT HOLDER
-    while (SDL_PollEvent(&event))
-    {
-        switch (event.type)
-        {
-        case SDL_QUIT:
-        {
-            gameClose = true;
-            break;
+    GameplayEventHolder();
+    RenderGameplayBgTexture();
+    CountTimeLeft();
+    CountRemainingLine();
+    GetHighestPointedLayer();
+    RenderGameplayTextLine();
+    RenderAndDetectMouseClickColorLine();
+    RenderFadingLine();
+    ResizeListColorLine();
+    WinLoseSystem();
+    GameplayDetectButtonClick();
+    ResetMouseClick();
+    SDL_Render();
 
-        }
-        case SDL_MOUSEBUTTONDOWN:
-        {
-            switch (event.button.button)
-            {
-            case SDL_BUTTON_LEFT:
-            {
-                isClicked = true;
-            }
-            default:
-                break;
-            }
-        }
-        case SDL_MOUSEMOTION:
-        {
-            mouseX = event.motion.x;
-            mouseY = event.motion.y;
-
-            std::stringstream ss;
-            ss << "X: " << mouseX << " Y: " << mouseY;
-
-            SDL_SetWindowTitle(window, ss.str().c_str());
-            break;
-
-        }
-        default:
-            break;
-
-        }
-
-    }
-
-    //Gameplay Background  
-    CustomTexture gameplayBgTexture = uiManager.gameplayBgTexture;
-    gameplayBgTexture.RenderTexture();
-
+ 
     /*if (!Mix_PlayingMusic())
     {
         Mix_PlayMusic(bgMusic, -1);
         cout << "Playing BG Music" << endl;
     }*/
-
-    
     //cout << Mix_GetError() << endl;
-    
-    //Count Remaining
-    CountTimeLeft();
-    CountRemainingLine();
-    GetHighestPointedLayer();
-
-
-
-    //Gameplay TextLine
-    int y = 200;
-    StringText(pixelFont_Small, { 0, 0, 0 }, "Remaining:", 2, y);
-    IntText(pixelFont_Small, { 0, 0, 0 }, remainingLine, 2, y + 20);
-    
-    StringText(pixelFont_Small, { 0, 0, 0 }, "Level:", 2, y + 50);
-    IntText(pixelFont_Small, { 0, 0, 0 }, level, 2, y + 70);
-
-    int timeLeftText_W, timeLeftText_H;
-    int roundedTimeLeftSecond = (int)(round(timeRemainingCounter));
-    GetTextWidthHeight(pixelFont_Small, to_string(roundedTimeLeftSecond), timeLeftText_W, timeLeftText_H);
-    IntText(pixelFont_Small, { 255, 255, 255 }, roundedTimeLeftSecond, 21 + (109 - timeLeftText_W) / 2, 427 + (21 - timeLeftText_H) / 2);
-
-
-
-
-    //Render and DetectMouseClick ColorLines
-    for (int i = 0; i < listColorLine.size(); i++)
-    {
-        if (listColorLine[i].isEnabled)
-        {
-            
-            listColorLine[i].RenderLine();
-            if (listColorLine[i].DetectMouseClick() && listColorLine[i].layer == highestLayer)
-            {
-                listColorLine[i].isEnabled = false;
-                
-                Mix_PlayChannel(-1, onClickButtonSFX, 0);
-                
-            }
-            
-
-        }
-    }
-
-    //Render FadingLine && CountFadingTime
-    for (int i = 0; i < queueListFadedColorLine.size(); i++)
-    {
-        queueListFadedColorLine[i].RenderLine();
-        queueListFadedColorLine[i].CountFadingTime();
-        float timer = queueListFadedColorLine[i].fadingTimer;
-        if (timer >= queueListFadedColorLine[i].fadingTimeLimit)
-        {
-            queueListFadedColorLine.erase(queueListFadedColorLine.begin() + i);
-            i--;
-        }
-    }
-
-    
-    ResizeListColorLine();
-
-    WinLoseSystem();
-
-    //Restart Button
-    Button restartButton = uiManager.restartButton;
-    restartButton.RenderButton(pixelFont_Small);
-    if (restartButton.DetectMouseClick())
-    {
-        RestartGame();
-
-    }
-
-    //ReturnMenu Button
-    Button returnMenuButton = uiManager.returnMenuButton;
-    returnMenuButton.RenderButton(pixelFont_Small);
-    if (returnMenuButton.DetectMouseClick())
-    {
-        gameStarted = false;
-    }
-
-
-    //Reset mouseClick
-    isClicked = false;
-
-    SDL_RenderPresent(renderer);
-    SDL_RenderClear(renderer);
-    SDL_Delay(1000 / fps);
 }
 
 
@@ -211,7 +88,6 @@ void LoseGame()
 #pragma endregion
 
 
-
 void ContinueNextLevel()
 {
     Button nextLevelButton = uiManager.nextLevelButton;
@@ -225,7 +101,6 @@ void ContinueNextLevel()
 
     }
 }
-
 
 void ResizeListColorLine()
 {
@@ -246,12 +121,10 @@ void ResizeListColorLine()
     }
 }
 
-
 void CountRemainingLine()
 {
     remainingLine = listColorLine.size();
 }
-
 
 void RestartGame()
 {
@@ -261,7 +134,6 @@ void RestartGame()
     timeRemainingCounter = maxTimeSecond;
     stopCounting = false;
 }
-
 
 void InitListColorLine(int newAmount)
 {
@@ -332,7 +204,6 @@ void InitListColorLine(int newAmount)
 
 }
 
-
 void CountTimeLeft()
 {
     if (!stopCounting)
@@ -351,4 +222,135 @@ void GetHighestPointedLayer()
             break;
         }
     }
+}
+
+void GameplayEventHolder()
+{
+    // EVENT HOLDER
+    while (SDL_PollEvent(&event))
+    {
+        switch (event.type)
+        {
+        case SDL_QUIT:
+        {
+            gameClose = true;
+            break;
+
+        }
+        case SDL_MOUSEBUTTONDOWN:
+        {
+            switch (event.button.button)
+            {
+            case SDL_BUTTON_LEFT:
+            {
+                isClicked = true;
+            }
+            default:
+                break;
+            }
+        }
+        case SDL_MOUSEMOTION:
+        {
+            mouseX = event.motion.x;
+            mouseY = event.motion.y;
+
+            std::stringstream ss;
+            ss << "X: " << mouseX << " Y: " << mouseY;
+
+            SDL_SetWindowTitle(window, ss.str().c_str());
+            break;
+
+        }
+        default:
+            break;
+
+        }
+
+    }
+
+}
+
+void RenderGameplayBgTexture()
+{
+    //Gameplay Background  
+    CustomTexture gameplayBgTexture = uiManager.gameplayBgTexture;
+    gameplayBgTexture.RenderTexture();
+}
+
+void RenderGameplayTextLine()
+{
+    //Gameplay TextLine
+    int y = 200;
+    StringText(pixelFont_Small, { 0, 0, 0 }, "Remaining:", 2, y);
+    IntText(pixelFont_Small, { 0, 0, 0 }, remainingLine, 2, y + 20);
+
+    StringText(pixelFont_Small, { 0, 0, 0 }, "Level:", 2, y + 50);
+    IntText(pixelFont_Small, { 0, 0, 0 }, level, 2, y + 70);
+
+    int timeLeftText_W, timeLeftText_H;
+    int roundedTimeLeftSecond = (int)(round(timeRemainingCounter));
+    GetTextWidthHeight(pixelFont_Small, to_string(roundedTimeLeftSecond), timeLeftText_W, timeLeftText_H);
+    IntText(pixelFont_Small, { 255, 255, 255 }, roundedTimeLeftSecond, 21 + (109 - timeLeftText_W) / 2, 427 + (21 - timeLeftText_H) / 2);
+
+
+}
+
+void GameplayDetectButtonClick()
+{
+    //Restart Button
+    Button restartButton = uiManager.restartButton;
+    restartButton.RenderButton(pixelFont_Small);
+    if (restartButton.DetectMouseClick())
+    {
+        RestartGame();
+
+    }
+
+    //ReturnMenu Button
+    Button returnMenuButton = uiManager.returnMenuButton;
+    returnMenuButton.RenderButton(pixelFont_Small);
+    if (returnMenuButton.DetectMouseClick())
+    {
+        gameStarted = false;
+    }
+
+}
+
+void RenderAndDetectMouseClickColorLine()
+{
+    //Render and DetectMouseClick ColorLines
+    for (int i = 0; i < listColorLine.size(); i++)
+    {
+        if (listColorLine[i].isEnabled)
+        {
+
+            listColorLine[i].RenderLine();
+            if (listColorLine[i].DetectMouseClick() && listColorLine[i].layer == highestLayer)
+            {
+                listColorLine[i].isEnabled = false;
+
+                Mix_PlayChannel(-1, onClickButtonSFX, 0);
+
+            }
+
+
+        }
+    }
+}
+
+void RenderFadingLine()
+{
+    //Render FadingLine && CountFadingTime
+    for (int i = 0; i < queueListFadedColorLine.size(); i++)
+    {
+        queueListFadedColorLine[i].RenderLine();
+        queueListFadedColorLine[i].CountFadingTime();
+        float timer = queueListFadedColorLine[i].fadingTimer;
+        if (timer >= queueListFadedColorLine[i].fadingTimeLimit)
+        {
+            queueListFadedColorLine.erase(queueListFadedColorLine.begin() + i);
+            i--;
+        }
+    }
+
 }
