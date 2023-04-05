@@ -47,7 +47,7 @@ void Button::RenderButton(TTF_Font* font)
         {
             int textW, textH;
             GetTextWidthHeight(font, buttonLabel, textW, textH);
-            StringText(font, { 255, 255, 255 }, buttonLabel, baseButton.x + (baseButton.w - textW) / 2, baseButton.y + (baseButton.h - textH) / 2);
+            Text(font, { 255, 255, 255 }, buttonLabel, baseButton.x + (baseButton.w - textW) / 2, baseButton.y + (baseButton.h - textH) / 2);
 
         }
 

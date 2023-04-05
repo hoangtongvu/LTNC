@@ -60,7 +60,7 @@ void WinGame()
     string winMessage = "YOU WIN";
     int textW, textH;
     GetTextWidthHeight(pixelFont_Med, winMessage, textW, textH);
-    StringText(pixelFont_Med, { 255, 255, 255 }, winMessage, gameplayScreen_X + (gameplayScreen_Width - textW) / 2, gameplayScreen_Y + (gameplayScreen_Height - textH) / 2);
+    Text(pixelFont_Med, { 255, 255, 255 }, winMessage, gameplayScreen_X + (gameplayScreen_Width - textW) / 2, gameplayScreen_Y + (gameplayScreen_Height - textH) / 2);
 
     if (!leveledUp)
     {
@@ -82,7 +82,7 @@ void LoseGame()
     string loseMessage = "YOU LOSE";
     int textW, textH;
     GetTextWidthHeight(pixelFont_Med, loseMessage, textW, textH);
-    StringText(pixelFont_Med, { 255, 255, 255 }, loseMessage, gameplayScreen_X + (gameplayScreen_Width - textW) / 2, gameplayScreen_Y + (gameplayScreen_Height - textH) / 2);
+    Text(pixelFont_Med, { 255, 255, 255 }, loseMessage, gameplayScreen_X + (gameplayScreen_Width - textW) / 2, gameplayScreen_Y + (gameplayScreen_Height - textH) / 2);
 
 }
 #pragma endregion
@@ -281,16 +281,16 @@ void RenderGameplayTextLine()
 {
     //Gameplay TextLine
     int y = 200;
-    StringText(pixelFont_Small, { 0, 0, 0 }, "Remaining:", 2, y);
-    IntText(pixelFont_Small, { 0, 0, 0 }, remainingLine, 2, y + 20);
+    Text(pixelFont_Small, { 0, 0, 0 }, "Remaining:", 2, y);
+    Text(pixelFont_Small, { 0, 0, 0 }, to_string(remainingLine), 2, y + 20);
 
-    StringText(pixelFont_Small, { 0, 0, 0 }, "Level:", 2, y + 50);
-    IntText(pixelFont_Small, { 0, 0, 0 }, level, 2, y + 70);
+    Text(pixelFont_Small, { 0, 0, 0 }, "Level:", 2, y + 50);
+    Text(pixelFont_Small, { 0, 0, 0 }, to_string(level), 2, y + 70);
 
     int timeLeftText_W, timeLeftText_H;
     int roundedTimeLeftSecond = (int)(round(timeRemainingCounter));
     GetTextWidthHeight(pixelFont_Small, to_string(roundedTimeLeftSecond), timeLeftText_W, timeLeftText_H);
-    IntText(pixelFont_Small, { 255, 255, 255 }, roundedTimeLeftSecond, 21 + (109 - timeLeftText_W) / 2, 427 + (21 - timeLeftText_H) / 2);
+    Text(pixelFont_Small, { 255, 255, 255 }, to_string(roundedTimeLeftSecond), 21 + (109 - timeLeftText_W) / 2, 427 + (21 - timeLeftText_H) / 2);
 
 
 }
