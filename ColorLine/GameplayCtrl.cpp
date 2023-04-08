@@ -128,7 +128,7 @@ void CountRemainingLine()
 
 void RestartGame()
 {
-    long newAmount = (long)round((long)level * level * 0.15 * 12 ) + colorLineAmount_Base; 
+    long long int newAmount = (long)round((long)level * level * 0.15 * 12 ) + colorLineAmount_Base; 
     InitListColorLine(newAmount);
     maxTimeSecond = maxTimeSecond_Base + (int)round(level * level * 0.13 * 12);
     timeRemainingCounter = maxTimeSecond;

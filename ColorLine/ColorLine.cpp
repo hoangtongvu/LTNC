@@ -3,8 +3,8 @@
 
 ColorLine::ColorLine():
     baseLineTexture("whitePixel.png", 0, 0),
-    baseBorderTexture("whitePixel.png", 0, 0)
-
+    baseBorderTexture("whitePixel.png", 0, 0),
+    pointedBloom({ 100, 100, 100, 100 }, 255, 255, 255, 5)
 {
     baseLineTexture.LoadTexture(-1, -1);
     baseBorderTexture.LoadTexture(-1, -1);
@@ -40,7 +40,7 @@ ColorLine::ColorLine():
     pointedLightenColorScale_Min = 0;
     pointedLightenColorScale_Max = 0.35;
     pointedLightenColorScale = pointedLightenColorScale_Min;
-    pointedLightenColorScaleSpeed = 1.3;
+    pointedLightenColorScaleSpeed = 1.6;
 
     onClickLightenColorScale = 0.75;
 
@@ -73,6 +73,7 @@ void ColorLine::SetDir(int dirParameter)
 
     baseLineTexture.Transform(baseLine.x, baseLine.y, baseLine.w, baseLine.h);
     baseBorderTexture.Transform(baseBorder.x, baseBorder.y, baseBorder.w, baseBorder.h);
+    pointedBloom.Transform = { baseBorder.x, baseBorder.y, baseBorder.w, baseBorder.h };
 }
 
 void ColorLine::SetBaseColor(int rPar, int gPar, int bPar, int alphaPar)
@@ -81,6 +82,7 @@ void ColorLine::SetBaseColor(int rPar, int gPar, int bPar, int alphaPar)
     g = gPar;
     b = bPar;
     alpha = alphaPar;
+    pointedBloom.SetColor(r, g, b);
 }
 
 void ColorLine::RenderLine()
@@ -124,6 +126,11 @@ void ColorLine::RenderLine()
     baseBorderTexture.SetColor(r * darkenBorderColorScale + (255 - r * darkenBorderColorScale) * borderColorScale,
         g * darkenBorderColorScale + (255 - g * darkenBorderColorScale) * borderColorScale,
         b * darkenBorderColorScale + (255 - b * darkenBorderColorScale) * borderColorScale, alpha);
+    if (IsPointed() && highestPointedLayer == layer)
+    {
+        pointedBloom.Render();
+
+    }
     baseBorderTexture.RenderTexture();
 
 
@@ -131,7 +138,11 @@ void ColorLine::RenderLine()
     baseLineTexture.SetColor(r + (255 - r) * baseLineColorScale,
         g + (255 - g) * baseLineColorScale,
         b + (255 - b) * baseLineColorScale, alpha);
+    pointedBloom.SetColor(r + (255 - r) * baseLineColorScale,
+        g + (255 - g) * baseLineColorScale,
+        b + (255 - b) * baseLineColorScale);
     baseLineTexture.RenderTexture();
+
 }
 
 bool ColorLine::DetectMouseClick()

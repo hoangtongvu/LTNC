@@ -4,10 +4,13 @@ void MainMenu_Update()
 {
     while (!gameStarted)
     {
+        
         MainMenuEventHolder();
         RenderMainMenuTexture();
         MainMenuDetectButtonClick();
         ResetMouseClick();
+        //BloomEffect bloom({ 100, 100, 100, 100 }, { 255, 255, 255 }, 5);
+        //bloom.Render();
         SDL_Render();
         
           

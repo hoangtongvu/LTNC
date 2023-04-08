@@ -32,14 +32,12 @@ int main(int argc, char* argv[])
     InitListColorLine(colorLineAmount);
 
 
-
     Mix_PlayMusic(bgMusic, -1);
     
     // GAME LOOP _________________________________________________________________
     while (!gameClose)
     {
         srand(time(NULL));
-
         MainMenu_Update();
         if (gameClose)
         {

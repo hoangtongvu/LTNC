@@ -3,6 +3,7 @@
 #include "GameManager.h"
 //#include "GameplayCtrl.h"
 #include "CustomTexture.h"
+#include "BloomEffect.h"
 
 class ColorLine
 {
@@ -36,6 +37,9 @@ public:
 
     int baseAlpha;
     int pointedAlpha;
+
+    BloomEffect pointedBloom;
+
 #pragma endregion
 
 

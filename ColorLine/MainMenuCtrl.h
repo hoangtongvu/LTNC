@@ -3,6 +3,7 @@
 
 #include "UIManager.h"
 #include "SDL_Func.h"
+#include "BloomEffect.h"
 
 void MainMenu_Update();
 
