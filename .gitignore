@@ -128,3 +128,7 @@ ColorLine/.vs/ColorLine/v16/ipch/AutoPCH/67c1badadb2e5e04/UIMANAGER.ipch
 ColorLine/.vs/ColorLine/v16/ipch/AutoPCH/87d5cec3fe9d7ab6/MAINMENUCTRL.ipch
 ColorLine/x64/Debug/MainMenuCtrl.obj
 ColorLine/x64/Debug/UIManager.obj
+ColorLine/.vs/ColorLine/v16/ipch/AutoPCH/38cc3082e12a65a2/MESSAGEWINDOW.ipch
+ColorLine/.vs/ColorLine/v16/ipch/AutoPCH/c5e82bd9de9cb417/MESSAGEWINDOW.ipch
+ColorLine/.vs/ColorLine/v16/ipch/AutoPCH/f2a3a1f3606c456f/BLOOMEFFECT.ipch
+ColorLine/x64/Debug/BloomEffect.obj
