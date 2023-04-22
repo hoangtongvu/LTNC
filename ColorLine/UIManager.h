@@ -6,19 +6,6 @@
 #include "CustomTexture.h"
 
 
-//extern Button restartButton;
-//extern Button returnMenuButton;
-//
-//extern Button startGameButton;
-//extern Button exitGameButton;
-//
-//extern Button nextLevelButton;
-//
-//extern CustomTexture gameplayBgTexture;
-//extern CustomTexture mainMenuTexture;
-
-
-
 
 class UIManager
 {
@@ -31,7 +18,7 @@ public:
 
 	Button nextLevelButton;
 
-	CustomTexture gameplayBgTexture;
+	//CustomTexture gameplayBgTexture;
 	CustomTexture mainMenuTexture;
 	UIManager();
 	~UIManager();

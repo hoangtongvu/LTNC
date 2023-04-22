@@ -13,7 +13,7 @@ public:
 
     Button(int x, int y, int w, int h, string label, string spritePath)
     {
-        
+        int thickness = 3;
         baseButton = { x, y, w, h };
         buttonLabel = label;
         buttonSpritePath = spritePath;

@@ -8,6 +8,9 @@
 #include "TEST_CLASS.h"
 #include "CustomTexture.h"
 #include "SDL_Func.h"
+#include "GameTimer.h"
+#include "WinLoseWindow.h"
+#include "LabelAndTextWindow.h"
 
 
 //SDL_Renderer* renderer;
@@ -102,3 +105,7 @@ void GameplayDetectButtonClick();
 void RenderAndDetectMouseClickColorLine();
 
 void RenderFadingLine();
+
+void TEST_RenderGameplayOverLay();
+
+void SetBgBlack();

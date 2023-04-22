@@ -27,8 +27,8 @@ int colorLineAmount = 50;
 int highestLayer = 0;
 int remainingLine = 0;
 
-int maxTimeSecond_Base = 35;
-int maxTimeSecond = 35;
+int maxTimeSecond_Base = 35;//35
+int maxTimeSecond = 35;//35
 double timeRemainingCounter = maxTimeSecond;
 bool stopCounting = false;
 

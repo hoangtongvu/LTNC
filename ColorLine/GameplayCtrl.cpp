@@ -6,6 +6,18 @@
 vector<ColorLine> listColorLine;
 vector<ColorLine> queueListFadedColorLine;
 
+string winMessage = "YOU WIN";
+string loseMessage = "YOU LOSE";
+
+
+int spaceBetween = SCREEN_WIDTH - gameplayScreen_X - gameplayScreen_Width;
+int thickness = 5;
+int leftPanel_X = spaceBetween;
+int leftPanel_Y = spaceBetween;
+int leftPanel_W = gameplayScreen_X - 2 * spaceBetween;
+int leftPanel_H = gameplayScreen_Height;
+
+
 #pragma endregion
 
 
@@ -13,17 +25,20 @@ vector<ColorLine> queueListFadedColorLine;
 void Gameplay_Update()
 {
     GameplayEventHolder();
-    RenderGameplayBgTexture();
+    //RenderGameplayBgTexture();
     CountTimeLeft();
     CountRemainingLine();
     GetHighestPointedLayer();
     RenderGameplayTextLine();
     RenderAndDetectMouseClickColorLine();
+    TEST_RenderGameplayOverLay();
     RenderFadingLine();
     ResizeListColorLine();
     WinLoseSystem();
     GameplayDetectButtonClick();
     ResetMouseClick();
+
+    SetBgBlack();
     SDL_Render();
 
  
@@ -54,14 +69,19 @@ void WinLoseSystem()
 void WinGame()
 {
     stopCounting = true;
-    SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
-    SDL_Rect winScreen = { gameplayScreen_X, gameplayScreen_Y, gameplayScreen_Width, gameplayScreen_Height };
-    SDL_RenderFillRect(renderer, &winScreen);
-    string winMessage = "YOU WIN";
-    int textW, textH;
-    GetTextWidthHeight(pixelFont_Med, winMessage, textW, textH);
-    Text(pixelFont_Med, { 255, 255, 255 }, winMessage, gameplayScreen_X + (gameplayScreen_Width - textW) / 2, gameplayScreen_Y + (gameplayScreen_Height - textH) / 2);
 
+    WinLoseWindow winWindow(winMessage, uiManager.nextLevelButton);
+    winWindow.r = 0;
+    winWindow.g = 255;
+    winWindow.b = 0;
+
+    int w = 500;
+    int h = 300;
+    SDL_Rect winScreen = { gameplayScreen_X + (gameplayScreen_Width - w) / 2, gameplayScreen_Y + (gameplayScreen_Height - h) / 2, w, h };
+
+    winWindow.Transform = winScreen;
+    winWindow.Render();
+    
     if (!leveledUp)
     {
         level++;
@@ -70,19 +90,30 @@ void WinGame()
 
     ContinueNextLevel();
 
+    
 
 }
 
 void LoseGame()
 {
     stopCounting = true;
-    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
-    SDL_Rect loseScreen = { gameplayScreen_X, gameplayScreen_Y, gameplayScreen_Width, gameplayScreen_Height };
-    SDL_RenderFillRect(renderer, &loseScreen);
-    string loseMessage = "YOU LOSE";
-    int textW, textH;
+
+    WinLoseWindow loseWindow(loseMessage, uiManager.restartButton);
+    loseWindow.r = 255;
+    loseWindow.g = 0;
+    loseWindow.b = 0;
+
+    //SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+    int w = 500;
+    int h = 300;
+    SDL_Rect loseScreen = { gameplayScreen_X + (gameplayScreen_Width - w) / 2, gameplayScreen_Y + (gameplayScreen_Height - h) / 2, w, h };
+    loseWindow.Transform = loseScreen;
+    loseWindow.Render();
+
+    //SDL_RenderFillRect(renderer, &loseScreen);
+    /*int textW, textH;
     GetTextWidthHeight(pixelFont_Med, loseMessage, textW, textH);
-    Text(pixelFont_Med, { 255, 255, 255 }, loseMessage, gameplayScreen_X + (gameplayScreen_Width - textW) / 2, gameplayScreen_Y + (gameplayScreen_Height - textH) / 2);
+    Text(pixelFont_Med, { 255, 255, 255 }, loseMessage, gameplayScreen_X + (gameplayScreen_Width - textW) / 2, gameplayScreen_Y + (gameplayScreen_Height - textH) / 2);*/
 
 }
 #pragma endregion
@@ -273,32 +304,61 @@ void GameplayEventHolder()
 void RenderGameplayBgTexture()
 {
     //Gameplay Background  
-    CustomTexture gameplayBgTexture = uiManager.gameplayBgTexture;
-    gameplayBgTexture.RenderTexture();
+    //CustomTexture gameplayBgTexture = uiManager.gameplayBgTexture;
+    //gameplayBgTexture.RenderTexture();
 }
 
 void RenderGameplayTextLine()
 {
+    int leftRightSpacing = 10;
+    int topBottomSpacing = 10;
+
+    int timeLeftText_W = leftPanel_W - 2 * leftRightSpacing;
+    int timeLeftText_H = 40;
+    int timeLeftText_X = leftPanel_X + leftRightSpacing;
+    int timeLeftText_Y = 427;
+
     //Gameplay TextLine
+    SDL_Color textColor = { 255, 255, 255 };
     int y = 200;
-    Text(pixelFont_Small, { 0, 0, 0 }, "Remaining:", 2, y);
-    Text(pixelFont_Small, { 0, 0, 0 }, to_string(remainingLine), 2, y + 20);
+    
 
-    Text(pixelFont_Small, { 0, 0, 0 }, "Level:", 2, y + 50);
-    Text(pixelFont_Small, { 0, 0, 0 }, to_string(level), 2, y + 70);
+    LabelAndTextWindow remainingLineWindow;
+    remainingLineWindow.Transform = { timeLeftText_X, y, timeLeftText_W, timeLeftText_H * 2 };
+    remainingLineWindow.label = "Line";
+    remainingLineWindow.text = to_string(remainingLine);
+    remainingLineWindow.Render();
+    
+    
+    LabelAndTextWindow levelWindow;
+    levelWindow.Transform = { timeLeftText_X, y + timeLeftText_H * 2 + topBottomSpacing, timeLeftText_W, timeLeftText_H * 2 };
+    levelWindow.label = "Level";
+    levelWindow.text = to_string(level);
+    levelWindow.Render();
 
-    int timeLeftText_W, timeLeftText_H;
+
+    /*Text(pixelFont_Small, textColor, "Level:", 2, y + 50);
+    Text(pixelFont_Small, textColor, to_string(level), 2, y + 70);*/
+
     int roundedTimeLeftSecond = (int)(round(timeRemainingCounter));
-    GetTextWidthHeight(pixelFont_Small, to_string(roundedTimeLeftSecond), timeLeftText_W, timeLeftText_H);
-    Text(pixelFont_Small, { 255, 255, 255 }, to_string(roundedTimeLeftSecond), 21 + (109 - timeLeftText_W) / 2, 427 + (21 - timeLeftText_H) / 2);
+
+    GameTimer timer;
+    timer.Transform = { timeLeftText_X, timeLeftText_Y, timeLeftText_W, timeLeftText_H };
+    timer.SetTime(roundedTimeLeftSecond);
+    timer.Render();
 
 
 }
 
 void GameplayDetectButtonClick()
 {
+    int buttonLeftRightSpacing = 10;
+    int buttonTopBottomSpacing = 10;
+    int buttonH = 40;
+
     //Restart Button
     Button restartButton = uiManager.restartButton;
+    restartButton.baseButton = { leftPanel_X + buttonLeftRightSpacing, leftPanel_Y + buttonTopBottomSpacing, leftPanel_W - 2 * buttonLeftRightSpacing, buttonH };
     restartButton.RenderButton(pixelFont_Small);
     if (restartButton.DetectMouseClick())
     {
@@ -308,6 +368,7 @@ void GameplayDetectButtonClick()
 
     //ReturnMenu Button
     Button returnMenuButton = uiManager.returnMenuButton;
+    returnMenuButton.baseButton = { leftPanel_X + buttonLeftRightSpacing, leftPanel_Y + 2 * buttonTopBottomSpacing + buttonH, leftPanel_W - 2 * buttonLeftRightSpacing, buttonH };
     returnMenuButton.RenderButton(pixelFont_Small);
     if (returnMenuButton.DetectMouseClick())
     {
@@ -352,5 +413,30 @@ void RenderFadingLine()
             i--;
         }
     }
+
+}
+
+void TEST_RenderGameplayOverLay()
+{
+    
+    //Gameplay Background  
+    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+    SDL_Rect gameplayRect = { gameplayScreen_X, gameplayScreen_Y, gameplayScreen_Width, gameplayScreen_Height };
+    SDL_RenderDrawRect(renderer, &gameplayRect);
+    gameplayRect = { gameplayScreen_X - thickness, gameplayScreen_Y - thickness, gameplayScreen_Width + thickness * 2, gameplayScreen_Height + thickness * 2 };
+    SDL_RenderDrawRect(renderer, &gameplayRect);
+
+    
+
+    SDL_Rect leftPanelRect = { leftPanel_X, leftPanel_Y, leftPanel_W, leftPanel_H };
+    SDL_RenderDrawRect(renderer, &leftPanelRect);
+    leftPanelRect = { leftPanel_X - thickness, leftPanel_Y - thickness, leftPanel_W + thickness * 2, leftPanel_H + thickness * 2 };
+    SDL_RenderDrawRect(renderer, &leftPanelRect);
+
+}
+
+void SetBgBlack()
+{
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 
 }

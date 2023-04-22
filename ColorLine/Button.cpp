@@ -33,13 +33,14 @@ void Button::RenderButton(TTF_Font* font)
         }
         else
         {
-            SDL_SetRenderDrawColor(renderer, 150, 150, 150, 255);
+            SDL_SetRenderDrawColor(renderer, 70, 70, 70, 255);
+            
             if (isPointed())
             {
-                SDL_RenderDrawRect(renderer, &baseButton);
-
+                SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);   
             }
-            //SDL_RenderFillRect(renderer, &baseButton);
+            SDL_RenderDrawRect(renderer, &baseButton);
+            
 
         }
 

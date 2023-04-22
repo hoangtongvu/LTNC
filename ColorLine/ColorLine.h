@@ -38,7 +38,7 @@ public:
     int baseAlpha;
     int pointedAlpha;
 
-    BloomEffect pointedBloom;
+    //BloomEffect pointedBloom;
 
 #pragma endregion
 

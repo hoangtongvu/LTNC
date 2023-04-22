@@ -32,14 +32,18 @@ void Game::LoadFonts()
 
 void Game::LoadSounds()
 {
-	bgMusic = Mix_LoadMUS((musicDir + "Lonesome Traveller.wav").c_str());
+	bgMusic = Mix_LoadMUS((musicDir + "road-in-the-forest-115035.mp3").c_str());
+	if (bgMusic == NULL)
+	{
+		cout << Mix_GetError();
+	}
 	onClickButtonSFX = Mix_LoadWAV((sfxDir + "Retro Blop 18.wav").c_str());
 }
 
 void Game::LoadTextures()
 {
 	uiManager.mainMenuTexture.LoadTexture(-1, -1);
-	uiManager.gameplayBgTexture.LoadTexture(-1, -1);
+	//uiManager.gameplayBgTexture.LoadTexture(-1, -1);
 	//mainMenuTexture.LoadTexture(-1, -1);
 	//gameplayBgTexture.LoadTexture(-1, -1);
 }
