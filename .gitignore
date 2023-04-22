@@ -132,3 +132,21 @@ ColorLine/.vs/ColorLine/v16/ipch/AutoPCH/38cc3082e12a65a2/MESSAGEWINDOW.ipch
 ColorLine/.vs/ColorLine/v16/ipch/AutoPCH/c5e82bd9de9cb417/MESSAGEWINDOW.ipch
 ColorLine/.vs/ColorLine/v16/ipch/AutoPCH/f2a3a1f3606c456f/BLOOMEFFECT.ipch
 ColorLine/x64/Debug/BloomEffect.obj
+ColorLine/.vs/ColorLine/v16/ipch/AutoPCH/31dd7768e1d88dd1/LABELANDTEXTWINDOW.ipch
+ColorLine/.vs/ColorLine/v16/ipch/AutoPCH/37d05981cd5ff82/CUSTOMWINDOW.ipch
+ColorLine/.vs/ColorLine/v16/ipch/AutoPCH/a8af6a85ef5bb69e/WINLOSEWINDOW.ipch
+ColorLine/.vs/ColorLine/v16/ipch/AutoPCH/f05f174d05998c3a/GAMETIMER.ipch
+ColorLine/x64/Debug/Assets/Audios/Musics/Lonesome Traveller.wav
+ColorLine/x64/Debug/Assets/Audios/SFXs/Retro Blop 18.wav
+ColorLine/x64/Debug/Assets/Fonts/Minecraft.ttf
+ColorLine/x64/Debug/Assets/Sprites/Clock_Orange.png
+ColorLine/x64/Debug/Assets/Sprites/ColorLine Game UI.png
+ColorLine/x64/Debug/Assets/Sprites/HomeButton.png
+ColorLine/x64/Debug/Assets/Sprites/menuBg.png
+ColorLine/x64/Debug/Assets/Sprites/RestartButton.png
+ColorLine/x64/Debug/Assets/Sprites/whitePixel.png
+ColorLine/x64/Debug/CustomWindow.obj
+ColorLine/x64/Debug/GameTimer.obj
+ColorLine/x64/Debug/LabelAndTextWindow.obj
+ColorLine/x64/Debug/SDL2_mixer.dll
+ColorLine/x64/Debug/WinLoseWindow.obj
