@@ -1,14 +1,10 @@
 ﻿#include "GameplayCtrl.h"
 #include "MainMenuCtrl.h"
 #include "Game.h"
-
-
+#include "GameSave.h"
 
 
 #pragma region FunctionInitialize
-
-
-
 
 
 #pragma endregion
@@ -17,7 +13,6 @@
 
 #pragma region VariableInitialize
 
-//Game game;
 
 #pragma endregion
 
@@ -32,9 +27,24 @@ int main(int argc, char* argv[])
     // INITIALIZE COLOR LINE
     InitListColorLine(colorLineAmount);
 
-
-    Mix_PlayMusic(bgMusic, -1);
+    //Play Bg music
+    //Mix_PlayMusic(bgMusic, -1);
     
+    //TEST SAVE GAME
+    //GameSave save;
+    gameSave.Load(saveFileName);
+
+    
+
+    //ofstream o_saveFile("Player data/save.txt");
+   /* if (o_saveFile)
+    {
+        o_saveFile << 30;
+    }*/
+
+    //o_saveFile.close();
+
+
     // GAME LOOP _________________________________________________________________
     while (!gameClose)
     {

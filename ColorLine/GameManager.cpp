@@ -22,7 +22,7 @@ int mouseY = 0;
 
 bool isClicked = false;
 
-int colorLineAmount_Base = 35;//35
+int colorLineAmount_Base = 1;//35
 int colorLineAmount = 50;
 int highestLayer = 0;
 int remainingLine = 0;
@@ -33,7 +33,6 @@ double timeRemainingCounter = maxTimeSecond;
 bool stopCounting = false;
 
 
-bool leveledUp = false;
 int level = 0;
 
 bool gameStarted = false;
@@ -65,6 +64,9 @@ TTF_Font* pixelFont_Med = NULL;
 
 
 bool gameClose = false;
+
+string saveFileName = "save.txt";
+
 
 
 

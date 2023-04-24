@@ -38,7 +38,6 @@ extern double timeRemainingCounter;
 extern bool stopCounting;
 
 
-extern bool leveledUp;
 extern int level;
 
 extern bool gameStarted;
@@ -68,6 +67,9 @@ extern TTF_Font* pixelFont_Small;
 extern TTF_Font* pixelFont_Med;
 
 extern bool gameClose;
+
+extern string saveFileName;
+
 
 void ResetMouseClick();
 

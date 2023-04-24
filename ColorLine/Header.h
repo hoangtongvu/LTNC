@@ -12,6 +12,9 @@
 #include <SDL_mixer.h>
 #include <iostream>
 #include <vector>
+
+#include <fstream>
+
 //#include "GameplayCtrl.h"
 
 

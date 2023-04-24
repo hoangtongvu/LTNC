@@ -11,6 +11,7 @@
 #include "GameTimer.h"
 #include "WinLoseWindow.h"
 #include "LabelAndTextWindow.h"
+#include "GameSave.h"
 
 
 //SDL_Renderer* renderer;

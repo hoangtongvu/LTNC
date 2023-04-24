@@ -10,6 +10,7 @@ string winMessage = "YOU WIN";
 string loseMessage = "YOU LOSE";
 
 
+
 int spaceBetween = SCREEN_WIDTH - gameplayScreen_X - gameplayScreen_Width;
 int thickness = 5;
 int leftPanel_X = spaceBetween;
@@ -82,11 +83,7 @@ void WinGame()
     winWindow.Transform = winScreen;
     winWindow.Render();
     
-    if (!leveledUp)
-    {
-        level++;
-        leveledUp = true;
-    }
+    
 
     ContinueNextLevel();
 
@@ -126,8 +123,10 @@ void ContinueNextLevel()
 
     if (nextLevelButton.DetectMouseClick())
     {
+        
+        level++;
+        gameSave.Write(saveFileName);
         nextLevelButton.isEnabled = false;
-        leveledUp = false;
         RestartGame();
 
     }

@@ -33,24 +33,32 @@ void Button::RenderButton(TTF_Font* font)
         }
         else
         {
-            SDL_SetRenderDrawColor(renderer, 70, 70, 70, 255);
+            Uint8 r, g, b;
+            r = 120;
+            g = 120;
+            b = 120;
+            SDL_SetRenderDrawColor(renderer, r, g, b, 255);
             
             if (isPointed())
             {
-                SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);   
+                r = 255;
+                g = 255;
+                b = 255;
             }
+            SDL_SetRenderDrawColor(renderer, r, g, b, 255);   
             SDL_RenderDrawRect(renderer, &baseButton);
             
+            
+            if (!buttonLabel.empty())
+            {
+                int textW, textH;
+                GetTextWidthHeight(font, buttonLabel, textW, textH);
+                Text(font, { r, g, b }, buttonLabel, baseButton.x + (baseButton.w - textW) / 2, baseButton.y + (baseButton.h - textH) / 2);
+
+            }
 
         }
 
-        if (!buttonLabel.empty())
-        {
-            int textW, textH;
-            GetTextWidthHeight(font, buttonLabel, textW, textH);
-            Text(font, { 255, 255, 255 }, buttonLabel, baseButton.x + (baseButton.w - textW) / 2, baseButton.y + (baseButton.h - textH) / 2);
-
-        }
 
     }
 }
