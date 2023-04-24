@@ -10,7 +10,6 @@
 #pragma endregion
 
 
-
 #pragma region VariableInitialize
 
 
@@ -30,19 +29,7 @@ int main(int argc, char* argv[])
     //Play Bg music
     //Mix_PlayMusic(bgMusic, -1);
     
-    //TEST SAVE GAME
-    //GameSave save;
-    gameSave.Load(saveFileName);
 
-    
-
-    //ofstream o_saveFile("Player data/save.txt");
-   /* if (o_saveFile)
-    {
-        o_saveFile << 30;
-    }*/
-
-    //o_saveFile.close();
 
 
     // GAME LOOP _________________________________________________________________
@@ -54,7 +41,7 @@ int main(int argc, char* argv[])
         {
             break;
         }
-        cout << Mix_GetError();
+        //cout << Mix_GetError();
         
         Gameplay_Update();
 
@@ -63,8 +50,7 @@ int main(int argc, char* argv[])
     
 
 
-    //TTF_CloseFont(pixelFont_Small);
-    //TTF_CloseFont(pixelFont_Med);
+    
     TTF_Quit();
     quitSDL(window, renderer);
 

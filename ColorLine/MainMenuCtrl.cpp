@@ -6,13 +6,11 @@ void MainMenu_Update()
     {
         
         MainMenuEventHolder();
-        RenderMainMenuTexture();
+        //RenderMainMenuTexture();
         MainMenuDetectButtonClick();
         ResetMouseClick();
-        //BloomEffect bloom({ 100, 100, 100, 100 }, { 255, 255, 255 }, 5);
-        //bloom.Render();
+        SetBgBlack();
         SDL_Render();
-        
           
     }
 }
@@ -77,6 +75,16 @@ void MainMenuDetectButtonClick()
 {
     // Start game Button
     Button startGameButton = uiManager.startGameButton;
+    string s;
+    if (level == 0)
+    {
+        s = "NEW GAME";
+    }
+    else
+    {
+        s = "CONTINUE";
+    }
+    startGameButton.buttonLabel = s;
     startGameButton.RenderButton(pixelFont_Med);
     if (startGameButton.DetectMouseClick())
     {
@@ -84,7 +92,7 @@ void MainMenuDetectButtonClick()
         RestartGame();
 
     }
-
+    
     // Exit game Button
     Button exitGameButton = uiManager.exitGameButton;
     exitGameButton.RenderButton(pixelFont_Med);

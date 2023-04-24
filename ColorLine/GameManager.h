@@ -75,3 +75,4 @@ void ResetMouseClick();
 
 void SDL_Render();
 
+void SetBgBlack();

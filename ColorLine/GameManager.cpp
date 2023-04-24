@@ -82,5 +82,8 @@ void SDL_Render()
     SDL_Delay(1000 / fps);
 }
 
-
+void SetBgBlack()
+{
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+}
 

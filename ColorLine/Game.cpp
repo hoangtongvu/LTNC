@@ -14,7 +14,7 @@ Game::~Game()
 
 void Game::LoadComponents()
 {
-	
+	LoadSaveFile();
 	LoadTextures();
 	LoadUI_Elements();
 	LoadSounds();
@@ -43,13 +43,15 @@ void Game::LoadSounds()
 void Game::LoadTextures()
 {
 	uiManager.mainMenuTexture.LoadTexture(-1, -1);
-	//uiManager.gameplayBgTexture.LoadTexture(-1, -1);
-	//mainMenuTexture.LoadTexture(-1, -1);
-	//gameplayBgTexture.LoadTexture(-1, -1);
 }
 
 
 void Game::LoadUI_Elements()
 {
 
+}
+
+void Game::LoadSaveFile()
+{
+	gameSave.Load(saveFileName);
 }

@@ -18,6 +18,8 @@ public:
 	void LoadTextures();
 
 	void LoadUI_Elements();
+
+	void LoadSaveFile();
 private:
 
 };

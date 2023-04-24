@@ -109,4 +109,3 @@ void RenderFadingLine();
 
 void TEST_RenderGameplayOverLay();
 
-void SetBgBlack();

@@ -434,8 +434,3 @@ void TEST_RenderGameplayOverLay()
 
 }
 
-void SetBgBlack()
-{
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-
-}
