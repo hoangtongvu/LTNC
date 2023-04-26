@@ -1,15 +1,28 @@
 #include "MainMenuCtrl.h"
 
-void MainMenu_Update()
+
+MainMenuCtrl mainMenuCtrl;
+
+MainMenuCtrl::MainMenuCtrl()
+{
+}
+
+MainMenuCtrl::~MainMenuCtrl()
+{
+}
+
+
+
+void MainMenuCtrl::Update()
 {
     while (!gameStarted)
     {
         
-        MainMenuEventHolder();
+        EventHolder();
         //RenderMainMenuTexture();
-        MainMenuSetButtonPosition();
-        MainMenuRenderButtons();
-        MainMenuDetectButtonClick();
+        SetButtonPosition();
+        RenderButtons();
+        DetectButtonClick();
         ResetMouseClick();
         SetBgBlack();
         SDL_Render();
@@ -18,7 +31,7 @@ void MainMenu_Update()
 }
 
 
-void MainMenuEventHolder()
+void MainMenuCtrl::EventHolder()
 {
     //Menu Event Holder
     while (SDL_PollEvent(&event))
@@ -67,13 +80,13 @@ void MainMenuEventHolder()
 
 }
 
-void RenderMainMenuTexture()
+void MainMenuCtrl::RenderMainMenuTexture()
 {
     CustomTexture mainMenuTexture = uiManager.mainMenuTexture;
     mainMenuTexture.RenderTexture();
 }
 
-void MainMenuDetectButtonClick()
+void MainMenuCtrl::DetectButtonClick()
 {
     // Start game Button
     Button startGameButton = uiManager.menuButtons.newGameButton;
@@ -104,14 +117,13 @@ void MainMenuDetectButtonClick()
 
 }
 
-
-void MainMenuRenderButtons()
+void MainMenuCtrl::RenderButtons()
 {
     MenuButtons menuButtons = uiManager.menuButtons;
     menuButtons.Render();
 }
 
-void MainMenuSetButtonPosition()
+void MainMenuCtrl::SetButtonPosition()
 {
     uiManager.menuButtons.SetPosition();
 }

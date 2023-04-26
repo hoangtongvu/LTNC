@@ -36,7 +36,7 @@ int main(int argc, char* argv[])
     while (!gameClose)
     {
         srand(time(NULL));
-        MainMenu_Update();
+        mainMenuCtrl.Update();
         if (gameClose)
         {
             break;

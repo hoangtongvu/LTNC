@@ -5,14 +5,32 @@
 #include "SDL_Func.h"
 #include "BloomEffect.h"
 
-void MainMenu_Update();
+class MainMenuCtrl
+{
+public:
+	MainMenuCtrl();
+	~MainMenuCtrl();
+	void Update();
 
-void MainMenuEventHolder();
 
-void RenderMainMenuTexture();
+private:
 
-void MainMenuDetectButtonClick();
+	void EventHolder();
 
-void MainMenuRenderButtons();
+	void RenderMainMenuTexture();
 
-void MainMenuSetButtonPosition();
+	void DetectButtonClick();
+
+	void RenderButtons();
+
+	void SetButtonPosition();
+
+};
+
+
+
+
+
+
+
+extern MainMenuCtrl mainMenuCtrl;
