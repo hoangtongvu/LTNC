@@ -4,6 +4,7 @@
 #include "TextFunc.h"
 #include "ColorLine.h"
 #include "CustomTexture.h"
+#include "MenuButtons.h"
 
 
 
@@ -13,8 +14,7 @@ public:
 	Button restartButton;
 	Button returnMenuButton;
 
-	Button startGameButton;
-	Button exitGameButton;
+	MenuButtons menuButtons;
 
 	Button nextLevelButton;
 

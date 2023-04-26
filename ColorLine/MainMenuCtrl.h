@@ -12,3 +12,7 @@ void MainMenuEventHolder();
 void RenderMainMenuTexture();
 
 void MainMenuDetectButtonClick();
+
+void MainMenuRenderButtons();
+
+void MainMenuSetButtonPosition();

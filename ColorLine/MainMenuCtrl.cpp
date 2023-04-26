@@ -7,6 +7,8 @@ void MainMenu_Update()
         
         MainMenuEventHolder();
         //RenderMainMenuTexture();
+        MainMenuSetButtonPosition();
+        MainMenuRenderButtons();
         MainMenuDetectButtonClick();
         ResetMouseClick();
         SetBgBlack();
@@ -74,28 +76,26 @@ void RenderMainMenuTexture()
 void MainMenuDetectButtonClick()
 {
     // Start game Button
-    Button startGameButton = uiManager.startGameButton;
-    string s;
-    if (level == 0)
-    {
-        s = "NEW GAME";
-    }
-    else
-    {
-        s = "CONTINUE";
-    }
-    startGameButton.buttonLabel = s;
-    startGameButton.RenderButton(pixelFont_Med);
+    Button startGameButton = uiManager.menuButtons.newGameButton;
     if (startGameButton.DetectMouseClick())
     {
+        level = 0;
         gameStarted = true;
         RestartGame();
 
     }
+
+
+    // Continue game Button
+    Button continueGameButton = uiManager.menuButtons.continueGameButton;
+    if (continueGameButton.DetectMouseClick())
+    {
+        gameStarted = true;
+        RestartGame();
+    }
     
     // Exit game Button
-    Button exitGameButton = uiManager.exitGameButton;
-    exitGameButton.RenderButton(pixelFont_Med);
+    Button exitGameButton = uiManager.menuButtons.exitGameButton;
     if (exitGameButton.DetectMouseClick())
     {
         gameStarted = true;
@@ -103,3 +103,17 @@ void MainMenuDetectButtonClick()
     }
 
 }
+
+
+void MainMenuRenderButtons()
+{
+    MenuButtons menuButtons = uiManager.menuButtons;
+    menuButtons.Render();
+}
+
+void MainMenuSetButtonPosition()
+{
+    uiManager.menuButtons.SetPosition();
+}
+
+

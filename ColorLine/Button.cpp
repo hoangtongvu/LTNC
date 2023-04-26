@@ -3,64 +3,64 @@
 
 void Button::RenderButton(TTF_Font* font)
 {
-    if (isEnabled)
+    if (!isEnabled) return;
+    
+    if (!buttonSpritePath.empty())
     {
-        if (!buttonSpritePath.empty())
+        SDL_Surface* buttonSurface;
+        buttonSurface = IMG_Load((spriteDir + buttonSpritePath).c_str());
+        SDL_Texture* buttonTex = SDL_CreateTextureFromSurface(renderer, buttonSurface);
+
+        int r, g, b;
+        if (isPointed())
         {
-            SDL_Surface* buttonSurface;
-            buttonSurface = IMG_Load((spriteDir + buttonSpritePath).c_str());
-            SDL_Texture* buttonTex = SDL_CreateTextureFromSurface(renderer, buttonSurface);
-
-            int r, g, b;
-            if (isPointed())
-            {
-                r = 255;
-                g = 255;
-                b = 255;
-            }
-            else
-            {
-                r = 220;
-                g = 220;
-                b = 220;
-            }
-            SDL_SetTextureColorMod(buttonTex, r, g, b);
-
-
-            SDL_FreeSurface(buttonSurface);
-            SDL_RenderCopy(renderer, buttonTex, NULL, &baseButton);
-            SDL_DestroyTexture(buttonTex);
+            r = 255;
+            g = 255;
+            b = 255;
         }
         else
         {
-            Uint8 r, g, b;
-            r = 120;
-            g = 120;
-            b = 120;
-            SDL_SetRenderDrawColor(renderer, r, g, b, 255);
-            
-            if (isPointed())
-            {
-                r = 255;
-                g = 255;
-                b = 255;
-            }
-            SDL_SetRenderDrawColor(renderer, r, g, b, 255);   
-            SDL_RenderDrawRect(renderer, &baseButton);
-            
-            
-            if (!buttonLabel.empty())
-            {
-                int textW, textH;
-                GetTextWidthHeight(font, buttonLabel, textW, textH);
-                Text(font, { r, g, b }, buttonLabel, baseButton.x + (baseButton.w - textW) / 2, baseButton.y + (baseButton.h - textH) / 2);
+            r = 220;
+            g = 220;
+            b = 220;
+        }
+        SDL_SetTextureColorMod(buttonTex, r, g, b);
 
-            }
+
+        SDL_FreeSurface(buttonSurface);
+        SDL_RenderCopy(renderer, buttonTex, NULL, &baseButton);
+        SDL_DestroyTexture(buttonTex);
+    }
+    else
+    {
+        Uint8 r, g, b;
+        r = 120;
+        g = 120;
+        b = 120;
+        SDL_SetRenderDrawColor(renderer, r, g, b, 255);
+            
+        if (isPointed())
+        {
+            r = 255;
+            g = 255;
+            b = 255;
+        }
+        SDL_SetRenderDrawColor(renderer, r, g, b, 255);   
+        SDL_RenderDrawRect(renderer, &baseButton);
+            
+            
+        if (!buttonLabel.empty())
+        {
+            int textW, textH;
+            GetTextWidthHeight(font, buttonLabel, textW, textH);
+            Text(font, { r, g, b }, buttonLabel, baseButton.x + (baseButton.w - textW) / 2, baseButton.y + (baseButton.h - textH) / 2);
 
         }
 
-
     }
+
+
+    
 }
 
 bool Button::DetectMouseClick()
@@ -76,6 +76,7 @@ bool Button::DetectMouseClick()
         if (isClicked)
         {
             buttonClicked = true;
+            //cout << buttonLabel << endl;    
         }
     }
     return buttonClicked;
