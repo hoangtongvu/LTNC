@@ -152,3 +152,5 @@ ColorLine/x64/Debug/SDL2_mixer.dll
 ColorLine/x64/Debug/WinLoseWindow.obj
 ColorLine/.vs/ColorLine/v16/ipch/AutoPCH/5e4288af1a3fe4ae/GAMESAVE.ipch
 ColorLine/x64/Debug/GameSave.obj
+ColorLine/.vs/ColorLine/v16/ipch/AutoPCH/2c6ee0840dba6f19/MENUBUTTONS.ipch
+ColorLine/x64/Debug/MenuButtons.obj
