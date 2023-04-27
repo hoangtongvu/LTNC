@@ -19,33 +19,17 @@
 
 int main(int argc, char* argv[])
 {
-    initSDL(window, renderer);
-    TTF_Init();
+    game.Init();
     game.LoadComponents();
     
     // INITIALIZE COLOR LINE
-    InitListColorLine(colorLineAmount);
+    game.InitListColorLine(colorLineAmount);
 
     //Play Bg music
     //Mix_PlayMusic(bgMusic, -1);
     
-
-
-
     // GAME LOOP _________________________________________________________________
-    while (!gameClose)
-    {
-        srand(time(NULL));
-        mainMenuCtrl.Update();
-        if (gameClose)
-        {
-            break;
-        }
-        
-        gameplayCtrl.Update();
-
-    }
-
+    game.Update();
 
     
     TTF_Quit();

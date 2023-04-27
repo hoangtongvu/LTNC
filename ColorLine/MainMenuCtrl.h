@@ -5,6 +5,8 @@
 #include "SDL_Func.h"
 #include "BloomEffect.h"
 
+#include "Game.h"
+
 class MainMenuCtrl
 {
 public:

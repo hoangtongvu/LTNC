@@ -2,6 +2,9 @@
 
 #include "GameManager.h"
 #include "GameplayCtrl.h"
+#include "MainMenuCtrl.h"
+
+extern vector<ColorLine> listColorLine;
 
 
 class Game
@@ -9,18 +12,22 @@ class Game
 public:
 	Game();
 	~Game();
+	void Init();
+
 	void LoadComponents();
 
-	void LoadFonts();
+	void RestartGame();//
 
-	void LoadSounds();
+	void InitListColorLine(int newAmount);//
 
-	void LoadTextures();
+	void Update();
 
-	void LoadUI_Elements();
-
-	void LoadSaveFile();
 private:
+	void LoadFonts();
+	void LoadSounds();
+	void LoadTextures();
+	void LoadUI_Elements();
+	void LoadSaveFile();
 
 };
 

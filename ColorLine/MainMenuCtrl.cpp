@@ -94,7 +94,7 @@ void MainMenuCtrl::DetectButtonClick()
     {
         level = 0;
         gameStarted = true;
-        RestartGame();
+        game.RestartGame();
 
     }
 
@@ -104,7 +104,7 @@ void MainMenuCtrl::DetectButtonClick()
     if (continueGameButton.DetectMouseClick())
     {
         gameStarted = true;
-        RestartGame();
+        game.RestartGame();
     }
     
     // Exit game Button

@@ -13,6 +13,7 @@
 #include "LabelAndTextWindow.h"
 #include "GameSave.h"
 
+#include "Game.h"
 
 
 #pragma region Blend and Color Texture
@@ -46,8 +47,10 @@ public:
 
 	void Update();
 
-
 private:
+	string winMessage = "YOU WIN";
+	string loseMessage = "YOU LOSE";
+
 	void WinLoseSystem();
 	void WinGame();
 	void LoseGame();
@@ -63,22 +66,6 @@ private:
 	void RenderFadingLine();
 	void TEST_RenderGameplayOverLay();
 };
-
-
-
-//extern vector<ColorLine> listColorLine;
-
-
-
-
-
-
-void RestartGame();//
-
-void InitListColorLine(int newAmount);//
-
-
-
 
 
 
