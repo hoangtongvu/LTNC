@@ -41,13 +41,10 @@ int main(int argc, char* argv[])
         {
             break;
         }
-        //cout << Mix_GetError();
         
-        Gameplay_Update();
+        gameplayCtrl.Update();
 
     }
-
-    
 
 
     

@@ -14,38 +14,6 @@
 #include "GameSave.h"
 
 
-//SDL_Renderer* renderer;
-//
-//
-//const int SCREEN_WIDTH = 1280;
-//const int SCREEN_HEIGHT = 720;
-//
-//
-//const int gameplayScreen_X = 175;
-//const int gameplayScreen_Y = 24;
-//const int gameplayScreen_Width = 1080;
-//const int gameplayScreen_Height = 671;
-//
-//
-//int mouseX = 0;
-//int mouseY = 0;
-//
-//bool isClicked = false;
-//
-//int colorLineAmount = 1000;
-//int highestLayer = 0;
-//int remainingLine = 0;
-//
-//int maxTimeSecond = 9999;
-//double timeRemainingCounter = maxTimeSecond;
-//bool stopCounting = false;
-//
-//int level = 0;
-//
-//bool gameStarted = false;
-//
-//string assetDir = "Assets/";
-//string spriteDir = assetDir + "Sprites/";
 
 #pragma region Blend and Color Texture
 
@@ -70,42 +38,50 @@
 
 #pragma endregion
 
+class GameplayCtrl
+{
+public:
+	GameplayCtrl();
+	~GameplayCtrl();
 
-extern vector<ColorLine> listColorLine;
+	void Update();
 
 
-void WinLoseSystem();
-void WinGame();
-void LoseGame();
+private:
+	void WinLoseSystem();
+	void WinGame();
+	void LoseGame();
+	void ContinueNextLevel();
+	void ResizeListColorLine();
+	void CountRemainingLine();
+	void CountTimeLeft();
+	void GetHighestPointedLayer();
+	void GameplayEventHolder();
+	void RenderGameplayTextLine();
+	void DetectButtonClick();
+	void RenderAndDetectMouseClickColorLine();
+	void RenderFadingLine();
+	void TEST_RenderGameplayOverLay();
+};
 
 
-void ContinueNextLevel();
 
-void ResizeListColorLine();
+//extern vector<ColorLine> listColorLine;
 
-void CountRemainingLine();
 
-void RestartGame();
 
-void InitListColorLine(int newAmount);
 
-void Gameplay_Update();
 
-void CountTimeLeft();
 
-void GetHighestPointedLayer();
+void RestartGame();//
 
-void GameplayEventHolder();
+void InitListColorLine(int newAmount);//
 
-void RenderGameplayBgTexture();
 
-void RenderGameplayTextLine();
 
-void GameplayDetectButtonClick();
 
-void RenderAndDetectMouseClickColorLine();
 
-void RenderFadingLine();
 
-void TEST_RenderGameplayOverLay();
 
+
+extern GameplayCtrl gameplayCtrl;
