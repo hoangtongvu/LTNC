@@ -6,7 +6,6 @@
 
 GameplayCtrl gameplayCtrl;
 
-//vector<ColorLine> listColorLine;
 vector<ColorLine> queueListFadedColorLine;
 
 
@@ -24,6 +23,7 @@ int leftPanel_H = gameplayScreen_Height;
 
 GameplayCtrl::GameplayCtrl()
 {
+
 }
 
 GameplayCtrl::~GameplayCtrl()

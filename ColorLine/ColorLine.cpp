@@ -12,10 +12,14 @@ ColorLine::ColorLine():
 
     borderThickness = 4;
 
+    verticalHeight = gameplayScreen_Height;
+    horizontalWidth = gameplayScreen_Width;
+    baseWidth = 43;
+
     baseBorder.x = 6;
     baseBorder.y = 6;
     baseBorder.w = gameplayScreen_Width;
-    baseBorder.h = 43;
+    baseBorder.h = 43;//43
 
     baseLine.x = baseBorder.x + borderThickness;
     baseLine.y = baseBorder.y + borderThickness;
@@ -47,6 +51,12 @@ ColorLine::ColorLine():
 
     baseAlpha = 150;
     pointedAlpha = 230;
+
+
+
+
+
+
 }
 
 
@@ -54,18 +64,31 @@ ColorLine::ColorLine():
 void ColorLine::SetDir(int dirParameter)
 {
     dir = dirParameter;
+
+
     if (dirParameter == 1)//vertical
     {
-        baseBorder.w = baseBorder.h;
-        baseBorder.h = gameplayScreen_Height;
-        baseBorder.x += gameplayScreen_X + rand() % (gameplayScreen_Width - baseBorder.w - baseBorder.x * 2 + 1);
-        baseBorder.y = gameplayScreen_Y;
+        baseBorder.w = baseWidth;
+        baseBorder.h = verticalHeight;
     }
     else
     {
-        baseBorder.y += gameplayScreen_Y + rand() % (gameplayScreen_Height - baseBorder.h - baseBorder.y * 2 + 1);
-        baseBorder.x = gameplayScreen_X;
+        baseBorder.w = horizontalWidth;
+        baseBorder.h = baseWidth;
     }
+    SetTransform();
+}
+
+void ColorLine::SetBaseColor(int rPar, int gPar, int bPar)
+{
+    r = rPar;
+    g = gPar;
+    b = bPar;
+    //pointedBloom.SetColor(r, g, b);
+}
+
+void ColorLine::SetTransform()
+{
     baseLine.x = baseBorder.x + borderThickness;
     baseLine.y = baseBorder.y + borderThickness;
     baseLine.w = baseBorder.w - borderThickness * 2;
@@ -74,15 +97,6 @@ void ColorLine::SetDir(int dirParameter)
     baseLineTexture.Transform(baseLine.x, baseLine.y, baseLine.w, baseLine.h);
     baseBorderTexture.Transform(baseBorder.x, baseBorder.y, baseBorder.w, baseBorder.h);
     //pointedBloom.Transform = { baseBorder.x, baseBorder.y, baseBorder.w, baseBorder.h };
-}
-
-void ColorLine::SetBaseColor(int rPar, int gPar, int bPar, int alphaPar)
-{
-    r = rPar;
-    g = gPar;
-    b = bPar;
-    alpha = alphaPar;
-    //pointedBloom.SetColor(r, g, b);
 }
 
 void ColorLine::RenderLine()

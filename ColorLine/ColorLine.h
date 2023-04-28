@@ -21,6 +21,11 @@ public:
     CustomTexture baseLineTexture;
     CustomTexture baseBorderTexture;
 
+    int verticalHeight;
+    int horizontalWidth;
+    int baseWidth;
+
+
     float fadingTimeLimit;
     float fadingTimer;
     float fadingT;
@@ -49,7 +54,7 @@ public:
 
     void SetDir(int dirParameter);
 
-    void SetBaseColor(int rPar, int gPar, int bPar, int alphaPar);
+    void SetBaseColor(int rPar, int gPar, int bPar);
 
     void RenderLine();
 
@@ -59,7 +64,7 @@ public:
 
     void CountFadingTime();
 
-
+    void SetTransform();
 
 
 private:

@@ -86,7 +86,7 @@ void Game::InitListColorLine(int newAmount)
         {
             dir = 1;
         }
-        int randomColor = rand() % 12;
+        
         int randColorR = rand() % 205 + 30;
         int randColorG = rand() % 205 + 30;
         int randColorB = rand() % 205 + 30;
@@ -94,8 +94,18 @@ void Game::InitListColorLine(int newAmount)
 
         ColorLine tempColorLine;
         tempColorLine.SetDir(dir);
-        //tempColorLine.SetBaseColor(simpleColorList[randomColor][0] + randColorRange, simpleColorList[randomColor][1] + randColorRange, simpleColorList[randomColor][2] + randColorRange, 1);
-        tempColorLine.SetBaseColor(randColorR, randColorG, randColorB, 1);
+        if (dir == 1)
+        {
+            tempColorLine.baseBorder.x = gameplayScreen_X + rand() % (gameplayScreen_Width - tempColorLine.baseBorder.w + 1);
+            tempColorLine.baseBorder.y = gameplayScreen_Y;
+        }
+        else
+        {
+            tempColorLine.baseBorder.y = gameplayScreen_Y + rand() % (gameplayScreen_Height - tempColorLine.baseBorder.h + 1);
+            tempColorLine.baseBorder.x = gameplayScreen_X;
+        }
+        tempColorLine.SetTransform();
+        tempColorLine.SetBaseColor(randColorR, randColorG, randColorB);
         listColorLine.emplace_back(tempColorLine);
     }
 

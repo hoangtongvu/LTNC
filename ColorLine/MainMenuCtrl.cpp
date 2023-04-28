@@ -5,6 +5,7 @@ MainMenuCtrl mainMenuCtrl;
 
 MainMenuCtrl::MainMenuCtrl()
 {
+    
 }
 
 MainMenuCtrl::~MainMenuCtrl()
@@ -25,6 +26,7 @@ void MainMenuCtrl::Update()
         DetectButtonClick();
         ResetMouseClick();
         SetBgBlack();
+        RenderLogo();
         SDL_Render();
           
     }
@@ -128,4 +130,10 @@ void MainMenuCtrl::SetButtonPosition()
     uiManager.menuButtons.SetPosition();
 }
 
+void MainMenuCtrl::RenderLogo()
+{
+    CharC_Logo logo;
+    logo.SetTransform();
+    logo.Render();
+}
 

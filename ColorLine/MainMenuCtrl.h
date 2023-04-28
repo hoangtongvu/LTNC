@@ -3,7 +3,7 @@
 
 #include "UIManager.h"
 #include "SDL_Func.h"
-#include "BloomEffect.h"
+#include "CharC_Logo.h"
 
 #include "Game.h"
 
@@ -26,6 +26,8 @@ private:
 	void RenderButtons();
 
 	void SetButtonPosition();
+
+	void RenderLogo();
 
 };
 
