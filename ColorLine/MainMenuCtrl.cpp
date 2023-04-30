@@ -132,8 +132,8 @@ void MainMenuCtrl::SetButtonPosition()
 
 void MainMenuCtrl::RenderLogo()
 {
-    CharC_Logo logo;
-    logo.SetTransform();
-    logo.Render();
+    //CharC_Logo logo;
+    //logo.SetTransform();
+    //logo.Render();
 }
 

@@ -245,20 +245,19 @@ void GameplayCtrl::RenderGameplayTextLine()
 
     LabelAndTextWindow remainingLineWindow;
     remainingLineWindow.Transform = { timeLeftText_X, y, timeLeftText_W, timeLeftText_H * 2 };
-    remainingLineWindow.label = "Line";
-    remainingLineWindow.text = to_string(remainingLine);
+    remainingLineWindow.label.SetContent("Line");
+    remainingLineWindow.text.SetContent(to_string(remainingLine));
     remainingLineWindow.Render();
     
     
     LabelAndTextWindow levelWindow;
     levelWindow.Transform = { timeLeftText_X, y + timeLeftText_H * 2 + topBottomSpacing, timeLeftText_W, timeLeftText_H * 2 };
-    levelWindow.label = "Level";
-    levelWindow.text = to_string(level);
+    levelWindow.label.SetContent("Level");
+    levelWindow.text.SetContent(to_string(level));
     levelWindow.Render();
 
 
-    /*Text(pixelFont_Small, textColor, "Level:", 2, y + 50);
-    Text(pixelFont_Small, textColor, to_string(level), 2, y + 70);*/
+
 
     int roundedTimeLeftSecond = (int)(round(timeRemainingCounter));
 

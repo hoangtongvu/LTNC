@@ -1,14 +1,13 @@
 #pragma once
 #include "GameManager.h"
-#include "TextFunc.h"
 #include "CustomWindow.h"
+#include "CustomText.h"
 
 
 class GameTimer: 
 	public CustomWindow
 {
 public:
-	string timeValue;
 
 
 	GameTimer();
@@ -17,6 +16,8 @@ public:
 	~GameTimer();
 
 private:
+	string timeValue;
+	CustomText text;
 	
 };
 

@@ -1,7 +1,6 @@
 #pragma once
 #include "GameManager.h"
 #include "Button.h"
-#include "TextFunc.h"
 #include "ColorLine.h"
 #include "CustomTexture.h"
 #include "MenuButtons.h"

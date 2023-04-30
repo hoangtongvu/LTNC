@@ -4,11 +4,11 @@
 CharC_Logo::CharC_Logo()
 {
 	Transform = { 300, 50, 120, 130 };
-    for (int i = 0; i < 3; i++)
+    /*for (int i = 0; i < 3; i++)
     {
         ColorLine temp;
         logoListColorLine.emplace_back(temp);
-    }
+    }*/
 }
 
 
@@ -50,4 +50,5 @@ void CharC_Logo::Render()
 
 CharC_Logo::~CharC_Logo()
 {
+    //logoListColorLine.clear();
 }

@@ -49,12 +49,15 @@ void Button::RenderButton(TTF_Font* font)
         SDL_RenderDrawRect(renderer, &baseButton);
             
             
-        if (!buttonLabel.empty())
+        if (!label.empty())
         {
+            buttonLabel.font = font;
+            buttonLabel.SetContent(label);
             int textW, textH;
-            GetTextWidthHeight(font, buttonLabel, textW, textH);
-            Text(font, { r, g, b }, buttonLabel, baseButton.x + (baseButton.w - textW) / 2, baseButton.y + (baseButton.h - textH) / 2);
-
+            textW = buttonLabel.Transform.w;
+            textH = buttonLabel.Transform.h;
+            buttonLabel.SetPosition(baseButton.x + (baseButton.w - textW) / 2, baseButton.y + (baseButton.h - textH) / 2);
+            buttonLabel.Render();
         }
 
     }

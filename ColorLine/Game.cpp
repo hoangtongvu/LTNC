@@ -21,10 +21,10 @@ void Game::Init()
 void Game::LoadComponents()
 {
 	LoadSaveFile();
+	LoadFonts();
 	LoadTextures();
 	LoadUI_Elements();
 	LoadSounds();
-	LoadFonts();
 	
 }
 

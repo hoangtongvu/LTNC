@@ -1,15 +1,15 @@
 #pragma once
 #include "GameManager.h"
-#include "TextFunc.h"
 #include "CustomWindow.h"
+#include "CustomText.h"
 
 
 class LabelAndTextWindow :
 	public CustomWindow
 {
 public:
-	string label;
-	string text;
+	CustomText label;
+	CustomText text;
 
 
 	LabelAndTextWindow();

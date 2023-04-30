@@ -7,8 +7,8 @@ class CharC_Logo
 public:
 	SDL_Rect Transform;
 
-	vector <ColorLine> logoListColorLine;
-
+	//vector <ColorLine> logoListColorLine;
+	ColorLine logoListColorLine[3];
 
 
 	void SetTransform();

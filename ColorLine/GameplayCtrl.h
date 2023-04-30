@@ -2,7 +2,6 @@
 #include "GameManager.h"
 
 #include "UIManager.h"
-#include "TextFunc.h"
 #include "ColorLine.h"
 #include "Button.h"
 #include "TEST_CLASS.h"

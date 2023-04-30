@@ -1,6 +1,5 @@
 #pragma once
 #include "Header.h"
-#include "TextFunc.h"
 
 
 class TEST_CLASS
