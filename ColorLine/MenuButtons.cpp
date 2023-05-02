@@ -1,7 +1,8 @@
 #include "MenuButtons.h"
 
 int minY = 350;
-int maxY = SCREEN_HEIGHT;
+int maxY = SCREEN_HEIGHT - 30;
+int borderWidth = 300;
 
 int menuButtonW = 250;
 int menuButtonH = 60;
@@ -36,7 +37,12 @@ MenuButtons::MenuButtons() :
 
 void MenuButtons::Render()
 {
-	
+	int thickness = 5;
+	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+	SDL_Rect Border = { (SCREEN_WIDTH - borderWidth) / 2, minY, borderWidth, maxY - minY };
+	SDL_RenderDrawRect(renderer, &Border);
+	Border = { Border.x + thickness, Border.y + thickness, Border.w - 2 * thickness, Border.h - 2 * thickness };
+	SDL_RenderDrawRect(renderer, &Border);
 
 
 	newGameButton.RenderButton(pixelFont_Med);
