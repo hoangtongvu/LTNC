@@ -11,7 +11,7 @@ public:
 	SDL_Texture* tex;
 
 
-	CustomTexture(string path, int x, int y);
+	CustomTexture(string path);
 	~CustomTexture();
 
 	
@@ -19,6 +19,8 @@ public:
 	void RenderTexture();
 	void Transform(int x, int y, int w, int h);
 	void SetColor(int r, int g, int b, int alpha);
+	void Destroy();
+
 
 private:
 

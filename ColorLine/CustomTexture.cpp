@@ -1,11 +1,11 @@
 #include "CustomTexture.h"
 
 
-CustomTexture::CustomTexture(string path, int x, int y)
+CustomTexture::CustomTexture(string path)
 {
 	texPath = spriteDir + path;
-	texRect.x = x;
-	texRect.y = y;
+	texRect.x = 0;
+	texRect.y = 0;
 }
 
 
@@ -76,6 +76,12 @@ void CustomTexture::SetColor(int r, int g, int b, int alpha)
 }
 
 
+void CustomTexture::Destroy()
+{
+    SDL_DestroyTexture(tex);
+}
+
 CustomTexture::~CustomTexture()
 {
+    //SDL_DestroyTexture(tex);
 }

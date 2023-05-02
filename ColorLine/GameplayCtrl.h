@@ -44,11 +44,23 @@ public:
 	GameplayCtrl();
 	~GameplayCtrl();
 
+	static GameplayCtrl* GetInstance()
+	{
+		if (instance == NULL)
+		{
+			instance = new GameplayCtrl();
+		}
+		return instance;
+	}
+
 	void Update();
 
 private:
 	string winMessage = "YOU WIN";
 	string loseMessage = "YOU LOSE";
+	static GameplayCtrl* instance;
+
+
 
 	void WinLoseSystem();
 	void WinGame();
@@ -64,10 +76,7 @@ private:
 	void RenderAndDetectMouseClickColorLine();
 	void RenderFadingLine();
 	void TEST_RenderGameplayOverLay();
+
 };
 
 
-
-
-
-extern GameplayCtrl gameplayCtrl;

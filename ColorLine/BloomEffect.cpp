@@ -3,7 +3,7 @@
 
 
 BloomEffect::BloomEffect(SDL_Rect _Transform, int _r, int _g, int _b, double _intensity) :
-	whitePixelTex("whitePixel.png", 0, 0)
+	whitePixelTex("whitePixel.png")
 {
 	whitePixelTex.LoadTexture(-1, -1);
 	Transform = _Transform;

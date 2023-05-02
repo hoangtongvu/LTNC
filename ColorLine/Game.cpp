@@ -1,6 +1,6 @@
 #include "Game.h"
 
-Game game;
+Game* Game::instance = NULL;
 
 vector<ColorLine> listColorLine;
 
@@ -34,6 +34,7 @@ void Game::LoadFonts()
 	int fontSize = 20;
 	pixelFont_Small = TTF_OpenFont((fontDir + "Minecraft.ttf").c_str(), fontSize);
 	pixelFont_Med = TTF_OpenFont((fontDir + "Minecraft.ttf").c_str(), fontSize * 2);
+	pixelFont_Big = TTF_OpenFont((fontDir + "Minecraft.ttf").c_str(), fontSize * 5);
 }
 
 void Game::LoadSounds()
@@ -48,7 +49,8 @@ void Game::LoadSounds()
 
 void Game::LoadTextures()
 {
-	uiManager.mainMenuTexture.LoadTexture(-1, -1);
+	//uiManager.mainMenuTexture.LoadTexture(-1, -1);
+	UIManager::GetInstance()->mainMenuTexture.LoadTexture(-1, -1);
 }
 
 void Game::LoadUI_Elements()
@@ -72,6 +74,10 @@ void Game::RestartGame()
 
 void Game::InitListColorLine(int newAmount)
 {
+    for (int i = 0; i < listColorLine.size(); i++)
+    {
+        listColorLine[i].OnDestroy();
+    }
     listColorLine.clear();
     colorLineAmount = newAmount;
     srand(time(NULL));
@@ -154,13 +160,13 @@ void Game::Update()
     while (!gameClose)
     {
         srand(time(NULL));
-        mainMenuCtrl.Update();
+        MainMenuCtrl::GetInstance()->Update();
         if (gameClose)
         {
             break;
         }
 
-        gameplayCtrl.Update();
+        GameplayCtrl::GetInstance()->Update();
 
     }
 

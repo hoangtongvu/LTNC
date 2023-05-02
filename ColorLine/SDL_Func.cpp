@@ -5,6 +5,7 @@ void initSDL(SDL_Window*& window, SDL_Renderer*& renderer)
 {
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
         logSDLError(std::cout, "SDL_Init", true);
+    //IMG_Init(IMG_INIT_PNG);
     if (TTF_Init() < 0)
     {
         cout << "Error initializing SDL_ttf: " << TTF_GetError() << endl;
@@ -14,6 +15,7 @@ void initSDL(SDL_Window*& window, SDL_Renderer*& renderer)
     {
         printf("%s", Mix_GetError());
     }
+
 
     window = SDL_CreateWindow(WINDOW_TITLE.c_str(), SDL_WINDOWPOS_CENTERED,
         SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);

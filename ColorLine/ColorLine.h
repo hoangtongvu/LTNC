@@ -1,7 +1,6 @@
 #pragma once
 
 #include "GameManager.h"
-//#include "GameplayCtrl.h"
 #include "CustomTexture.h"
 #include "BloomEffect.h"
 
@@ -65,6 +64,8 @@ public:
     void CountFadingTime();
 
     void SetTransform();
+
+    void OnDestroy();
 
 
 private:

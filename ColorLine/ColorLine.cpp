@@ -2,8 +2,8 @@
 
 
 ColorLine::ColorLine():
-    baseLineTexture("whitePixel.png", 0, 0),
-    baseBorderTexture("whitePixel.png", 0, 0)
+    baseLineTexture("whitePixel.png"),
+    baseBorderTexture("whitePixel.png")
     //pointedBloom({ 100, 100, 100, 100 }, 255, 255, 255, 5)
 {
     baseLineTexture.LoadTexture(-1, -1);
@@ -191,8 +191,16 @@ void ColorLine::CountFadingTime()
 }
 
 
+void ColorLine::OnDestroy()
+{
+    baseBorderTexture.Destroy();
+    baseLineTexture.Destroy();
+}
+
 ColorLine::~ColorLine()
 {
+    /*baseBorderTexture.Destroy();
+    baseLineTexture.Destroy();*/
    
 }
 

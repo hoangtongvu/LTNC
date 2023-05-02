@@ -3,7 +3,8 @@
 
 #include "UIManager.h"
 #include "SDL_Func.h"
-#include "CharC_Logo.h"
+//#include "CharC_Logo.h"
+//#include "GameLogo.h"
 
 #include "Game.h"
 
@@ -12,11 +13,21 @@ class MainMenuCtrl
 public:
 	MainMenuCtrl();
 	~MainMenuCtrl();
+
+	static MainMenuCtrl* GetInstance()
+	{
+		if (instance == NULL)
+		{
+			instance = new MainMenuCtrl();
+		}
+		return instance;
+	}
 	void Update();
 
 
 private:
 
+	//GameLogo logo;
 	void EventHolder();
 
 	void RenderMainMenuTexture();
@@ -29,12 +40,8 @@ private:
 
 	void RenderLogo();
 
+	static MainMenuCtrl* instance;
 };
 
 
 
-
-
-
-
-extern MainMenuCtrl mainMenuCtrl;

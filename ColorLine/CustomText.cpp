@@ -18,28 +18,46 @@ CustomText::~CustomText()
 
 void CustomText::Render()
 {
-	/*if (textSurface == NULL)
+	SetContent(content);
+	if (textTex != NULL)
 	{
-		return;
-	}*/
-	SDL_RenderCopy(renderer, textTex, NULL, &Transform);
-	SDL_DestroyTexture(textTex);
-	SDL_FreeSurface(textSurface);
+		SDL_RenderCopy(renderer, textTex, NULL, &Transform);
+		SDL_DestroyTexture(textTex);
+	}
+	else
+	{
+		cout << "NULL" << endl;
+	}
+
+
 }
 
 void CustomText::SetContent(string s)
 {
 	content = s;
+
 	textSurface = TTF_RenderText_Solid(font, content.c_str(), color);
-	cout << TTF_GetError();
 	if (textSurface == NULL)
 	{
+		cout << "TextSurface is NULL" << endl;
 		return;
+	}
+	if (textTex != NULL)
+	{
+		SDL_DestroyTexture(textTex);
+
+	}
+	else
+	{
+		//cout << "NULL" << endl;
 	}
 	textTex = SDL_CreateTextureFromSurface(renderer, textSurface);
 	
 	Transform.w = textSurface->w;
 	Transform.h = textSurface->h;
+	SDL_FreeSurface(textSurface);
+	//cout << TTF_GetError() << endl;
+
 }
 
 void CustomText::SetPosition(int x, int y)

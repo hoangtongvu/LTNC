@@ -4,7 +4,8 @@
 
 #pragma region Variable Definition
 
-GameplayCtrl gameplayCtrl;
+
+GameplayCtrl* GameplayCtrl::instance = NULL;
 
 vector<ColorLine> queueListFadedColorLine;
 
@@ -77,7 +78,7 @@ void GameplayCtrl::WinGame()
 {
     stopCounting = true;
 
-    WinLoseWindow winWindow(winMessage, uiManager.nextLevelButton);
+    WinLoseWindow winWindow(winMessage, UIManager::GetInstance()->nextLevelButton);
     winWindow.r = 0;
     winWindow.g = 255;
     winWindow.b = 0;
@@ -101,7 +102,7 @@ void GameplayCtrl::LoseGame()
 {
     stopCounting = true;
 
-    WinLoseWindow loseWindow(loseMessage, uiManager.restartButton);
+    WinLoseWindow loseWindow(loseMessage, UIManager::GetInstance()->restartButton);
     loseWindow.r = 255;
     loseWindow.g = 0;
     loseWindow.b = 0;
@@ -124,7 +125,7 @@ void GameplayCtrl::LoseGame()
 
 void GameplayCtrl::ContinueNextLevel()
 {
-    Button nextLevelButton = uiManager.nextLevelButton;
+    Button nextLevelButton = UIManager::GetInstance()->nextLevelButton;
     nextLevelButton.RenderButton(pixelFont_Small);
 
     if (nextLevelButton.DetectMouseClick())
@@ -133,7 +134,7 @@ void GameplayCtrl::ContinueNextLevel()
         level++;
         gameSave.Write(saveFileName);
         nextLevelButton.isEnabled = false;
-        game.RestartGame();
+        Game::GetInstance()->RestartGame();
 
     }
 }
@@ -276,17 +277,17 @@ void GameplayCtrl::DetectButtonClick()
     int buttonH = 40;
 
     //Restart Button
-    Button restartButton = uiManager.restartButton;
+    Button restartButton = UIManager::GetInstance()->restartButton;
     restartButton.baseButton = { leftPanel_X + buttonLeftRightSpacing, leftPanel_Y + buttonTopBottomSpacing, leftPanel_W - 2 * buttonLeftRightSpacing, buttonH };
     restartButton.RenderButton(pixelFont_Small);
     if (restartButton.DetectMouseClick())
     {
-        game.RestartGame();
+        Game::GetInstance()->RestartGame();
 
     }
 
     //ReturnMenu Button
-    Button returnMenuButton = uiManager.returnMenuButton;
+    Button returnMenuButton = UIManager::GetInstance()->returnMenuButton;
     returnMenuButton.baseButton = { leftPanel_X + buttonLeftRightSpacing, leftPanel_Y + 2 * buttonTopBottomSpacing + buttonH, leftPanel_W - 2 * buttonLeftRightSpacing, buttonH };
     returnMenuButton.RenderButton(pixelFont_Small);
     if (returnMenuButton.DetectMouseClick())

@@ -61,6 +61,7 @@ Mix_Chunk* onClickButtonSFX = NULL;
 
 TTF_Font* pixelFont_Small = NULL;
 TTF_Font* pixelFont_Med = NULL;
+TTF_Font* pixelFont_Big = NULL;
 
 
 bool gameClose = false;

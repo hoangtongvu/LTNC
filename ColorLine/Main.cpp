@@ -19,17 +19,18 @@
 
 int main(int argc, char* argv[])
 {
-    game.Init();
-    game.LoadComponents();
+    Game::GetInstance()->Init();
+    Game::GetInstance()->LoadComponents();
+    //GameLogo logo;
     
     // INITIALIZE COLOR LINE
-    game.InitListColorLine(colorLineAmount);
+    Game::GetInstance()->InitListColorLine(colorLineAmount);
 
     //Play Bg music
     //Mix_PlayMusic(bgMusic, -1);
-    
+
     // GAME LOOP _________________________________________________________________
-    game.Update();
+    Game::GetInstance()->Update();
 
     
     TTF_Quit();

@@ -1,11 +1,15 @@
 #include "MainMenuCtrl.h"
 
 
-MainMenuCtrl mainMenuCtrl;
+
+MainMenuCtrl* MainMenuCtrl::instance = NULL;
+
+
 
 MainMenuCtrl::MainMenuCtrl()
 {
-    
+
+
 }
 
 MainMenuCtrl::~MainMenuCtrl()
@@ -25,8 +29,8 @@ void MainMenuCtrl::Update()
         RenderButtons();
         DetectButtonClick();
         ResetMouseClick();
-        SetBgBlack();
         RenderLogo();
+        SetBgBlack();
         SDL_Render();
           
     }
@@ -84,33 +88,33 @@ void MainMenuCtrl::EventHolder()
 
 void MainMenuCtrl::RenderMainMenuTexture()
 {
-    CustomTexture mainMenuTexture = uiManager.mainMenuTexture;
+    CustomTexture mainMenuTexture = UIManager::GetInstance()->mainMenuTexture;
     mainMenuTexture.RenderTexture();
 }
 
 void MainMenuCtrl::DetectButtonClick()
 {
     // Start game Button
-    Button startGameButton = uiManager.menuButtons.newGameButton;
+    Button startGameButton = UIManager::GetInstance()->menuButtons.newGameButton;
     if (startGameButton.DetectMouseClick())
     {
         level = 0;
         gameStarted = true;
-        game.RestartGame();
+        Game::GetInstance()->RestartGame();
 
     }
 
 
     // Continue game Button
-    Button continueGameButton = uiManager.menuButtons.continueGameButton;
+    Button continueGameButton = UIManager::GetInstance()->menuButtons.continueGameButton;
     if (continueGameButton.DetectMouseClick())
     {
         gameStarted = true;
-        game.RestartGame();
+        Game::GetInstance()->RestartGame();
     }
     
     // Exit game Button
-    Button exitGameButton = uiManager.menuButtons.exitGameButton;
+    Button exitGameButton = UIManager::GetInstance()->menuButtons.exitGameButton;
     if (exitGameButton.DetectMouseClick())
     {
         gameStarted = true;
@@ -121,19 +125,20 @@ void MainMenuCtrl::DetectButtonClick()
 
 void MainMenuCtrl::RenderButtons()
 {
-    MenuButtons menuButtons = uiManager.menuButtons;
+    MenuButtons menuButtons = UIManager::GetInstance()->menuButtons;
+    
     menuButtons.Render();
 }
 
 void MainMenuCtrl::SetButtonPosition()
 {
-    uiManager.menuButtons.SetPosition();
+    UIManager::GetInstance()->menuButtons.SetPosition();
 }
 
 void MainMenuCtrl::RenderLogo()
 {
-    //CharC_Logo logo;
-    //logo.SetTransform();
+    UIManager::GetInstance()->logo.Render();
+
     //logo.Render();
 }
 

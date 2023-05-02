@@ -65,6 +65,7 @@ extern Mix_Chunk* onClickButtonSFX;
 
 extern TTF_Font* pixelFont_Small;
 extern TTF_Font* pixelFont_Med;
+extern TTF_Font* pixelFont_Big;
 
 extern bool gameClose;
 

@@ -7,18 +7,20 @@ class CharC_Logo
 public:
 	SDL_Rect Transform;
 
-	//vector <ColorLine> logoListColorLine;
-	ColorLine logoListColorLine[3];
+	vector <ColorLine> logoListColorLine;
 
 
 	void SetTransform();
 	void Render();
+
 
 	CharC_Logo();
 	~CharC_Logo();
 
 private:
 
+	float colorChangeTimer;
+	float maxTimeColorChange;
 };
 
 

@@ -10,8 +10,19 @@ extern vector<ColorLine> listColorLine;
 class Game
 {
 public:
+
 	Game();
 	~Game();
+
+	static Game* GetInstance()
+	{
+		if (instance == NULL)
+		{
+			instance = new Game();
+		}
+		return instance;
+	}
+
 	void Init();
 
 	void LoadComponents();
@@ -29,6 +40,5 @@ private:
 	void LoadUI_Elements();
 	void LoadSaveFile();
 
+	static Game* instance;
 };
-
-extern Game game;
