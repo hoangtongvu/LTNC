@@ -158,3 +158,5 @@ ColorLine/x64/Debug/CharC_Logo.obj
 ColorLine/.vs/ColorLine/v16/ipch/AutoPCH/a6ce2759166738a8/CHARC_LOGO.ipch
 ColorLine/.vs/ColorLine/v16/ipch/AutoPCH/768eb23d7e405eb5/CUSTOMTEXT.ipch
 ColorLine/x64/Debug/CustomText.obj
+ColorLine/.vs/ColorLine/v16/ipch/AutoPCH/4b0fda3967d95908/GAMELOGO.ipch
+ColorLine/x64/Debug/GameLogo.obj
