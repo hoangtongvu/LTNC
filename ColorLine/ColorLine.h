@@ -15,10 +15,14 @@ public:
     int borderThickness;
     int r, g, b, alpha;
     int layer;
+    enum Direction
+    {
+        Horizontal,
+        Vertical
+    };
     int dir;
     bool isEnabled;
-    CustomTexture baseLineTexture;
-    CustomTexture baseBorderTexture;
+    
 
     int verticalHeight;
     int horizontalWidth;
@@ -31,6 +35,29 @@ public:
     float fadingSpeed;
     
 
+    
+
+    //BloomEffect pointedBloom;
+
+#pragma endregion
+
+
+    ColorLine();
+    ~ColorLine();
+    void SetDir(int dirParameter);
+    void SetBaseColor(int rPar, int gPar, int bPar);
+    void RenderLine();
+    bool DetectMouseClick();
+    bool IsPointed();
+    void CountFadingTime();
+    void SetTransform();
+    void OnDestroy();
+
+
+private:
+    CustomTexture baseLineTexture;
+    CustomTexture baseBorderTexture;
+
     float pointedLightenColorScale;
     float pointedLightenColorScaleSpeed;
     float pointedLightenColorScale_Max;
@@ -41,35 +68,6 @@ public:
 
     int baseAlpha;
     int pointedAlpha;
-
-    //BloomEffect pointedBloom;
-
-#pragma endregion
-
-
-
-    ColorLine();
-    ~ColorLine();
-
-    void SetDir(int dirParameter);
-
-    void SetBaseColor(int rPar, int gPar, int bPar);
-
-    void RenderLine();
-
-    bool DetectMouseClick();
-
-    bool IsPointed();
-
-    void CountFadingTime();
-
-    void SetTransform();
-
-    void OnDestroy();
-
-
-private:
-
 };
 
 

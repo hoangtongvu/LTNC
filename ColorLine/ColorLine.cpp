@@ -53,7 +53,7 @@ ColorLine::ColorLine():
     pointedAlpha = 230;
 
 
-
+    
 
 
 
@@ -66,7 +66,7 @@ void ColorLine::SetDir(int dirParameter)
     dir = dirParameter;
 
 
-    if (dirParameter == 1)//vertical
+    if (dirParameter == Vertical)//vertical
     {
         baseBorder.w = baseWidth;
         baseBorder.h = verticalHeight;

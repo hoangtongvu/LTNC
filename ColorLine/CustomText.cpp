@@ -23,7 +23,7 @@ void CustomText::Render()
 	SDL_RenderCopy(renderer, tempTex, NULL, &Transform);
 	SDL_DestroyTexture(tempTex);
 	SDL_FreeSurface(tempSurface);
-	cout << TTF_GetError() << endl;
+	//cout << TTF_GetError() << endl;
 
 
 }

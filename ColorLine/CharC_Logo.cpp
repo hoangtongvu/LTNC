@@ -23,19 +23,19 @@ void CharC_Logo::SetTransform()
     logoListColorLine[0].baseBorder.x = Transform.x + w;
     logoListColorLine[0].baseBorder.y = Transform.y;
     logoListColorLine[0].horizontalWidth = Transform.w - w;
-    logoListColorLine[0].SetDir(0);
+    logoListColorLine[0].SetDir(ColorLine::Horizontal);
 
 
     logoListColorLine[1].baseBorder.x = Transform.x;
     logoListColorLine[1].baseBorder.y = Transform.y + w;
     logoListColorLine[1].verticalHeight = Transform.h - 2 * w;
-    logoListColorLine[1].SetDir(1);
+    logoListColorLine[1].SetDir(ColorLine::Vertical);
 
 
     logoListColorLine[2].baseBorder.x = Transform.x + w;
     logoListColorLine[2].baseBorder.y = Transform.y + Transform.h - w;
     logoListColorLine[2].horizontalWidth = Transform.w - w;
-    logoListColorLine[2].SetDir(0);
+    logoListColorLine[2].SetDir(ColorLine::Horizontal);
 
 
 

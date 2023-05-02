@@ -102,7 +102,7 @@ void Game::InitListColorLine(int newAmount)
 
         ColorLine tempColorLine;
         tempColorLine.SetDir(dir);
-        if (dir == 1)
+        if (dir == ColorLine::Vertical)
         {
             tempColorLine.baseBorder.x = gameplayScreen_X + rand() % (gameplayScreen_Width - tempColorLine.baseBorder.w + 1);
             tempColorLine.baseBorder.y = gameplayScreen_Y;
