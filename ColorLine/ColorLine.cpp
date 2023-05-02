@@ -49,7 +49,7 @@ ColorLine::ColorLine():
     onClickLightenColorScale = 0.75;
 
 
-    baseAlpha = 150;
+    baseAlpha = 140;
     pointedAlpha = 230;
 
 

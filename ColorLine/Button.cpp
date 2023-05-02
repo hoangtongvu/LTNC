@@ -52,6 +52,7 @@ void Button::RenderButton(TTF_Font* font)
         if (!label.empty())
         {
             buttonLabel.font = font;
+            buttonLabel.color = { r, g, b };
             buttonLabel.SetContent(label);
             int textW, textH;
             textW = buttonLabel.Transform.w;

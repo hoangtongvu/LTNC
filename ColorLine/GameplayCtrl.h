@@ -70,7 +70,7 @@ private:
 	void CountRemainingLine();
 	void CountTimeLeft();
 	void GetHighestPointedLayer();
-	void GameplayEventHolder();
+	void EventHolder();
 	void RenderGameplayTextLine();
 	void DetectButtonClick();
 	void RenderAndDetectMouseClickColorLine();

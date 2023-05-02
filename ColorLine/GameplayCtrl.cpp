@@ -34,7 +34,7 @@ GameplayCtrl::~GameplayCtrl()
 
 void GameplayCtrl::Update()
 {
-    GameplayEventHolder();
+    EventHolder();
     CountTimeLeft();
     CountRemainingLine();
     GetHighestPointedLayer();
@@ -183,7 +183,7 @@ void GameplayCtrl::GetHighestPointedLayer()
     }
 }
 
-void GameplayCtrl::GameplayEventHolder()
+void GameplayCtrl::EventHolder()
 {
     // EVENT HOLDER
     while (SDL_PollEvent(&event))
