@@ -18,8 +18,8 @@ public:
 	void SetPosition(int x, int y);
 
 private:
-	SDL_Surface* textSurface;
-	SDL_Texture* textTex;
+
+	SDL_Texture* GetTexture(SDL_Surface* tempSurface);
 
 };
 

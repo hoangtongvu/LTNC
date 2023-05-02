@@ -7,27 +7,23 @@ CustomText::CustomText(TTF_Font* _font)
 	color = { 255, 255, 255 };
 	font = _font;
 	content = "";
-	textSurface = NULL;
-	textTex = NULL;
 }
 
 CustomText::~CustomText()
 {
+	/*SDL_DestroyTexture(textTex);
+	SDL_FreeSurface(textSurface);*/
 }
 
 
 void CustomText::Render()
 {
-	SetContent(content);
-	if (textTex != NULL)
-	{
-		SDL_RenderCopy(renderer, textTex, NULL, &Transform);
-		SDL_DestroyTexture(textTex);
-	}
-	else
-	{
-		cout << "NULL" << endl;
-	}
+	SDL_Surface* tempSurface = TTF_RenderText_Solid(font, content.c_str(), color);;
+	SDL_Texture* tempTex = GetTexture(tempSurface);
+	SDL_RenderCopy(renderer, tempTex, NULL, &Transform);
+	SDL_DestroyTexture(tempTex);
+	SDL_FreeSurface(tempSurface);
+	cout << TTF_GetError() << endl;
 
 
 }
@@ -36,29 +32,25 @@ void CustomText::SetContent(string s)
 {
 	content = s;
 
-	textSurface = TTF_RenderText_Solid(font, content.c_str(), color);
-	if (textSurface == NULL)
+	SDL_Surface* _textSurface = TTF_RenderText_Solid(font, content.c_str(), color);
+	if (_textSurface == NULL)
 	{
 		cout << "TextSurface is NULL" << endl;
 		return;
 	}
-	if (textTex != NULL)
-	{
-		SDL_DestroyTexture(textTex);
-
-	}
-	else
-	{
-		//cout << "NULL" << endl;
-	}
-	textTex = SDL_CreateTextureFromSurface(renderer, textSurface);
 	
-	Transform.w = textSurface->w;
-	Transform.h = textSurface->h;
-	SDL_FreeSurface(textSurface);
-	//cout << TTF_GetError() << endl;
+	Transform.w = _textSurface->w;
+	Transform.h = _textSurface->h;
 
+	SDL_FreeSurface(_textSurface);
 }
+
+
+SDL_Texture* CustomText::GetTexture(SDL_Surface* tempSurface)
+{		
+	return SDL_CreateTextureFromSurface(renderer, tempSurface);
+}
+
 
 void CustomText::SetPosition(int x, int y)
 {
