@@ -138,7 +138,5 @@ void MainMenuCtrl::SetButtonPosition()
 void MainMenuCtrl::RenderLogo()
 {
     UIManager::GetInstance()->logo.Render();
-
-    //logo.Render();
 }
 

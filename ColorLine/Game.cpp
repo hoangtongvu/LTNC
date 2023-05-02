@@ -44,7 +44,9 @@ void Game::LoadSounds()
 	{
 		cout << Mix_GetError();
 	}
-	onClickButtonSFX = Mix_LoadWAV((sfxDir + "Retro Blop 18.wav").c_str());
+	onClickButtonSFX = Mix_LoadWAV((sfxDir + "Retro Beeep 20 - ClickedButton.wav").c_str());
+	onPointedButtonSFX = Mix_LoadWAV((sfxDir + "Retro Beeep 06 - PointedButton.wav").c_str());
+	onClickColorLineSFX = Mix_LoadWAV((sfxDir + "Retro Blop 18.wav").c_str());
 }
 
 void Game::LoadTextures()

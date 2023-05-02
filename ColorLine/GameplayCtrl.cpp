@@ -310,7 +310,7 @@ void GameplayCtrl::RenderAndDetectMouseClickColorLine()
             {
                 listColorLine[i].isEnabled = false;
 
-                Mix_PlayChannel(-1, onClickButtonSFX, 0);
+                Mix_PlayChannel(-1, onClickColorLineSFX, 0);
 
             }
 

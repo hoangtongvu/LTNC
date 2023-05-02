@@ -57,7 +57,9 @@ float deltaTime = 1 / (float)fps;
 int highestPointedLayer = 0;
 
 Mix_Music* bgMusic = NULL;
+Mix_Chunk* onPointedButtonSFX = NULL;
 Mix_Chunk* onClickButtonSFX = NULL;
+Mix_Chunk* onClickColorLineSFX = NULL;
 
 TTF_Font* pixelFont_Small = NULL;
 TTF_Font* pixelFont_Med = NULL;

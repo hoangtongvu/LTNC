@@ -61,7 +61,9 @@ extern float deltaTime;
 extern int highestPointedLayer;
 
 extern Mix_Music* bgMusic;
+extern Mix_Chunk* onPointedButtonSFX;
 extern Mix_Chunk* onClickButtonSFX;
+extern Mix_Chunk* onClickColorLineSFX;
 
 extern TTF_Font* pixelFont_Small;
 extern TTF_Font* pixelFont_Med;

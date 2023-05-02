@@ -78,6 +78,7 @@ bool Button::DetectMouseClick()
     {
         if (isClicked)
         {
+            Mix_PlayChannel(-1, onPointedButtonSFX, 0);
             buttonClicked = true;
             //cout << buttonLabel << endl;    
         }
@@ -96,6 +97,7 @@ bool Button::isPointed()
     if (mouseX >= baseButton.x && mouseY >= baseButton.y &&
         mouseX <= baseButton.x + baseButton.w && mouseY <= baseButton.y + baseButton.h)
     {
+        //Mix_PlayChannel(-1, onPointedButtonSFX, 0);
         pointedByMouse = true;
         
     }
