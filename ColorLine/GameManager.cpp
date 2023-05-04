@@ -22,7 +22,7 @@ int mouseY = 0;
 
 bool isClicked = false;
 
-int colorLineAmount_Base = 1;//35
+int colorLineAmount_Base = 35;//35
 int colorLineAmount = 50;
 int highestLayer = 0;
 int remainingLine = 0;
@@ -90,3 +90,9 @@ void SetBgBlack()
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 }
 
+float LerpFloat(float a, float b, float t)
+{
+    float temp;
+    temp = b * t + a * (1 - t);//a + (b - a) * t;
+    return temp;
+}

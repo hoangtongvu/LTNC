@@ -4,7 +4,7 @@
 #include "UIManager.h"
 #include "SDL_Func.h"
 //#include "CharC_Logo.h"
-//#include "GameLogo.h"
+#include "Vector3.h"
 
 #include "Game.h"
 
@@ -39,6 +39,11 @@ private:
 	void SetButtonPosition();
 
 	void RenderLogo();
+
+	void SetColoredBg();
+
+	Vector3 a, b;
+	float colorChangeTimer;
 
 	static MainMenuCtrl* instance;
 };

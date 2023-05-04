@@ -8,8 +8,9 @@ MainMenuCtrl* MainMenuCtrl::instance = NULL;
 
 MainMenuCtrl::MainMenuCtrl()
 {
-
-
+    a = { 255, 96, 208 };
+    b = { 160, 32, 255 };
+    colorChangeTimer = 0;
 }
 
 MainMenuCtrl::~MainMenuCtrl()
@@ -31,6 +32,7 @@ void MainMenuCtrl::Update()
         ResetMouseClick();
         RenderLogo();
         SetBgBlack();
+        //SetColoredBg();
         SDL_Render();
           
     }
@@ -140,3 +142,14 @@ void MainMenuCtrl::RenderLogo()
     UIManager::GetInstance()->logo.Render();
 }
 
+void MainMenuCtrl::SetColoredBg()
+{
+    const float speed = 0.5 * deltaTime;
+    colorChangeTimer += deltaTime * 0.2;
+    Vector3 temp = Vector3::Lerp(a, b, colorChangeTimer);
+    temp.Print();
+    //a = Vector3::Lerp(a, b, colorChangeTimer);
+    //a.Print();
+    //SDL_SetRenderDrawColor(renderer, a.x, a.y, a.z, 255);
+    SDL_SetRenderDrawColor(renderer, temp.x, temp.y, temp.z, 255);
+}

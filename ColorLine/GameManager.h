@@ -79,3 +79,6 @@ void ResetMouseClick();
 void SDL_Render();
 
 void SetBgBlack();
+
+float LerpFloat(float a, float b, float t);
+
